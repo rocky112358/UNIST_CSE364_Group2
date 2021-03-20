@@ -6,10 +6,7 @@ FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND="noninteractive"
 
 RUN apt-get update
-RUN apt-get -y install vim
-RUN apt-get -y install git
-RUN apt-get -y install openjdk-11-jdk
-RUN apt-get -y install maven
+RUN apt-get -y install vim git openjdk-11-jdk maven
 
 #Create /root/project folder and set it as WORKDIR.
 RUN mkdir -p /root/project

@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Scanner;
 
 class Movie {
@@ -55,6 +57,61 @@ class Rating {
 
 public class Movieblock {
     public static void main(String args[]) {
+        if (args.length != 2) {
+            System.out.println("Error: 2 args are required");
+            System.exit(-1);
+        }
+        String[] genres = args[0].split("\\|");
+        String occupation = args[1];
+
+        String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
+        Map<String, Integer> occupationMap = new HashMap<String, Integer>();
+        occupationMap.put("other", 0);
+        occupationMap.put("academic", 1);
+        occupationMap.put("educator", 1);
+        occupationMap.put("artist", 2);
+        occupationMap.put("clerical", 3);
+        occupationMap.put("admin", 3);
+        occupationMap.put("collegestudent", 4);
+        occupationMap.put("gradstudent", 4);
+        occupationMap.put("customerservice", 5);
+        occupationMap.put("doctor", 6);
+        occupationMap.put("healthcare", 6);
+        occupationMap.put("executive", 7);
+        occupationMap.put("managerial", 7);
+        occupationMap.put("farmer", 8);
+        occupationMap.put("homemaker", 9);
+        occupationMap.put("k-12student", 0);
+        occupationMap.put("lawyer", 11);
+        occupationMap.put("programmer", 12);
+        occupationMap.put("retired", 13);
+        occupationMap.put("sales", 14);
+        occupationMap.put("marketing", 14);
+        occupationMap.put("scientist", 15);
+        occupationMap.put("self-employed", 16);
+        occupationMap.put("technician", 17);
+        occupationMap.put("engineer", 17);
+        occupationMap.put("tradesman", 18);
+        occupationMap.put("craftsman", 18);
+        occupationMap.put("unemployed", 19);
+        occupationMap.put("writer", 20);
+
+        // validate input with genre list and occupation map
+        for (String g: genres) {
+            if (!Arrays.asList(genreArray).contains(g)) {
+                System.out.println("Error: invalid genre input");
+                System.exit(-1);
+            }
+        }
+
+        Integer occupationNo = occupationMap.get(occupation.toLowerCase());
+        if (occupationNo == null) {
+            System.out.println("Error: invalid occupation input");
+            System.exit(-1);
+        }
+
+
+
         List<Movie> movies = new ArrayList<Movie>();
         List<User> users = new ArrayList<User>();
         List<Rating> ratings = new ArrayList<Rating>();

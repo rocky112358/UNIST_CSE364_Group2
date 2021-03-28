@@ -120,7 +120,7 @@ public class Movieblock {
             String line;
             while((line = br.readLine()) != null) {
                 String[] properties = line.split("::");
-                Movie movie = new Movie(properties[0], properties[1], properties[2]);
+                Movie movie = new Movie(properties[0], properties[1], properties[2].toLowerCase());
                 movies.add(movie);
             }
             br.close();

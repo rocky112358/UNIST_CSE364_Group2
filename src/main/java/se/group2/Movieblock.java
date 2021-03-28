@@ -61,8 +61,8 @@ public class Movieblock {
             System.out.println("Error: 2 args are required");
             System.exit(-1);
         }
-        String[] genres = args[0].split("\\|");
-        String occupation = args[1];
+        String[] genresInput = args[0].split("\\|");
+        String occupationInput = args[1];
 
         String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
         Map<String, Integer> occupationMap = new HashMap<String, Integer>();
@@ -97,19 +97,18 @@ public class Movieblock {
         occupationMap.put("writer", 20);
 
         // validate input with genre list and occupation map
-        for (String g: genres) {
+        for (String g: genresInput) {
             if (!Arrays.asList(genreArray).contains(g)) {
                 System.out.println("Error: invalid genre input");
                 System.exit(-1);
             }
         }
 
-        Integer occupationNo = occupationMap.get(occupation.toLowerCase());
-        if (occupationNo == null) {
+        Integer occupationInputNo = occupationMap.get(occupationInput.toLowerCase());
+        if (occupationInputNo == null) {
             System.out.println("Error: invalid occupation input");
             System.exit(-1);
         }
-
 
 
         List<Movie> movies = new ArrayList<Movie>();

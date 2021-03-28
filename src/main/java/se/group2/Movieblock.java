@@ -3,14 +3,11 @@ package se.group2;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Scanner;
 
 class Movie {
     int id;
@@ -56,7 +53,7 @@ class Rating {
 
 
 public class Movieblock {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Error: 2 args are required");
             System.exit(-1);
@@ -65,7 +62,7 @@ public class Movieblock {
         String occupationInput = args[1];
 
         String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
-        Map<String, Integer> occupationMap = new HashMap<String, Integer>();
+        Map<String, Integer> occupationMap = new HashMap<>();
         occupationMap.put("other", 0);
         occupationMap.put("academic", 1);
         occupationMap.put("educator", 1);
@@ -110,10 +107,9 @@ public class Movieblock {
             System.exit(-1);
         }
 
-
-        List<Movie> movies = new ArrayList<Movie>();
-        List<User> users = new ArrayList<User>();
-        List<Rating> ratings = new ArrayList<Rating>();
+        List<Movie> movies = new ArrayList<>();
+        List<User> users = new ArrayList<>();
+        List<Rating> ratings = new ArrayList<>();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("data/movies.dat"));
@@ -155,7 +151,7 @@ public class Movieblock {
         }
 
         // find movie ids to use by genre
-        List<Integer> targetMovies = new ArrayList<Integer>();
+        List<Integer> targetMovies = new ArrayList<>();
         for (Movie m: movies) {
             boolean flag = true;
             for (String g: genresInput){
@@ -170,7 +166,7 @@ public class Movieblock {
         }
 
         // find user ids to use by occupation
-        List<Integer> targetUsers = new ArrayList<Integer>();
+        List<Integer> targetUsers = new ArrayList<>();
         for (User u: users) {
             if (u.occupation != occupationInputNo) {
                 continue;
@@ -179,7 +175,7 @@ public class Movieblock {
         }
 
         // find rating values to use
-        List<Integer> targetRatings = new ArrayList<Integer>();
+        List<Integer> targetRatings = new ArrayList<>();
         for (Rating r: ratings) {
             if (targetMovies.contains(r.movieId) && targetUsers.contains(r.userId)) {
                 targetRatings.add(r.rating);
@@ -187,8 +183,8 @@ public class Movieblock {
         }
 
         // find average and print
-        Integer ratingSum = targetRatings.stream().mapToInt(Integer::intValue).sum();
-        double averageRating = ratingSum.doubleValue() / targetRatings.size();
+        int ratingSum = targetRatings.stream().mapToInt(Integer::intValue).sum();
+        double averageRating = (double)ratingSum / targetRatings.size();
         System.out.println(averageRating);
     }
 }

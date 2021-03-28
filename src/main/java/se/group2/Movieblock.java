@@ -187,6 +187,6 @@ public class Movieblock {
         // find average and print
         int ratingSum = targetRatings.stream().mapToInt(Integer::intValue).sum();
         double averageRating = (double)ratingSum / targetRatings.size();
-        System.out.println(averageRating);
+        System.out.println(String.format("%.11f", averageRating));
     }
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 class Movie {
     int id;
@@ -58,7 +59,7 @@ public class Movieblock {
             System.out.println("Error: 2 args are required");
             System.exit(-1);
         }
-        String[] genresInput = args[0].split("\\|");
+        List<String> genresInput = Arrays.asList(args[0].split("\\|"));
         String occupationInput = args[1];
 
         String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
@@ -93,6 +94,7 @@ public class Movieblock {
         occupationMap.put("unemployed", 19);
         occupationMap.put("writer", 20);
 
+        genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
         // validate input with genre list and occupation map
         for (String g: genresInput) {
             if (!Arrays.asList(genreArray).contains(g)) {

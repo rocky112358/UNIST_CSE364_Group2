@@ -153,5 +153,42 @@ public class Movieblock {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // find movie ids to use by genre
+        List<Integer> targetMovies = new ArrayList<Integer>();
+        for (Movie m: movies) {
+            boolean flag = true;
+            for (String g: genresInput){
+                if (!m.genre.contains(g)) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                targetMovies.add(m.id);
+            }
+        }
+
+        // find user ids to use by occupation
+        List<Integer> targetUsers = new ArrayList<Integer>();
+        for (User u: users) {
+            if (u.occupation != occupationInputNo) {
+                continue;
+            }
+            targetUsers.add(u.id);
+        }
+
+        // find rating values to use
+        List<Integer> targetRatings = new ArrayList<Integer>();
+        for (Rating r: ratings) {
+            if (targetMovies.contains(r.movieId) && targetUsers.contains(r.userId)) {
+                targetRatings.add(r.rating);
+            }
+        }
+
+        // find average and print
+        Integer ratingSum = targetRatings.stream().mapToInt(Integer::intValue).sum();
+        double averageRating = ratingSum.doubleValue() / targetRatings.size();
+        System.out.println(averageRating);
     }
 }

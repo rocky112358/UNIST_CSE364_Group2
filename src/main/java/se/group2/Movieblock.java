@@ -166,6 +166,10 @@ public class Movieblock {
                 targetMovies.add(m.id);
             }
         }
+        if (targetMovies.size() == 0) {
+            System.out.println("Error: There are no movies with that category(categories)");
+            System.exit(-1);
+        }
 
         // find user ids to use by occupation
         List<Integer> targetUsers = new ArrayList<>();

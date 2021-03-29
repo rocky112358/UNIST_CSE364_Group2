@@ -16,6 +16,7 @@ WORKDIR /root/project
 #Your run.sh must include command lines that git clone your_repository, cd your_repository, mvn instll, and java command to run your code. 
 #The details are given in Submission Instructions.
 COPY run.sh /root/project
+RUN chmod 755 run.sh
 
 #The container should execute a bash shell by default when the built image is launched.
 RUN /bin/bash

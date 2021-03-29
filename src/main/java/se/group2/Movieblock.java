@@ -79,7 +79,7 @@ public class Movieblock {
         occupationMap.put("managerial", 7);
         occupationMap.put("farmer", 8);
         occupationMap.put("homemaker", 9);
-        occupationMap.put("k-12student", 0);
+        occupationMap.put("k-12student", 10);
         occupationMap.put("lawyer", 11);
         occupationMap.put("programmer", 12);
         occupationMap.put("retired", 13);

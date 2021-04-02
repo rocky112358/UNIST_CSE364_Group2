@@ -26,7 +26,9 @@ for UNIST CSE364 Software Engineering
 We implemented a program that takes 2 args from user input, a list of genres and an occupation, then prints the average score of the movie of the genre, by user of the occupation.
 
 ### How to install the program
-Download Dockerfile and run.sh from Blackboard
+1. Download Dockerfile and run.sh from Blackboard
+
+2. Put dockerfile and run.sh in the same directory path, build the image, and run the container.
 ```bash
 $ ls  # Dockerfile and run.sh should be in the same directory
 Dockerfile run.sh
@@ -34,26 +36,25 @@ $ docker build -t group2 .
 $ docker run -it group2
 ```
 
-In the container:
+3. Execute run.sh in container.
 ```sh
-root@00b24b224c90:~/project# ./run.sh 
+root@[containerID]:~/project# . run.sh 
 Cloning into 'UNIST_CSE364_Group2'...
 Username for 'https://github.com': [your username]
 Password for 'https://[your username]@github.com': [your password]
 (mvn install runs)
 (java program runs with two args: Adventure educator)
 3.42427802252
-root@1684e8a105c0:~/project#
+root@[containerID]:~/project/UNIST_CSE364_Group2#
 ```
 
 ### How to run the program
 After the installation, you can run the program with other args in the container: 
 
 ```sh
-root@00b24b224c90:~/project# cd UNIST_CSE364_Group2
-root@00b24b224c90:~/project# pwd
+root@[containerID]:~/project/UNIST_CSE364_Group2# pwd
 /root/project/UNIST_CSE364_Group2
-root@00b24b224c90:~/project# java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock Comedy Artist
+root@[containerID]:~/project# java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock Comedy Artist
 ```
 You can copy the command below and modify it:
 ```sh

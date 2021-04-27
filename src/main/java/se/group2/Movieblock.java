@@ -104,16 +104,42 @@ public class Movieblock {
         }
         return ratings;
     }
+
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.out.println("Error: 2 args are required");
+        if (args.length < 3 || args.length > 4) {
+            System.out.println("Args: gender age occupation [genre(s)]");
             System.exit(-1);
         }
-        List<String> genresInput = Arrays.asList(args[0].split("\\|"));
-        String occupationInput = args[1];
+        String genderInput = "";
+        String ageInput = "";
+        String occupationInput = "";
+        List<String> genresInput = new ArrayList<String>();
+        genderInput = args[0];
+        ageInput = args[1];
+        occupationInput = args[2];
+        if (args.length == 4) {
+            genresInput = Arrays.asList(args[3].split("\\|"));
+        }
 
-        String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
+        // validate gender input
+        List<String> genderCandidate = new ArrayList<String>();
+        genderCandidate.add("F");
+        genderCandidate.add("M");
+        genderCandidate.add("");
+        if (!genderCandidate.contains(genderInput)) {
+            System.out.println("Error: invalid gender input");
+            System.exit(-1);
+        }
+
+        // validate age input
+        if (!ageInput.equals("") && Integer.parseInt(ageInput) < 0) {
+            System.out.println("Error: invalid age input");
+            System.exit(-1);
+        }
+
+        // validate occupation input and convert to integer
         Map<String, Integer> occupationMap = new HashMap<>();
+        occupationMap.put("", -1);
         occupationMap.put("other", 0);
         occupationMap.put("academic", 1);
         occupationMap.put("educator", 1);
@@ -121,15 +147,20 @@ public class Movieblock {
         occupationMap.put("clerical", 3);
         occupationMap.put("admin", 3);
         occupationMap.put("collegestudent", 4);
+        occupationMap.put("college student", 4);
         occupationMap.put("gradstudent", 4);
+        occupationMap.put("grad student", 4);
         occupationMap.put("customerservice", 5);
+        occupationMap.put("customer service", 5);
         occupationMap.put("doctor", 6);
         occupationMap.put("healthcare", 6);
+        occupationMap.put("health care", 6);
         occupationMap.put("executive", 7);
         occupationMap.put("managerial", 7);
         occupationMap.put("farmer", 8);
         occupationMap.put("homemaker", 9);
         occupationMap.put("k-12student", 10);
+        occupationMap.put("k-12 student", 10);
         occupationMap.put("lawyer", 11);
         occupationMap.put("programmer", 12);
         occupationMap.put("retired", 13);
@@ -144,19 +175,22 @@ public class Movieblock {
         occupationMap.put("unemployed", 19);
         occupationMap.put("writer", 20);
 
-        genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
-        // validate input with genre list and occupation map
-        for (String g: genresInput) {
-            if (!Arrays.asList(genreArray).contains(g)) {
-                System.out.println("Error: invalid genre input");
-                System.exit(-1);
-            }
-        }
-
         Integer occupationInputNo = occupationMap.get(occupationInput.toLowerCase());
         if (occupationInputNo == null) {
             System.out.println("Error: invalid occupation input");
             System.exit(-1);
+        }
+
+        // if there are genres input, validate
+        String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
+        if (args.length == 4) {
+            genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
+            for (String g : genresInput) {
+                if (!g.equals("") && !Arrays.asList(genreArray).contains(g)) {
+                    System.out.println("Error: invalid genre input");
+                    System.exit(-1);
+                }
+            }
         }
 
         List<Movie> movies = loadMovies("data/movies.dat");

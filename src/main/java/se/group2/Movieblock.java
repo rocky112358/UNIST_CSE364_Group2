@@ -83,6 +83,11 @@ public class Movieblock {
         links = l;
     }
 
+    public static void printMovie(Movie movie) {
+        for (Link l: links) {
+            if (l.movieId == movie.id) {
+                System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", movie.title, l.imdbId);
+                break;
             }
         }
     }
@@ -188,5 +193,10 @@ public class Movieblock {
         List<Movie> recommendations;
         recommendations = engine.recommendMovies(genderInput, ageInput, occupationInput);
 
+        // print result
+        loadLinks("data/links.dat");
+        for (Movie m: recommendations) {
+            printMovie(m);
+        }
     }
 }

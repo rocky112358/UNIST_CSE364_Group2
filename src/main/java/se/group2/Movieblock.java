@@ -14,7 +14,7 @@ class Movie {
     int id;
     String title;
     List<String> genre;
-    
+
     public Movie(String i, String t, String g) {
         id = Integer.parseInt(i);
         title = t;
@@ -52,57 +52,39 @@ class Rating {
     }
 }
 
+class Link {
+    int movieId;
+    String imdbId;
+
+    public Link(String m, String i) {
+        movieId = Integer.parseInt(m);
+        imdbId = i;
+
+    }
+}
 
 public class Movieblock {
-    public static List<Movie> loadMovies(String filename) {
-        List<Movie> movies = new ArrayList<>();
+    private static List<Link> links;
+
+    public static void loadLinks(String filename) {
+        List<Link> l = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
             String line;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 String[] properties = line.split("::");
-                Movie movie = new Movie(properties[0], properties[1], properties[2].toLowerCase());
-                movies.add(movie);
+                Link link = new Link(properties[0], properties[1]);
+                l.add(link);
             }
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return movies;
+        links = l;
     }
 
-    public static List<User> loadUsers(String filename) {
-        List<User> users = new ArrayList<>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                User user = new User(properties[0], properties[1], properties[2], properties[3], properties[4]);
-                users.add(user);
             }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return users;
-    }
-
-    public static List<Rating> loadRatings(String filename) {
-        List<Rating> ratings = new ArrayList<>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                Rating rating = new Rating(properties[0], properties[1], properties[2], properties[3]);
-                ratings.add(rating);
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ratings;
     }
 
     public static void main(String[] args) {
@@ -193,49 +175,18 @@ public class Movieblock {
             }
         }
 
-        List<Movie> movies = loadMovies("data/movies.dat");
-        List<User> users = loadUsers("data/users.dat");
-        List<Rating> ratings = loadRatings("data/ratings.dat");
+        // prepare engine
+        RecommendationEngine engine;
+        engine = new RecommendationEngine();
 
-        // find movie ids to use by genre
-        List<Integer> targetMovies = new ArrayList<>();
-        for (Movie m: movies) {
-            boolean flag = true;
-            for (String g: genresInput){
-                if (!m.genre.contains(g)) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag) {
-                targetMovies.add(m.id);
-            }
-        }
-        if (targetMovies.size() == 0) {
-            System.out.println("Error: There are no movies with that category(categories)");
-            System.exit(-1);
-        }
+        // load data
+        engine.loadMovies("data/movies.dat");
+        engine.loadUsers("data/users.dat");
+        engine.loadRatings("data/ratings.dat");
 
-        // find user ids to use by occupation
-        List<Integer> targetUsers = new ArrayList<>();
-        for (User u: users) {
-            if (u.occupation != occupationInputNo) {
-                continue;
-            }
-            targetUsers.add(u.id);
-        }
+        // run
+        List<Movie> recommendations;
+        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInput);
 
-        // find rating values to use
-        List<Integer> targetRatings = new ArrayList<>();
-        for (Rating r: ratings) {
-            if (targetMovies.contains(r.movieId) && targetUsers.contains(r.userId)) {
-                targetRatings.add(r.rating);
-            }
-        }
-
-        // find average and print
-        int ratingSum = targetRatings.stream().mapToInt(Integer::intValue).sum();
-        double averageRating = (double)ratingSum / targetRatings.size();
-        System.out.println(String.format("%.11f", averageRating));
     }
 }

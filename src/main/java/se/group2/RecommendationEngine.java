@@ -67,6 +67,21 @@ public class RecommendationEngine {
 
     public List<Movie> recommendMovies(String genderInput, String ageInput, String occupationInput) {
         List<Movie> recommendations = new ArrayList<>();
+
+        if (movies.size() == 0) {
+            System.out.println("[ERROR] no movie data loaded.");
+            System.exit(-1);
+        }
+        if (ratings.size() == 0) {
+            System.out.println("[ERROR] no rating data loaded.");
+            System.exit(-1);
+        }
+        if (users.size() == 0) {
+            System.out.println("[ERROR] no user data loaded.");
+            System.exit(-1);
+        }
+
+        // TODO: implement recommendation
         for (Movie m: movies) {
             recommendations.add(m);
             if (recommendations.size() >= 10) {

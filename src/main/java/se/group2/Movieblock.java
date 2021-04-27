@@ -54,6 +54,56 @@ class Rating {
 
 
 public class Movieblock {
+    public static List<Movie> loadMovies(String filename) {
+        List<Movie> movies = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line;
+            while((line = br.readLine()) != null) {
+                String[] properties = line.split("::");
+                Movie movie = new Movie(properties[0], properties[1], properties[2].toLowerCase());
+                movies.add(movie);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
+
+    public static List<User> loadUsers(String filename) {
+        List<User> users = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line;
+            while((line = br.readLine()) != null) {
+                String[] properties = line.split("::");
+                User user = new User(properties[0], properties[1], properties[2], properties[3], properties[4]);
+                users.add(user);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public static List<Rating> loadRatings(String filename) {
+        List<Rating> ratings = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line;
+            while((line = br.readLine()) != null) {
+                String[] properties = line.split("::");
+                Rating rating = new Rating(properties[0], properties[1], properties[2], properties[3]);
+                ratings.add(rating);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ratings;
+    }
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Error: 2 args are required");
@@ -109,48 +159,9 @@ public class Movieblock {
             System.exit(-1);
         }
 
-        List<Movie> movies = new ArrayList<>();
-        List<User> users = new ArrayList<>();
-        List<Rating> ratings = new ArrayList<>();
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("data/movies.dat"));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                Movie movie = new Movie(properties[0], properties[1], properties[2].toLowerCase());
-                movies.add(movie);
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("data/users.dat"));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                User user = new User(properties[0], properties[1], properties[2], properties[3], properties[4]);
-                users.add(user);
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("data/ratings.dat"));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                Rating rating = new Rating(properties[0], properties[1], properties[2], properties[3]);
-                ratings.add(rating);
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<Movie> movies = loadMovies("data/movies.dat");
+        List<User> users = loadUsers("data/users.dat");
+        List<Rating> ratings = loadRatings("data/ratings.dat");
 
         // find movie ids to use by genre
         List<Integer> targetMovies = new ArrayList<>();

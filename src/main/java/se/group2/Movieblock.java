@@ -184,11 +184,6 @@ public class Movieblock {
         RecommendationEngine engine;
         engine = new RecommendationEngine();
 
-        // load data
-        engine.loadMovies("data/movies.dat");
-        engine.loadUsers("data/users.dat");
-        engine.loadRatings("data/ratings.dat");
-
         // run
         List<Movie> recommendations;
         recommendations = engine.recommendMovies(genderInput, ageInput, occupationInput);

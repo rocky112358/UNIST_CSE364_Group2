@@ -12,6 +12,9 @@ public class RecommendationEngine {
     private static List<User> users;
 
     public RecommendationEngine(){
+        movies = new ArrayList<>();
+        ratings = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     public void loadMovies(String filename) {
@@ -27,6 +30,8 @@ public class RecommendationEngine {
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.printf("[ERROR] Could not load movie data from '%s'", filename);
+            System.exit(-1);
         }
         movies = m;
     }
@@ -44,6 +49,8 @@ public class RecommendationEngine {
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.printf("[ERROR] Could not load user data from '%s'", filename);
+            System.exit(-1);
         }
         users = u;
     }
@@ -61,6 +68,8 @@ public class RecommendationEngine {
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.printf("[ERROR] Could not load rating data from '%s'", filename);
+            System.exit(-1);
         }
         ratings = r;
     }
@@ -69,16 +78,13 @@ public class RecommendationEngine {
         List<Movie> recommendations = new ArrayList<>();
 
         if (movies.size() == 0) {
-            System.out.println("[ERROR] no movie data loaded.");
-            System.exit(-1);
+            this.loadMovies("data/movies.dat");
         }
         if (ratings.size() == 0) {
-            System.out.println("[ERROR] no rating data loaded.");
-            System.exit(-1);
+            this.loadRatings("data/ratings.dat");
         }
         if (users.size() == 0) {
-            System.out.println("[ERROR] no user data loaded.");
-            System.exit(-1);
+            this.loadUsers("data/users.dat");
         }
 
         // TODO: implement recommendation

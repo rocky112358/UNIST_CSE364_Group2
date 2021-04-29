@@ -186,7 +186,7 @@ public class Movieblock {
 
         // run
         List<Movie> recommendations;
-        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInput);
+        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo);
 
         // print result
         loadLinks("data/links.dat");

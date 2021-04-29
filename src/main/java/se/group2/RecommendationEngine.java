@@ -3,8 +3,8 @@ package se.group2;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RecommendationEngine {
     private static List<Movie> movies;
@@ -74,7 +74,7 @@ public class RecommendationEngine {
         ratings = r;
     }
 
-    public List<Movie> recommendMovies(String genderInput, String ageInput, String occupationInput) {
+    public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput) {
         List<Movie> recommendations = new ArrayList<>();
 
         if (movies.size() == 0) {
@@ -87,9 +87,65 @@ public class RecommendationEngine {
             this.loadUsers("data/users.dat");
         }
 
-        // TODO: implement recommendation
+        // recommendation algorithm: weighted average
+        // first, divide users in 8 groups, each has same(similar)/different properties with the input for each property.
+        // we have 3 properties, so there are 2^3=8 groups
+        HashMap<Integer, User> userMap = new HashMap<>();
+        int[] groupCount = new int[8];
+        for (User u: users) {
+            userMap.put(u.id, u);
+            int ind = (0b100 * (u.gender.equals(genderInput) ? 1 : 0)) |
+                    (0b10 * (u.canBeAge(ageInput) ? 1 : 0)) |
+                    (u.occupation==occupationInput ? 1 : 0);
+            groupCount[ind] += 1;
+        }
+
+        HashMap<Integer, Movie> movieMap = new HashMap<>();
+        HashMap<Integer, Double> movieRatingSum = new HashMap<>();
+        HashMap<Integer, Integer> movieRatingCnt = new HashMap<>();
+
         for (Movie m: movies) {
-            recommendations.add(m);
+            movieMap.put(m.id, m);
+            movieRatingSum.put(m.id, 0.0);
+            movieRatingCnt.put(m.id, 0);
+        }
+
+        // weighted rating = {rating} * (e ^ (1 - {number of users in the group}/{total number of users})
+        // to give more weight as the group is smaller, less weight as the group is larger.
+        // the weight get closer to 1 as the group is larger.
+
+        for (Rating r: ratings) {
+            User user = userMap.get(r.userId);
+            double groupRatio = (double)groupCount[
+                    (0b100 * (user.gender.equals(genderInput) ? 1 : 0)) |
+                    (0b10 * (user.canBeAge(ageInput) ? 1 : 0)) |
+                    (user.occupation==occupationInput ? 1 : 0)] / users.size();
+            double weight = Math.exp(1 - groupRatio);
+            movieRatingSum.put(r.movieId, movieRatingSum.get(r.movieId) + r.rating * weight);
+            movieRatingCnt.put(r.movieId, movieRatingCnt.get(r.movieId) + 1);
+        }
+
+        // find average of each movies
+        HashMap<Integer, Double> movieRatingAvg = new HashMap<>();
+        for (Integer k: movieRatingSum.keySet()) {
+            if (movieRatingCnt.get(k) == 0){
+                movieRatingAvg.put(k, 0.0);
+            } else {
+                movieRatingAvg.put(k, movieRatingSum.get(k) / movieRatingCnt.get(k));
+            }
+        }
+
+        // sort by average score, in reverse order
+        List<Map.Entry<Integer, Double>> sortedRatings = movieRatingAvg.entrySet().stream().sorted(
+                Map.Entry.<Integer, Double>comparingByValue().reversed()).collect(Collectors.toList());
+
+        // put top 10 movie objects to recommendations
+        for (Map.Entry<Integer, Double> movieRating: sortedRatings) {
+            if (movieRatingCnt.get(movieRating.getKey()) < 5) {  // if the movie is rated less than 5 times, skip it.
+                continue;
+            }
+            recommendations.add(movieMap.get(movieRating.getKey()));
+            System.out.printf("%f\n", movieRating.getValue());
             if (recommendations.size() >= 10) {
                 break;
             }

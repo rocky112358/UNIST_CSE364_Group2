@@ -36,6 +36,26 @@ class User {
         occupation = Integer.parseInt(o);
         zipcode = z;
     }
+
+    public boolean canBeAge(String a) {
+        if (age == 1) {
+            return Integer.parseInt(a) < 18;
+        } else if (age == 18) {
+            return 18 <= Integer.parseInt(a) && Integer.parseInt(a) <= 24;
+        } else if (age == 25) {
+            return 25 <= Integer.parseInt(a) && Integer.parseInt(a) <= 34;
+        } else if (age == 35) {
+            return 35 <= Integer.parseInt(a) && Integer.parseInt(a) <= 44;
+        } else if (age == 45) {
+            return 45 <= Integer.parseInt(a) && Integer.parseInt(a) <= 49;
+        } else if (age == 50) {
+            return 50 <= Integer.parseInt(a) && Integer.parseInt(a) <= 55;
+        } else if (age == 56) {
+            return 56 <= Integer.parseInt(a);
+        } else {
+            return false;
+        }
+    }
 }
 
 class Rating {

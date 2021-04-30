@@ -145,7 +145,6 @@ public class RecommendationEngine {
                 continue;
             }
             recommendations.add(movieMap.get(movieRating.getKey()));
-            System.out.printf("%f\n", movieRating.getValue());
             if (recommendations.size() >= 10) {
                 break;
             }

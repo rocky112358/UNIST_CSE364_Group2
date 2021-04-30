@@ -14,7 +14,7 @@ class Movie {
     int id;
     String title;
     List<String> genre;
-    
+
     public Movie(String i, String t, String g) {
         id = Integer.parseInt(i);
         title = t;
@@ -36,6 +36,28 @@ class User {
         occupation = Integer.parseInt(o);
         zipcode = z;
     }
+
+    public boolean canBeAge(String a) {
+        if (a.equals("")) {
+            return false;
+        } else if (age == 1) {
+            return Integer.parseInt(a) < 18;
+        } else if (age == 18) {
+            return 18 <= Integer.parseInt(a) && Integer.parseInt(a) <= 24;
+        } else if (age == 25) {
+            return 25 <= Integer.parseInt(a) && Integer.parseInt(a) <= 34;
+        } else if (age == 35) {
+            return 35 <= Integer.parseInt(a) && Integer.parseInt(a) <= 44;
+        } else if (age == 45) {
+            return 45 <= Integer.parseInt(a) && Integer.parseInt(a) <= 49;
+        } else if (age == 50) {
+            return 50 <= Integer.parseInt(a) && Integer.parseInt(a) <= 55;
+        } else if (age == 56) {
+            return 56 <= Integer.parseInt(a);
+        } else {
+            return false;
+        }
+    }
 }
 
 class Rating {
@@ -52,18 +74,80 @@ class Rating {
     }
 }
 
+class Link {
+    int movieId;
+    String imdbId;
+
+    public Link(String m, String i) {
+        movieId = Integer.parseInt(m);
+        imdbId = i;
+    }
+}
 
 public class Movieblock {
+    private static List<Link> links;
+
+    public static void loadLinks(String filename) {
+        List<Link> l = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] properties = line.split("::");
+                Link link = new Link(properties[0], properties[1]);
+                l.add(link);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        links = l;
+    }
+
+    public static void printMovie(Movie movie) {
+        for (Link l: links) {
+            if (l.movieId == movie.id) {
+                System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", movie.title, l.imdbId);
+                break;
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.out.println("Error: 2 args are required");
+        if (args.length < 3 || args.length > 4) {
+            System.out.println("Args: gender age occupation [genre(s)]");
             System.exit(-1);
         }
-        List<String> genresInput = Arrays.asList(args[0].split("\\|"));
-        String occupationInput = args[1];
+        String genderInput = "";
+        String ageInput = "";
+        String occupationInput = "";
+        List<String> genresInput = new ArrayList<String>();
+        genderInput = args[0];
+        ageInput = args[1];
+        occupationInput = args[2];
+        if (args.length == 4) {
+            genresInput = Arrays.asList(args[3].split("\\|"));
+        }
 
-        String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
+        // validate gender input
+        List<String> genderCandidate = new ArrayList<String>();
+        genderCandidate.add("F");
+        genderCandidate.add("M");
+        genderCandidate.add("");
+        if (!genderCandidate.contains(genderInput)) {
+            System.out.println("Error: invalid gender input");
+            System.exit(-1);
+        }
+
+        // validate age input
+        if (!ageInput.equals("") && Integer.parseInt(ageInput) < 0) {
+            System.out.println("Error: invalid age input");
+            System.exit(-1);
+        }
+
+        // validate occupation input and convert to integer
         Map<String, Integer> occupationMap = new HashMap<>();
+        occupationMap.put("", -1);
         occupationMap.put("other", 0);
         occupationMap.put("academic", 1);
         occupationMap.put("educator", 1);
@@ -71,15 +155,20 @@ public class Movieblock {
         occupationMap.put("clerical", 3);
         occupationMap.put("admin", 3);
         occupationMap.put("collegestudent", 4);
+        occupationMap.put("college student", 4);
         occupationMap.put("gradstudent", 4);
+        occupationMap.put("grad student", 4);
         occupationMap.put("customerservice", 5);
+        occupationMap.put("customer service", 5);
         occupationMap.put("doctor", 6);
         occupationMap.put("healthcare", 6);
+        occupationMap.put("health care", 6);
         occupationMap.put("executive", 7);
         occupationMap.put("managerial", 7);
         occupationMap.put("farmer", 8);
         occupationMap.put("homemaker", 9);
         occupationMap.put("k-12student", 10);
+        occupationMap.put("k-12 student", 10);
         occupationMap.put("lawyer", 11);
         occupationMap.put("programmer", 12);
         occupationMap.put("retired", 13);
@@ -94,103 +183,36 @@ public class Movieblock {
         occupationMap.put("unemployed", 19);
         occupationMap.put("writer", 20);
 
-        genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
-        // validate input with genre list and occupation map
-        for (String g: genresInput) {
-            if (!Arrays.asList(genreArray).contains(g)) {
-                System.out.println("Error: invalid genre input");
-                System.exit(-1);
-            }
-        }
-
         Integer occupationInputNo = occupationMap.get(occupationInput.toLowerCase());
         if (occupationInputNo == null) {
             System.out.println("Error: invalid occupation input");
             System.exit(-1);
         }
 
-        List<Movie> movies = new ArrayList<>();
-        List<User> users = new ArrayList<>();
-        List<Rating> ratings = new ArrayList<>();
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("data/movies.dat"));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                Movie movie = new Movie(properties[0], properties[1], properties[2].toLowerCase());
-                movies.add(movie);
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("data/users.dat"));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                User user = new User(properties[0], properties[1], properties[2], properties[3], properties[4]);
-                users.add(user);
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("data/ratings.dat"));
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] properties = line.split("::");
-                Rating rating = new Rating(properties[0], properties[1], properties[2], properties[3]);
-                ratings.add(rating);
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // find movie ids to use by genre
-        List<Integer> targetMovies = new ArrayList<>();
-        for (Movie m: movies) {
-            boolean flag = true;
-            for (String g: genresInput){
-                if (!m.genre.contains(g)) {
-                    flag = false;
-                    break;
+        // if there are genres input, validate
+        String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
+        if (args.length == 4) {
+            genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
+            for (String g : genresInput) {
+                if (!g.equals("") && !Arrays.asList(genreArray).contains(g)) {
+                    System.out.println("Error: invalid genre input");
+                    System.exit(-1);
                 }
             }
-            if (flag) {
-                targetMovies.add(m.id);
-            }
-        }
-        if (targetMovies.size() == 0) {
-            System.out.println("Error: There are no movies with that category(categories)");
-            System.exit(-1);
         }
 
-        // find user ids to use by occupation
-        List<Integer> targetUsers = new ArrayList<>();
-        for (User u: users) {
-            if (u.occupation != occupationInputNo) {
-                continue;
-            }
-            targetUsers.add(u.id);
-        }
+        // prepare engine
+        RecommendationEngine engine;
+        engine = new RecommendationEngine();
 
-        // find rating values to use
-        List<Integer> targetRatings = new ArrayList<>();
-        for (Rating r: ratings) {
-            if (targetMovies.contains(r.movieId) && targetUsers.contains(r.userId)) {
-                targetRatings.add(r.rating);
-            }
-        }
+        // run
+        List<Movie> recommendations;
+        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo);
 
-        // find average and print
-        int ratingSum = targetRatings.stream().mapToInt(Integer::intValue).sum();
-        double averageRating = (double)ratingSum / targetRatings.size();
-        System.out.println(String.format("%.11f", averageRating));
+        // print result
+        loadLinks("data/links.dat");
+        for (Movie m: recommendations) {
+            printMovie(m);
+        }
     }
 }

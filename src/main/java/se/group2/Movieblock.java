@@ -38,7 +38,9 @@ class User {
     }
 
     public boolean canBeAge(String a) {
-        if (age == 1) {
+        if (a.equals("")) {
+            return false;
+        } else if (age == 1) {
             return Integer.parseInt(a) < 18;
         } else if (age == 18) {
             return 18 <= Integer.parseInt(a) && Integer.parseInt(a) <= 24;
@@ -79,7 +81,6 @@ class Link {
     public Link(String m, String i) {
         movieId = Integer.parseInt(m);
         imdbId = i;
-
     }
 }
 

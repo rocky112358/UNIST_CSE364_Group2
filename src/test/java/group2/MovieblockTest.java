@@ -1,16 +1,18 @@
 package se.group2;
+
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
-import java.util.Map;
-import java.util.HashMap;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+
+import java.util.*;
+
+import static org.junit.Assert.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 
-public class MovieblockTest{
+public class MovieblockTest {
     public static Map<String, Integer> occupationMap = new HashMap<>();
 
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -31,7 +33,7 @@ public class MovieblockTest{
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         occupationMap.put("", -1);
         occupationMap.put("other", 0);
         occupationMap.put("academic", 1);
@@ -70,56 +72,56 @@ public class MovieblockTest{
     }
 
     @Test
-    public void validateGenderInputTest(){
+    public void validateGenderInputTest() {
         String test_female = "F";
         String test_male = "M";
         String test_everyone = "";
         String test_wrong = "D";
-        assertEquals(true, Movieblock.validateGenderInput(test_female));
-        assertEquals(true, Movieblock.validateGenderInput(test_male));
-        assertEquals(true, Movieblock.validateGenderInput(test_everyone));
-        assertEquals(false, Movieblock.validateGenderInput(test_wrong));
+        assertTrue(Movieblock.validateGenderInput(test_female));
+        assertTrue(Movieblock.validateGenderInput(test_male));
+        assertTrue(Movieblock.validateGenderInput(test_everyone));
+        assertFalse(Movieblock.validateGenderInput(test_wrong));
     }
 
     @Test
-    public void validateAgeInputTest(){
-                String test_everyone = "";
+    public void validateAgeInputTest() {
+        String test_everyone = "";
         String test_normal = "100";
         String test_zero = "0";
         String test_negative = "-1";
-        assertEquals(true, Movieblock.validateAgeInput(test_everyone));
-        assertEquals(true, Movieblock.validateAgeInput(test_normal));
-        assertEquals(true, Movieblock.validateAgeInput(test_zero));
-        assertEquals(false, Movieblock.validateAgeInput(test_negative));
+        assertTrue(Movieblock.validateAgeInput(test_everyone));
+        assertTrue(Movieblock.validateAgeInput(test_normal));
+        assertTrue(Movieblock.validateAgeInput(test_zero));
+        assertFalse(Movieblock.validateAgeInput(test_negative));
     }
 
     @Test
-    public void validateOccupationInputTest(){
+    public void validateOccupationInputTest() {
         String test_other = "other";
         String test_gradstudent = "grad student";
         String test_everyone = "";
         String test_wrong = "Dog";
 
-        assertEquals(true, Movieblock.validateOccupationInput(test_other, MovieblockTest.occupationMap));
-        assertEquals(true, Movieblock.validateOccupationInput(test_gradstudent, MovieblockTest.occupationMap));
-        assertEquals(true, Movieblock.validateOccupationInput(test_everyone, MovieblockTest.occupationMap));
-        assertEquals(false, Movieblock.validateOccupationInput(test_wrong, MovieblockTest.occupationMap));
+        assertTrue(Movieblock.validateOccupationInput(test_other, MovieblockTest.occupationMap));
+        assertTrue(Movieblock.validateOccupationInput(test_gradstudent, MovieblockTest.occupationMap));
+        assertTrue(Movieblock.validateOccupationInput(test_everyone, MovieblockTest.occupationMap));
+        assertFalse(Movieblock.validateOccupationInput(test_wrong, MovieblockTest.occupationMap));
     }
 
     @Test
-    public void validateGenreInputTest(){
+    public void validateGenreInputTest() {
         String test_adventure = "adventure";
         String test_uppercase = "AdVenture";
         String test_everything = "";
         String test_wrong = "Dog";
-        assertEquals(true, Movieblock.validateGenreInput(test_adventure));
-        assertEquals(false, Movieblock.validateGenreInput(test_uppercase));
-        assertEquals(true, Movieblock.validateGenreInput(test_everything));
-        assertEquals(false, Movieblock.validateGenreInput(test_wrong));
+        assertTrue(Movieblock.validateGenreInput(test_adventure));
+        assertFalse(Movieblock.validateGenreInput(test_uppercase));
+        assertTrue(Movieblock.validateGenreInput(test_everything));
+        assertFalse(Movieblock.validateGenreInput(test_wrong));
     }
 
     @Test
-    public void encodeOccupationTest(){
+    public void encodeOccupationTest() {
         String test_academic = "academic";
         String test_uppercase = "AcadEmic";
         String test_everything = "";
@@ -311,56 +313,56 @@ public class MovieblockTest{
     }
 
     @Test
-    public void argumentTest(){
-        String[] test_two = {"",""};
+    public void moreArgumentTest() {
+        String[] args = {"F", "25", "gradstudent", "drama", "more_arg"};
 
-        Movieblock.main(test_two);
+        Movieblock.main(args);
 
-        assertEquals("Args: gender age occupation [genre(s)]\n", outStream.toString());
+        assertEquals("Args: gender age occupation [genre(s)]", outStream.toString().strip());
     }
 
-	@Test
-    public void BlankdgenreTest(){
-        String[] test_four = {"","","",""};
+    @Test
+    public void blankGenreTest() {
+        String[] test_four = {"", "", "", ""};
 
         Movieblock.main(test_four);
 
-        assertEquals("Error: invalid genre input\n", outStream.toString());
+        assertEquals("Error: invalid genre input", outStream.toString().strip());
     }
-	
-	@Test
-    public void InvalidgenderTest(){
-        String[] invalid_gender = {"D","",""};
+
+    @Test
+    public void invalidGenderTest() {
+        String[] invalid_gender = {"D", "", ""};
 
         Movieblock.main(invalid_gender);
 
-        assertEquals("Error: invalid gender input\n", outStream.toString());
+        assertEquals("Error: invalid gender input", outStream.toString().strip());
     }
-	
-	@Test
-    public void InvalidageTest(){
-        String[] invalid_age = {"","-15",""};
+
+    @Test
+    public void invalidAgeTest() {
+        String[] invalid_age = {"", "-15", ""};
 
         Movieblock.main(invalid_age);
 
-        assertEquals("Error: invalid age input\n", outStream.toString());
+        assertEquals("Error: invalid age input", outStream.toString().strip());
     }
 
-	@Test
-    public void InvalidoccupationTest(){
-        String[] invalid_occupation = {"","","dog"};
+    @Test
+    public void invalidOccupationTest() {
+        String[] invalid_occupation = {"", "", "dog"};
 
         Movieblock.main(invalid_occupation);
 
-        assertEquals("Error: invalid occupation input\n", outStream.toString());
+        assertEquals("Error: invalid occupation input", outStream.toString().strip());
     }
 
-	@Test
-    public void InvalidgenreTest(){
-        String[] invalid_genre = {"","","","dog"};
+    @Test
+    public void invalidGenreTest() {
+        String[] invalid_genre = {"", "", "", "dog"};
 
         Movieblock.main(invalid_genre);
 
-        assertEquals("Error: invalid genre input\n", outStream.toString());
+        assertEquals("Error: invalid genre input", outStream.toString().strip());
     }
 }

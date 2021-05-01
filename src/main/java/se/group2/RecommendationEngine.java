@@ -74,7 +74,7 @@ public class RecommendationEngine {
         ratings = r;
     }
 
-    public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput) {
+    public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput, List<String> genresInput) {
         List<Movie> recommendations = new ArrayList<>();
 
         if (movies.size() == 0) {
@@ -144,7 +144,17 @@ public class RecommendationEngine {
             if (movieRatingCnt.get(movieRating.getKey()) < 5) {  // if the movie is rated less than 5 times, skip it.
                 continue;
             }
-            recommendations.add(movieMap.get(movieRating.getKey()));
+            if(genresInput.size() > 0){
+                for(String g: movieMap.get(movieRating.getKey()).genre){
+                    if(genresInput.contains(g)){
+                        recommendations.add(movieMap.get(movieRating.getKey()));
+                        break;
+                    }
+                }
+            }
+            else {
+                recommendations.add(movieMap.get(movieRating.getKey()));
+            }
             if (recommendations.size() >= 10) {
                 break;
             }

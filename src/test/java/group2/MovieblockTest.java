@@ -128,6 +128,187 @@ public class MovieblockTest{
         assertSame(-1, Movieblock.encodeOccupation(test_everything, MovieblockTest.occupationMap));
     }
 
+    @Test
+    public void userCanBeAgeTest() {
+        User u = new User("1", "F", "1", "1", "");
+        assertFalse(u.canBeAge(""));
+        assertTrue(u.canBeAge("17"));
+        assertFalse(u.canBeAge("18"));
+        u = new User("1", "F", "18", "1", "");
+        assertFalse(u.canBeAge("17"));
+        assertTrue(u.canBeAge("18"));
+        assertTrue(u.canBeAge("24"));
+        assertFalse(u.canBeAge("25"));
+        u = new User("1", "F", "25", "1", "");
+        assertFalse(u.canBeAge("24"));
+        assertTrue(u.canBeAge("25"));
+        assertTrue(u.canBeAge("34"));
+        assertFalse(u.canBeAge("35"));
+        u = new User("1", "F", "35", "1", "");
+        assertTrue(u.canBeAge("35"));
+        assertFalse(u.canBeAge("45"));
+        u = new User("1", "F", "45", "1", "");
+        assertTrue(u.canBeAge("45"));
+        assertFalse(u.canBeAge("50"));
+        u = new User("1", "F", "50", "1", "");
+        assertTrue(u.canBeAge("50"));
+        assertFalse(u.canBeAge("56"));
+        u = new User("1", "F", "56", "1", "");
+        assertTrue(u.canBeAge("56"));
+        assertFalse(u.canBeAge("1"));
+        u = new User("1", "F", "999", "1", "");
+        assertFalse(u.canBeAge("1"));
+    }
+
+    @Test
+    public void loadUsersTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        r.loadUsers("data/users.dat");
+        User u = r.getUserById(1);
+        assertEquals(1, u.id);
+        assertEquals("F", u.gender);
+        assertEquals(1, u.age);
+        assertEquals(10, u.occupation);
+        assertEquals("48067", u.zipcode);
+    }
+
+    @Test
+    public void loadRatingsTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        r.loadRatings("data/ratings.dat");
+        Rating ra = r.getRatingByUserAndMovie(1, 1193);
+        assertEquals(1, ra.userId);
+        assertEquals(1193, ra.movieId);
+        assertEquals(5, ra.rating);
+        assertEquals(978300760, ra.timestamp);
+    }
+
+    @Test
+    public void loadMoviesTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        r.loadMovies("data/movies.dat");
+        Movie m = r.getMovieById(1);
+        assertEquals(1, m.id);
+        assertEquals("Toy Story (1995)", m.title);
+        assertEquals(Arrays.asList("animation", "children's", "comedy"), m.genre);
+    }
+
+    @Test
+    public void getRatingByUserAndMovieTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        r.loadRatings("data/ratings.dat");
+        Rating ra = r.getRatingByUserAndMovie(1, 1193);
+        assertEquals(1, ra.userId);
+        assertEquals(1193, ra.movieId);
+        assertEquals(5, ra.rating);
+        assertEquals(978300760, ra.timestamp);
+        ra = r.getRatingByUserAndMovie(99, 99999);
+        assertNull(ra);
+    }
+
+    @Test
+    public void getUserByIdTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        r.loadUsers("data/users.dat");
+        User u = r.getUserById(1);
+        assertEquals(1, u.id);
+        assertEquals("F", u.gender);
+        assertEquals(1, u.age);
+        assertEquals(10, u.occupation);
+        assertEquals("48067", u.zipcode);
+        u = r.getUserById(99999);
+        assertNull(u);
+    }
+
+    @Test
+    public void getMovieByIdTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        r.loadMovies("data/movies.dat");
+        Movie m = r.getMovieById(1);
+        assertEquals(1, m.id);
+        assertEquals("Toy Story (1995)", m.title);
+        assertEquals(Arrays.asList("animation", "children's", "comedy"), m.genre);
+        m = r.getMovieById(99999);
+        assertNull(m);
+    }
+
+    @Test
+    public void automaticLoadDataTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList());
+        assertEquals(10, recommend.size());
+
+        User u = r.getUserById(1);
+        assertEquals(1, u.id);
+        assertEquals("F", u.gender);
+        assertEquals(1, u.age);
+        assertEquals(10, u.occupation);
+        assertEquals("48067", u.zipcode);
+
+        Rating ra = r.getRatingByUserAndMovie(1, 1193);
+        assertEquals(1, ra.userId);
+        assertEquals(1193, ra.movieId);
+        assertEquals(5, ra.rating);
+        assertEquals(978300760, ra.timestamp);
+
+        Movie m = r.getMovieById(1);
+        assertEquals(1, m.id);
+        assertEquals("Toy Story (1995)", m.title);
+        assertEquals(Arrays.asList("animation", "children's", "comedy"), m.genre);
+    }
+
+    @Test
+    public void manualLoadDataTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        r.loadRatings("data/ratings.dat");
+        r.loadUsers("data/users.dat");
+        r.loadMovies("data/movies.dat");
+        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList());
+        assertEquals(10, recommend.size());
+    }
+
+    @Test
+    public void groupDivisionTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        List<Movie> recommend = r.recommendMovies("M", "", -1, Collections.emptyList());
+        assertEquals(10, recommend.size());
+        recommend = r.recommendMovies("", "1", -1, Collections.emptyList());
+        assertEquals(10, recommend.size());
+        recommend = r.recommendMovies("", "", 1, Collections.emptyList());
+        assertEquals(10, recommend.size());
+    }
+
+    @Test
+    public void genreFilterTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        List<Movie> recommend = r.recommendMovies("M", "", -1, Collections.singletonList("drama"));
+        for (Movie m : recommend) {
+            assertTrue(m.genre.contains("drama"));
+        }
+    }
+
+    @Test
+    public void lessArgumentTest() {
+        String[] args = {"", ""};
+
+        Movieblock.main(args);
+
+        assertEquals("Args: gender age occupation [genre(s)]", outStream.toString().strip());
+    }
+
+    @Test
+    public void normalArgumentTest1() {
+        String[] args = {"F", "25", "gradstudent"};
+
+        Movieblock.main(args);
+    }
+
+    @Test
+    public void normalArgumentTest2() {
+        String[] args = {"F", "25", "gradstudent", "drama"};
+
+        Movieblock.main(args);
+    }
 
     @Test
     public void argumentTest(){

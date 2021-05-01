@@ -137,4 +137,49 @@ public class MovieblockTest{
 
         assertEquals("Args: gender age occupation [genre(s)]\n", outStream.toString());
     }
+
+	@Test
+    public void BlankdgenreTest(){
+        String[] test_four = {"","","",""};
+
+        Movieblock.main(test_four);
+
+        assertEquals("Error: invalid genre input\n", outStream.toString());
+    }
+	
+	@Test
+    public void InvalidgenderTest(){
+        String[] invalid_gender = {"D","",""};
+
+        Movieblock.main(invalid_gender);
+
+        assertEquals("Error: invalid gender input\n", outStream.toString());
+    }
+	
+	@Test
+    public void InvalidageTest(){
+        String[] invalid_age = {"","-15",""};
+
+        Movieblock.main(invalid_age);
+
+        assertEquals("Error: invalid age input\n", outStream.toString());
+    }
+
+	@Test
+    public void InvalidoccupationTest(){
+        String[] invalid_occupation = {"","","dog"};
+
+        Movieblock.main(invalid_occupation);
+
+        assertEquals("Error: invalid occupation input\n", outStream.toString());
+    }
+
+	@Test
+    public void InvalidgenreTest(){
+        String[] invalid_genre = {"","","","dog"};
+
+        Movieblock.main(invalid_genre);
+
+        assertEquals("Error: invalid genre input\n", outStream.toString());
+    }
 }

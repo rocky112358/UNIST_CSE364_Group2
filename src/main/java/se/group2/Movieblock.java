@@ -149,6 +149,10 @@ public class Movieblock {
         List<String> genresInput = new ArrayList<>();
         if (args.length == 4) {
             genresInput = Arrays.asList(args[3].split("\\|"));
+            if(args[3].length() == 0 || genresInput.size() == 0){
+                System.out.println("Error: invalid genre input");
+                System.exit(-1);
+            }
         }
 
         // validate gender input
@@ -224,7 +228,7 @@ public class Movieblock {
 
         // run
         List<Movie> recommendations;
-        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo);
+        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo, genresInput);
 
         // print result
         loadLinks("data/links.dat");

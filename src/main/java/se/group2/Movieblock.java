@@ -87,6 +87,13 @@ class Link {
 public class Movieblock {
     private static List<Link> links;
 
+    public Link getLinkByMovieId(int id) {
+        for (Link l: links) {
+            return l;
+        }
+        return null;
+    }
+
     public static boolean validateGenderInput(String genderInput) {
         String[] genderCandidate = {"F", "M", ""};
         return Arrays.asList(genderCandidate).contains(genderInput);
@@ -140,7 +147,7 @@ public class Movieblock {
     public static void main(String[] args) {
         if (args.length < 3 || args.length > 4) {
             System.out.println("Args: gender age occupation [genre(s)]");
-            System.exit(-1);
+            return;
         }
 
         String genderInput = args[0];
@@ -151,20 +158,20 @@ public class Movieblock {
             genresInput = Arrays.asList(args[3].split("\\|"));
             if(args[3].length() == 0 || genresInput.size() == 0){
                 System.out.println("Error: invalid genre input");
-                System.exit(-1);
+                return;
             }
         }
 
         // validate gender input
         if (!validateGenderInput(genderInput)) {
             System.out.println("Error: invalid gender input");
-            System.exit(-1);
+            return;
         }
 
         // validate age input
         if (!validateAgeInput(ageInput)) {
             System.out.println("Error: invalid age input");
-            System.exit(-1);
+            return;
         }
 
         // validate occupation input and convert to integer
@@ -207,7 +214,7 @@ public class Movieblock {
 
         if (!validateOccupationInput(occupationInput, occupationMap)) {
             System.out.println("Error: invalid occupation input");
-            System.exit(-1);
+            return;
         }
         Integer occupationInputNo = encodeOccupation(occupationInput, occupationMap);
 
@@ -217,7 +224,7 @@ public class Movieblock {
             for (String g : genresInput) {
                 if (!validateGenreInput(g)) {
                     System.out.println("Error: invalid genre input");
-                    System.exit(-1);
+                    return;
                 }
             }
         }

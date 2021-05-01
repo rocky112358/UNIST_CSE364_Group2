@@ -17,6 +17,33 @@ public class RecommendationEngine {
         users = new ArrayList<>();
     }
 
+    public User getUserById(int id) {
+        for (User u: users) {
+            if (u.id == id) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public Movie getMovieById(int id) {
+        for (Movie m: movies) {
+            if (m.id == id) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    public Rating getRatingByUserAndMovie(int userId, int movieId) {
+        for (Rating r: ratings) {
+            if (r.userId == userId && r.movieId == movieId) {
+                return r;
+            }
+        }
+        return null;
+    }
+
     public void loadMovies(String filename) {
         List<Movie> m = new ArrayList<>();
         try {
@@ -90,22 +117,18 @@ public class RecommendationEngine {
         // recommendation algorithm: weighted average
         // first, divide users in 8 groups, each has same(similar)/different properties with the input for each property.
         // we have 3 properties, so there are 2^3=8 groups
-        HashMap<Integer, User> userMap = new HashMap<>();
         int[] groupCount = new int[8];
         for (User u: users) {
-            userMap.put(u.id, u);
             int ind = (0b100 * (u.gender.equals(genderInput) ? 1 : 0)) |
                     (0b10 * (u.canBeAge(ageInput) ? 1 : 0)) |
                     (u.occupation==occupationInput ? 1 : 0);
             groupCount[ind] += 1;
         }
 
-        HashMap<Integer, Movie> movieMap = new HashMap<>();
         HashMap<Integer, Double> movieRatingSum = new HashMap<>();
         HashMap<Integer, Integer> movieRatingCnt = new HashMap<>();
 
         for (Movie m: movies) {
-            movieMap.put(m.id, m);
             movieRatingSum.put(m.id, 0.0);
             movieRatingCnt.put(m.id, 0);
         }
@@ -115,7 +138,7 @@ public class RecommendationEngine {
         // the weight get closer to 1 as the group is larger.
 
         for (Rating r: ratings) {
-            User user = userMap.get(r.userId);
+            User user = getUserById(r.userId);
             double groupRatio = (double)groupCount[
                     (0b100 * (user.gender.equals(genderInput) ? 1 : 0)) |
                     (0b10 * (user.canBeAge(ageInput) ? 1 : 0)) |
@@ -145,15 +168,15 @@ public class RecommendationEngine {
                 continue;
             }
             if(genresInput.size() > 0){
-                for(String g: movieMap.get(movieRating.getKey()).genre){
+                for(String g: getMovieById(movieRating.getKey()).genre){
                     if(genresInput.contains(g)){
-                        recommendations.add(movieMap.get(movieRating.getKey()));
+                        recommendations.add(getMovieById(movieRating.getKey()));
                         break;
                     }
                 }
             }
             else {
-                recommendations.add(movieMap.get(movieRating.getKey()));
+                recommendations.add(getMovieById(movieRating.getKey()));
             }
             if (recommendations.size() >= 10) {
                 break;

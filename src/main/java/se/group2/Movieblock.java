@@ -149,7 +149,7 @@ public class Movieblock {
         List<String> genresInput = new ArrayList<>();
         if (args.length == 4) {
             genresInput = Arrays.asList(args[3].split("\\|"));
-            if(genresInput.size() == 0){
+            if(args[3].length() == 0 || genresInput.size() == 0){
                 System.out.println("Error: invalid genre input");
                 System.exit(-1);
             }

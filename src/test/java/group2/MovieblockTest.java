@@ -1,13 +1,34 @@
 package se.group2;
 import org.junit.Test;
 import org.junit.Before;
+import org.junit.After;
 import java.util.Map;
 import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 
 public class MovieblockTest{
     public static Map<String, Integer> occupationMap = new HashMap<>();
+
+    private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
+
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outStream));
+        System.setErr(new PrintStream(errStream));
+    }
+
+    @After
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
+    }
 
     @Before
     public void setUp(){
@@ -62,7 +83,7 @@ public class MovieblockTest{
 
     @Test
     public void validateAgeInputTest(){
-        String test_everyone = "";
+                String test_everyone = "";
         String test_normal = "100";
         String test_zero = "0";
         String test_negative = "-1";
@@ -105,5 +126,15 @@ public class MovieblockTest{
         assertSame(1, Movieblock.encodeOccupation(test_academic, MovieblockTest.occupationMap));
         assertSame(1, Movieblock.encodeOccupation(test_uppercase, MovieblockTest.occupationMap));
         assertSame(-1, Movieblock.encodeOccupation(test_everything, MovieblockTest.occupationMap));
+    }
+
+
+    @Test
+    public void argumentTest(){
+        String[] test_two = {"",""};
+
+        Movieblock.main(test_two);
+
+        assertEquals("Args: gender age occupation [genre(s)]\n", outStream.toString());
     }
 }

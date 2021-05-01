@@ -87,6 +87,30 @@ class Link {
 public class Movieblock {
     private static List<Link> links;
 
+    public static boolean validateGenderInput(String genderInput) {
+        String[] genderCandidate = {"F", "M", ""};
+        return Arrays.asList(genderCandidate).contains(genderInput);
+    }
+
+    public static boolean validateAgeInput(String ageInput) {
+        return ageInput.equals("") || Integer.parseInt(ageInput) >= 0;
+    }
+
+    public static boolean validateOccupationInput(String occupationInput, Map<String, Integer> occupationMap) {
+        return occupationMap.get(occupationInput.toLowerCase()) != null;
+    }
+
+    public static boolean validateGenreInput(String genreInput) {
+        String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary",
+                "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller",
+                "war", "western"};
+        return genreInput.equals("") || Arrays.asList(genreArray).contains(genreInput);
+    }
+
+    public static Integer encodeOccupation(String occupationInput, Map<String, Integer> occupationMap) {
+        return occupationMap.get(occupationInput.toLowerCase());
+    }
+
     public static void loadLinks(String filename) {
         List<Link> l = new ArrayList<>();
         try {
@@ -118,29 +142,23 @@ public class Movieblock {
             System.out.println("Args: gender age occupation [genre(s)]");
             System.exit(-1);
         }
-        String genderInput = "";
-        String ageInput = "";
-        String occupationInput = "";
-        List<String> genresInput = new ArrayList<String>();
-        genderInput = args[0];
-        ageInput = args[1];
-        occupationInput = args[2];
+
+        String genderInput = args[0];
+        String ageInput = args[1];
+        String occupationInput = args[2];
+        List<String> genresInput = new ArrayList<>();
         if (args.length == 4) {
             genresInput = Arrays.asList(args[3].split("\\|"));
         }
 
         // validate gender input
-        List<String> genderCandidate = new ArrayList<String>();
-        genderCandidate.add("F");
-        genderCandidate.add("M");
-        genderCandidate.add("");
-        if (!genderCandidate.contains(genderInput)) {
+        if (!validateGenderInput(genderInput)) {
             System.out.println("Error: invalid gender input");
             System.exit(-1);
         }
 
         // validate age input
-        if (!ageInput.equals("") && Integer.parseInt(ageInput) < 0) {
+        if (!validateAgeInput(ageInput)) {
             System.out.println("Error: invalid age input");
             System.exit(-1);
         }
@@ -183,18 +201,17 @@ public class Movieblock {
         occupationMap.put("unemployed", 19);
         occupationMap.put("writer", 20);
 
-        Integer occupationInputNo = occupationMap.get(occupationInput.toLowerCase());
-        if (occupationInputNo == null) {
+        if (!validateOccupationInput(occupationInput, occupationMap)) {
             System.out.println("Error: invalid occupation input");
             System.exit(-1);
         }
+        Integer occupationInputNo = encodeOccupation(occupationInput, occupationMap);
 
         // if there are genres input, validate
-        String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary", "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller", "war", "western"};
         if (args.length == 4) {
             genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
             for (String g : genresInput) {
-                if (!g.equals("") && !Arrays.asList(genreArray).contains(g)) {
+                if (validateGenreInput(g)) {
                     System.out.println("Error: invalid genre input");
                     System.exit(-1);
                 }

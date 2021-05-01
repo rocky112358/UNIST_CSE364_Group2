@@ -211,7 +211,7 @@ public class Movieblock {
         if (args.length == 4) {
             genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
             for (String g : genresInput) {
-                if (validateGenreInput(g)) {
+                if (!validateGenreInput(g)) {
                     System.out.println("Error: invalid genre input");
                     System.exit(-1);
                 }

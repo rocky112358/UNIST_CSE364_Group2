@@ -87,6 +87,13 @@ class Link {
 public class Movieblock {
     private static List<Link> links;
 
+    public Link getLinkByMovieId(int id) {
+        for (Link l: links) {
+            return l;
+        }
+        return null;
+    }
+
     public static boolean validateGenderInput(String genderInput) {
         String[] genderCandidate = {"F", "M", ""};
         return Arrays.asList(genderCandidate).contains(genderInput);

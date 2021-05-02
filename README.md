@@ -58,7 +58,7 @@ Then find the ratio of each group among all users and let's call this 'groupRati
 
 Now, iterate over ratings one by one and add score of the movie to corresponding variable. The score is slightly modified with a formula below before being added. `r` is the groupRatio of the group which the user made the rating belongs to.
 
-![image](https://user-images.githubusercontent.com/6457345/116813655-c80e8580-ab8f-11eb-9710-3e501ac261f0.png)
+![image](https://user-images.githubusercontent.com/6457345/116816565-6ead5300-ab9d-11eb-9cd9-6157eff6823f.png)
 
 The weight will be closer to 1 if the group is larger, and close to e(=2.71828..., aka. Euler's number) if the group is smaller.
 

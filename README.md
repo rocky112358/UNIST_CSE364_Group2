@@ -265,8 +265,8 @@ java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.
 Error: invalid gender input
 ```
 
-Second, In the case of age, you can enter 0 or a positive integer or "".
-It is possible to enter a value that is accepted as a positive number in [parseInt]( https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String) ).
+Second, In the case of age, you can enter 0 or a decimal positive integer or "".
+It is possible to enter a value that is accepted as a decimal positive number in [parseInt]( https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String) ).
 
 In the case of blank, the movie is recommended regardless of age.
 
@@ -274,6 +274,8 @@ In the case of blank, the movie is recommended regardless of age.
 # age argument example
 java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock "" "0" ""
 java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock "" "100" ""
+java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock "" "00253" ""
+java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock "" "+10" ""
 java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock "" "" ""
 ```
 

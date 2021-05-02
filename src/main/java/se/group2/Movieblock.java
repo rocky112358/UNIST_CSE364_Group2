@@ -100,7 +100,11 @@ public class Movieblock {
     }
 
     public static boolean validateAgeInput(String ageInput) {
-        return ageInput.equals("") || Integer.parseInt(ageInput) >= 0;
+        try {
+            return ageInput.equals("") || Integer.parseInt(ageInput) >= 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public static boolean validateOccupationInput(String occupationInput, Map<String, Integer> occupationMap) {

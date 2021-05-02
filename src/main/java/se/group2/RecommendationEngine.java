@@ -70,7 +70,7 @@ public class RecommendationEngine {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] properties = line.split("::");
-                User user = new User(properties[0], properties[1], properties[2], properties[3], properties[4]);
+                User user = new User(properties[0], properties[1].toLowerCase(), properties[2], properties[3], properties[4]);
                 u.add(user);
             }
             br.close();

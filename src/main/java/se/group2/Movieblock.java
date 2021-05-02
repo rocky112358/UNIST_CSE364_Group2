@@ -95,8 +95,8 @@ public class Movieblock {
     }
 
     public static boolean validateGenderInput(String genderInput) {
-        String[] genderCandidate = {"F", "M", ""};
-        return Arrays.asList(genderCandidate).contains(genderInput);
+        String[] genderCandidate = {"f", "m", ""};
+        return Arrays.asList(genderCandidate).contains(genderInput.toLowerCase());
     }
 
     public static boolean validateAgeInput(String ageInput) {
@@ -167,6 +167,7 @@ public class Movieblock {
             System.out.println("Error: invalid gender input");
             return;
         }
+        genderInput = genderInput.toLowerCase();
 
         // validate age input
         if (!validateAgeInput(ageInput)) {

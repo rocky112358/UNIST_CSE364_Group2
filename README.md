@@ -1,7 +1,50 @@
 # Movie Recommendation System: Movieblock
 for UNIST CSE364 Software Engineering
 
-## Milestone 1
+## Milestone 2
+
+### How our recommendation algorithm works
+
+The recommendation system takes 4 inputs, gender, age, occupation and genre(s), and the last one is optional.
+
+First, the engine divides the users into 8 groups and count number of users belong to each group. In the table below, Y means that the user has same property with the input user, and N means not.
+
+```
+  Same?  |  Gender | Age | Occupation
+---------+---------+-----+------------
+ Group 0 |      N  |   N |          N 
+ Group 1 |      N  |   N |          Y 
+ Group 2 |      N  |   Y |          N 
+ Group 3 |      N  |   Y |          Y 
+ Group 4 |      Y  |   N |          N 
+ Group 5 |      Y  |   N |          Y 
+ Group 6 |      Y  |   Y |          N 
+ Group 7 |      Y  |   Y |          Y 
+```
+
+Then find the ratio of each group among all users and let's call this 'groupRatio'. groupRatio will have a value of 0 or more, but less than 1.
+
+Now, iterate over ratings one by one and add score of the movie to corresponding variable. The score is slightly modified with a formula below before being added. `r` is the groupRatio of the group which the user made the rating belongs to.
+
+![image](https://user-images.githubusercontent.com/6457345/116813655-c80e8580-ab8f-11eb-9710-3e501ac261f0.png)
+
+The weight will be closer to 1 if the group is larger, and close to e(=2.71828..., aka. Euler's number) if the group is smaller.
+
+Sum up these weighted scores and divide them with the number of ratings of each movie to find the average.
+
+What we think of in this algorithm is to emphasize evaluation of the user as there are fewer people who match the characteristics of the user given as input.
+
+This recommendation system is in a situation where it is necessary to recommend movies only with the characteristics of the user without the user's previous viewing record or evaluation record data, which can be considered as a cold start. Therefore, we designed this algorithm because we had to find the biases of people that match the characteristics of the user given as input in the data we have, and we thought that movies that matches this should be recommended.
+
+Finally, sort the movies in descending order of the average score, then return movie objects with top 10 average score. If any genre is specified, the movies with corresponding genre are returned.
+
+---
+
+## ~~Milestone 1~~ (Deprecated)
+
+This program no longer behaves like **How to run the program** described below in the lastest commit. (as of May 2, 2021)
+
+This version is tagged as "milestone-1" and you may checkout if you like.
 
 ### What did we do
 #### Repository structure

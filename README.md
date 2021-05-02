@@ -266,6 +266,8 @@ Error: invalid gender input
 ```
 
 Second, In the case of age, you can enter 0 or a positive integer or "".
+It is possible to enter a value that is accepted as a positive number in [parseInt]( https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String) ).
+
 In the case of blank, the movie is recommended regardless of age.
 
 ```sh

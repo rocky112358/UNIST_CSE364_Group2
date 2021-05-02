@@ -74,11 +74,15 @@ public class MovieblockTest {
     @Test
     public void validateGenderInputTest() {
         String test_female = "F";
+        String test_female_lowercase = "f";
         String test_male = "M";
+        String test_male_lowercase = "m";
         String test_everyone = "";
         String test_wrong = "D";
         assertTrue(Movieblock.validateGenderInput(test_female));
+        assertTrue(Movieblock.validateGenderInput(test_female_lowercase));
         assertTrue(Movieblock.validateGenderInput(test_male));
+        assertTrue(Movieblock.validateGenderInput(test_male_lowercase));
         assertTrue(Movieblock.validateGenderInput(test_everyone));
         assertFalse(Movieblock.validateGenderInput(test_wrong));
     }
@@ -132,33 +136,33 @@ public class MovieblockTest {
 
     @Test
     public void userCanBeAgeTest() {
-        User u = new User("1", "F", "1", "1", "");
+        User u = new User("1", "f", "1", "1", "");
         assertFalse(u.canBeAge(""));
         assertTrue(u.canBeAge("17"));
         assertFalse(u.canBeAge("18"));
-        u = new User("1", "F", "18", "1", "");
+        u = new User("1", "f", "18", "1", "");
         assertFalse(u.canBeAge("17"));
         assertTrue(u.canBeAge("18"));
         assertTrue(u.canBeAge("24"));
         assertFalse(u.canBeAge("25"));
-        u = new User("1", "F", "25", "1", "");
+        u = new User("1", "f", "25", "1", "");
         assertFalse(u.canBeAge("24"));
         assertTrue(u.canBeAge("25"));
         assertTrue(u.canBeAge("34"));
         assertFalse(u.canBeAge("35"));
-        u = new User("1", "F", "35", "1", "");
+        u = new User("1", "f", "35", "1", "");
         assertTrue(u.canBeAge("35"));
         assertFalse(u.canBeAge("45"));
-        u = new User("1", "F", "45", "1", "");
+        u = new User("1", "f", "45", "1", "");
         assertTrue(u.canBeAge("45"));
         assertFalse(u.canBeAge("50"));
-        u = new User("1", "F", "50", "1", "");
+        u = new User("1", "f", "50", "1", "");
         assertTrue(u.canBeAge("50"));
         assertFalse(u.canBeAge("56"));
-        u = new User("1", "F", "56", "1", "");
+        u = new User("1", "f", "56", "1", "");
         assertTrue(u.canBeAge("56"));
         assertFalse(u.canBeAge("1"));
-        u = new User("1", "F", "999", "1", "");
+        u = new User("1", "f", "999", "1", "");
         assertFalse(u.canBeAge("1"));
     }
 

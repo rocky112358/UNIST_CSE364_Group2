@@ -15,7 +15,7 @@ public class RecommendationEngineTest {
         r.loadUsers("data/users.dat");
         User u = r.getUserById(1);
         assertEquals(1, u.id);
-        assertEquals("F", u.gender);
+        assertEquals("f", u.gender);
         assertEquals(1, u.age);
         assertEquals(10, u.occupation);
         assertEquals("48067", u.zipcode);
@@ -61,7 +61,7 @@ public class RecommendationEngineTest {
         r.loadUsers("data/users.dat");
         User u = r.getUserById(1);
         assertEquals(1, u.id);
-        assertEquals("F", u.gender);
+        assertEquals("f", u.gender);
         assertEquals(1, u.age);
         assertEquals(10, u.occupation);
         assertEquals("48067", u.zipcode);
@@ -89,7 +89,7 @@ public class RecommendationEngineTest {
 
         User u = r.getUserById(1);
         assertEquals(1, u.id);
-        assertEquals("F", u.gender);
+        assertEquals("f", u.gender);
         assertEquals(1, u.age);
         assertEquals(10, u.occupation);
         assertEquals("48067", u.zipcode);
@@ -119,7 +119,7 @@ public class RecommendationEngineTest {
     @Test
     public void groupDivisionTest() {
         RecommendationEngine r = new RecommendationEngine();
-        List<Movie> recommend = r.recommendMovies("M", "", -1, Collections.emptyList());
+        List<Movie> recommend = r.recommendMovies("m", "", -1, Collections.emptyList());
         assertEquals(10, recommend.size());
         recommend = r.recommendMovies("", "1", -1, Collections.emptyList());
         assertEquals(10, recommend.size());
@@ -130,7 +130,7 @@ public class RecommendationEngineTest {
     @Test
     public void genreFilterTest() {
         RecommendationEngine r = new RecommendationEngine();
-        List<Movie> recommend = r.recommendMovies("M", "", -1, Collections.singletonList("drama"));
+        List<Movie> recommend = r.recommendMovies("m", "", -1, Collections.singletonList("drama"));
         for (Movie m : recommend) {
             assertTrue(m.genre.contains("drama"));
         }

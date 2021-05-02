@@ -394,7 +394,11 @@ Everyone has contributed to all parts. However in this part, we will mention the
 
 ---
 
+
 ## ~~Milestone 1~~ (Deprecated)
+
+<details>
+  <summary> Click to expand! </summary>
 
 > **This program no longer behaves like **How to run the program** described below in the lastest commit. (as of May 2, 2021)**
 > **This version is tagged as "milestone-1" and you may checkout if you like.**
@@ -560,3 +564,5 @@ Error: There are no movies with that category(categories)
 20151467 장동원: Set up Docker environment, test image build
 
 20171108 박다현: Download dataset, test input validation logic
+
+</details>

@@ -237,6 +237,7 @@ You can copy the command below and modify it:
 ```sh
 java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar se.group2.Movieblock GENDER AGE OCCUPATION [GENRES]
 ```
+* All arguments must be entered enclosed in quotation marks.
 
 ### Supported inputs and expected ouputs when inputs are not supported
 The program takes 3 or 4 arguments, gender, age, occupation and a list of genres (optional).

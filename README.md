@@ -37,9 +37,32 @@ We implemented features that recommend Top 10 movies given user data and recomme
 
 ### How our recommendation algorithm works
 
+#### About implementation
+
+Our recommendation engine is implemented in RecomendationEngine.java (se.group2.RecommendationEngine)
+
 The recommendation system takes 4 inputs, gender, age, occupation and genre(s), and the last one is optional.
 
-First, the engine divides the users into 8 groups and count number of users belong to each group. In the table below, Y means that the user has same property with the input user, and N means not.
+When recommendMovies() method is called with the arguments above, it returns a list of Movies, a length of 10.
+
+The method loads data with default filenames if they are not loaded before being called. ([line 107-115](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L107-L115
+))
+
+Then gives score to each movie with an algorithm described as below. ([line 117-159](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L117-L159
+))
+
+Next, sort them in descending order by score. ([line 161-163](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L161-L163
+))
+
+Finally, iterating over the sorted list of movies, add the movie to 'recommendations' list, which is to be returned to the caller, until the size of it reaches 10,
+
+excluding the movie rated less than 5 times, and not belong to the genre if specified. ([line 165-185](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L165-L185
+))
+
+#### About our algorithm design
+
+First, the engine divides the users into 8 groups and count number of users belong to each group. In the table below, Y means that the user has same property with the input user, and N means not. ([line 117-126](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L165-L185
+))
 
 ```
   Same?  |  Gender | Age | Occupation
@@ -54,7 +77,9 @@ First, the engine divides the users into 8 groups and count number of users belo
  Group 7 |      Y  |   Y |          Y 
 ```
 
-Then find the ratio of each group among all users and let's call this 'groupRatio'. groupRatio will have a value of 0 or more, but less than 1.
+Before we introduce our algorithm, let's define a term 'groupRatio'. This is the ratio of each group among all users. 
+
+groupRatio will have a value of 0 or more, but less than 1.
 
 Now, iterate over ratings one by one and add score of the movie to corresponding variable. The score is slightly modified with a formula below before being added. `r` is the groupRatio of the group which the user made the rating belongs to.
 
@@ -62,13 +87,12 @@ Now, iterate over ratings one by one and add score of the movie to corresponding
 
 The weight will be closer to 1 if the group is larger, and close to e(=2.71828..., aka. Euler's number) if the group is smaller.
 
-Sum up these weighted scores and divide them with the number of ratings of each movie to find the average.
+Sum up these weighted scores and divide them with the number of ratings of each movie to find the average. ([line 136-149](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L136-L149
+))
 
 What we think of in this algorithm is to emphasize evaluation of the user as there are fewer people who match the characteristics of the user given as input.
 
 This recommendation system is in a situation where it is necessary to recommend movies only with the characteristics of the user without the user's previous viewing record or evaluation record data, which can be considered as a cold start. Therefore, we designed this algorithm because we had to find the biases of people that match the characteristics of the user given as input in the data we have, and we thought that movies that matches this should be recommended.
-
-Finally, sort the movies in descending order of the average score, then return movie objects with top 10 average score. If any genre is specified, the movies with corresponding genre are returned.
 
 ### How to install the program
 1. Download Dockerfile and run.sh from Blackboard.

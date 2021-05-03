@@ -52,7 +52,7 @@ Then gives score to each movie with an algorithm described as below. ([line 117-
 Next, sort them in descending order by score. ([line 161-163](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L161-L163
 ))
 
-Finally, iterating over the sorted list of movies, add the movie to 'recommendations' list, which is to be returned to the caller, until the size of it reaches 10, excluding the movie rated less than 5 times, and not belong to the genre if specified. ([line 165-185](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L165-L185
+Finally, iterating over the sorted list of movies, add the movie to 'recommendations' list, which is to be returned to the caller, until the size of it reaches 10. During the iteration, the movie rated less than 5 times or the movie which does not belong to the genre are excluded (if specified). ([line 165-185](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L165-L185
 ))
 
 #### About our algorithm design

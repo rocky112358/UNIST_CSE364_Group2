@@ -43,9 +43,7 @@ Our recommendation engine is implemented in RecomendationEngine.java (se.group2.
 
 The recommendation system takes 4 inputs, gender, age, occupation and genre(s), and the last one is optional.
 
-When recommendMovies() method is called with the arguments above, it returns a list of Movies, a length of 10.
-
-The method loads data with default filenames if they are not loaded before being called. ([line 107-115](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L107-L115
+When recommendMovies() method is called with the arguments above, it returns a list of Movies, a length of 10. The method loads data with default filenames if they are not loaded before being called. ([line 107-115](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L107-L115
 ))
 
 Then gives score to each movie with an algorithm described as below. ([line 117-159](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L117-L159
@@ -54,9 +52,7 @@ Then gives score to each movie with an algorithm described as below. ([line 117-
 Next, sort them in descending order by score. ([line 161-163](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L161-L163
 ))
 
-Finally, iterating over the sorted list of movies, add the movie to 'recommendations' list, which is to be returned to the caller, until the size of it reaches 10,
-
-excluding the movie rated less than 5 times, and not belong to the genre if specified. ([line 165-185](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L165-L185
+Finally, iterating over the sorted list of movies, add the movie to 'recommendations' list, which is to be returned to the caller, until the size of it reaches 10, excluding the movie rated less than 5 times, and not belong to the genre if specified. ([line 165-185](https://github.com/rocky112358/UNIST_CSE364_Group2/blob/9edf5288b0f565a2057b99027c13e57bb87b3330/src/main/java/se/group2/RecommendationEngine.java#L165-L185
 ))
 
 #### About our algorithm design
@@ -77,9 +73,7 @@ First, the engine divides the users into 8 groups and count number of users belo
  Group 7 |      Y  |   Y |          Y 
 ```
 
-Before we introduce our algorithm, let's define a term 'groupRatio'. This is the ratio of each group among all users. 
-
-groupRatio will have a value of 0 or more, but less than 1.
+Before we introduce our algorithm, let's define a term 'groupRatio'. This is the ratio of each group among all users. groupRatio will have a value of 0 or more, but less than 1.
 
 Now, iterate over ratings one by one and add score of the movie to corresponding variable. The score is slightly modified with a formula below before being added. `r` is the groupRatio of the group which the user made the rating belongs to.
 

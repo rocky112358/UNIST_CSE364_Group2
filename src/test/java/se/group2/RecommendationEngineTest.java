@@ -84,7 +84,7 @@ public class RecommendationEngineTest {
     @Test
     public void automaticLoadDataTest() {
         RecommendationEngine r = new RecommendationEngine();
-        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList());
+        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList(), 10);
         assertEquals(10, recommend.size());
 
         User u = r.getUserById(1);
@@ -112,25 +112,25 @@ public class RecommendationEngineTest {
         r.loadRatings("data/ratings.dat");
         r.loadUsers("data/users.dat");
         r.loadMovies("data/movies.dat");
-        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList());
+        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList(), 10);
         assertEquals(10, recommend.size());
     }
 
     @Test
     public void groupDivisionTest() {
         RecommendationEngine r = new RecommendationEngine();
-        List<Movie> recommend = r.recommendMovies("m", "", -1, Collections.emptyList());
+        List<Movie> recommend = r.recommendMovies("m", "", -1, Collections.emptyList(), 10);
         assertEquals(10, recommend.size());
-        recommend = r.recommendMovies("", "1", -1, Collections.emptyList());
+        recommend = r.recommendMovies("", "1", -1, Collections.emptyList(), 10);
         assertEquals(10, recommend.size());
-        recommend = r.recommendMovies("", "", 1, Collections.emptyList());
+        recommend = r.recommendMovies("", "", 1, Collections.emptyList(), 10);
         assertEquals(10, recommend.size());
     }
 
     @Test
     public void genreFilterTest() {
         RecommendationEngine r = new RecommendationEngine();
-        List<Movie> recommend = r.recommendMovies("m", "", -1, Collections.singletonList("drama"));
+        List<Movie> recommend = r.recommendMovies("m", "", -1, Collections.singletonList("drama"), 10);
         for (Movie m : recommend) {
             assertTrue(m.genre.contains("drama"));
         }

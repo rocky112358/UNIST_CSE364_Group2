@@ -101,7 +101,7 @@ public class RecommendationEngine {
         ratings = r;
     }
 
-    public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput, List<String> genresInput) {
+    public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput, List<String> genresInput, Integer limitNo) {
         List<Movie> recommendations = new ArrayList<>();
 
         if (movies.size() == 0) {
@@ -178,7 +178,7 @@ public class RecommendationEngine {
             else {
                 recommendations.add(getMovieById(movieRating.getKey()));
             }
-            if (recommendations.size() >= 10) {
+            if (recommendations.size() >= limitNo) {
                 break;
             }
         }

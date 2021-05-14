@@ -158,12 +158,8 @@ public class Movieblock {
         String ageInput = args[1];
         String occupationInput = args[2];
         List<String> genresInput = new ArrayList<>();
-        if (args.length == 4) {
+        if (args.length == 4 && args[3].length() != 0) {
             genresInput = Arrays.asList(args[3].split("\\|"));
-            if(args[3].length() == 0 || genresInput.size() == 0){
-                System.out.println("Error: invalid genre input");
-                return;
-            }
         }
 
         // validate gender input

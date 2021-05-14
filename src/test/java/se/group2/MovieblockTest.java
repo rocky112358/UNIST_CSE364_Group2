@@ -199,15 +199,6 @@ public class MovieblockTest {
     }
 
     @Test
-    public void blankGenreTest() {
-        String[] test_four = {"", "", "", ""};
-
-        Movieblock.main(test_four);
-
-        assertEquals("Error: invalid genre input", outStream.toString().strip());
-    }
-
-    @Test
     public void invalidGenderTest() {
         String[] invalid_gender = {"D", "", ""};
 

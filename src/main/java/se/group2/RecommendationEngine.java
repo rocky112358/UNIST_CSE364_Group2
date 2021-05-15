@@ -175,7 +175,7 @@ public class RecommendationEngine {
         List<String> genresTemp = genresInput;
         if(!titleInput.isEmpty()) {
             Movie movieTemp = getMovieByTitle(titleInput);
-            if(movieTemp != NULL)
+            if(movieTemp != null)
                 genresTemp = movieTemp.genre;
         }
 

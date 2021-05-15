@@ -118,6 +118,20 @@ public class Movieblock {
         return genreInput.equals("") || Arrays.asList(genreArray).contains(genreInput);
     }
 
+    /*public static boolean validateTitleInput(String titleInput) {
+        try{
+            return titleInput.equals("")
+        }
+    }*/
+
+    public static boolean validateLimitInput(String limitInput) {
+        try {
+            return limitInput.equals("") || Integer.parseInt(limitInput) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public static Integer encodeOccupation(String occupationInput, Map<String, Integer> occupationMap) {
         return occupationMap.get(occupationInput.toLowerCase());
     }
@@ -149,8 +163,8 @@ public class Movieblock {
     }
 
     public static void main(String[] args) {
-        if (args.length < 3 || args.length > 4) {
-            System.out.println("Args: gender age occupation [genre(s)]");
+        if (args.length != 6) {
+            System.out.println("Args: gender age occupation genre(s) title limit");
             return;
         }
 
@@ -158,9 +172,11 @@ public class Movieblock {
         String ageInput = args[1];
         String occupationInput = args[2];
         List<String> genresInput = new ArrayList<>();
-        if (args.length == 4 && args[3].length() != 0) {
+        if (args[3].length() != 0) {
             genresInput = Arrays.asList(args[3].split("\\|"));
         }
+        String titleInput = args[4];
+        String limitInput = args[5];
 
         // validate gender input
         if (!validateGenderInput(genderInput)) {
@@ -220,14 +236,22 @@ public class Movieblock {
         Integer occupationInputNo = encodeOccupation(occupationInput, occupationMap);
 
         // if there are genres input, validate
-        if (args.length == 4) {
-            genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
-            for (String g : genresInput) {
-                if (!validateGenreInput(g)) {
-                    System.out.println("Error: invalid genre input");
-                    return;
-                }
+        genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
+        for (String g : genresInput) {
+            if (!validateGenreInput(g)) {
+                System.out.println("Error: invalid genre input");
+                return;
             }
+        }
+
+        if (!validateLimitInput(limitInput)) {
+            System.out.println("Error: invalid limit input");
+            return;
+        }
+
+        int limitNo = 10;
+        if (limitInput.length() != 0) {
+            limitNo = Integer.parseInt(limitInput);
         }
 
         // prepare engine
@@ -236,7 +260,7 @@ public class Movieblock {
 
         // run
         List<Movie> recommendations;
-        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo, genresInput);
+        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo, genresInput, titleInput, limitNo);
 
         // print result
         loadLinks("data/links.dat");

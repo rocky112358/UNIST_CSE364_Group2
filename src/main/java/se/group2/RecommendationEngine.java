@@ -35,6 +35,15 @@ public class RecommendationEngine {
         return null;
     }
 
+    public Movie getMovieByTitle(String title){
+        for (Movie m: movies) {
+            if (m.title.equals(title)){
+                return m;
+            }
+        }
+        return null;
+    }
+
     public Rating getRatingByUserAndMovie(int userId, int movieId) {
         for (Rating r: ratings) {
             if (r.userId == userId && r.movieId == movieId) {
@@ -101,7 +110,7 @@ public class RecommendationEngine {
         ratings = r;
     }
 
-    public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput, List<String> genresInput) {
+    public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput, List<String> genresInput, String titleInput, Integer limitNo) {
         List<Movie> recommendations = new ArrayList<>();
 
         if (movies.size() == 0) {
@@ -162,14 +171,22 @@ public class RecommendationEngine {
         List<Map.Entry<Integer, Double>> sortedRatings = movieRatingAvg.entrySet().stream().sorted(
                 Map.Entry.<Integer, Double>comparingByValue().reversed()).collect(Collectors.toList());
 
+        // convert titleInput to genresInput (even there are no movies with title)
+        List<String> genresTemp = genresInput;
+        if(!titleInput.isEmpty()) {
+            Movie movieTemp = getMovieByTitle(titleInput);
+            if(movieTemp != null)
+                genresTemp = movieTemp.genre;
+        }
+
         // put top 10 movie objects to recommendations
         for (Map.Entry<Integer, Double> movieRating: sortedRatings) {
             if (movieRatingCnt.get(movieRating.getKey()) < 5) {  // if the movie is rated less than 5 times, skip it.
                 continue;
             }
-            if(genresInput.size() > 0){
+            if(genresTemp.size() > 0){
                 for(String g: getMovieById(movieRating.getKey()).genre){
-                    if(genresInput.contains(g)){
+                    if(genresTemp.contains(g)){
                         recommendations.add(getMovieById(movieRating.getKey()));
                         break;
                     }
@@ -178,7 +195,7 @@ public class RecommendationEngine {
             else {
                 recommendations.add(getMovieById(movieRating.getKey()));
             }
-            if (recommendations.size() >= 10) {
+            if (recommendations.size() >= limitNo) {
                 break;
             }
         }

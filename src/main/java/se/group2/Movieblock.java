@@ -118,6 +118,12 @@ public class Movieblock {
         return genreInput.equals("") || Arrays.asList(genreArray).contains(genreInput);
     }
 
+    /*public static boolean validateTitleInput(String titleInput) {
+        try{
+            return titleInput.equals("")
+        }
+    }*/
+
     public static boolean validateLimitInput(String limitInput) {
         try {
             return limitInput.equals("") || Integer.parseInt(limitInput) > 0;
@@ -157,8 +163,8 @@ public class Movieblock {
     }
 
     public static void main(String[] args) {
-        if (args.length != 5) {
-            System.out.println("Args: gender age occupation genre(s) limit");
+        if (args.length != 6) {
+            System.out.println("Args: gender age occupation genre(s) title limit");
             return;
         }
 
@@ -169,7 +175,8 @@ public class Movieblock {
         if (args[3].length() != 0) {
             genresInput = Arrays.asList(args[3].split("\\|"));
         }
-        String limitInput = args[4];
+        String titleInput = args[4];
+        String limitInput = args[5];
 
         // validate gender input
         if (!validateGenderInput(genderInput)) {
@@ -253,7 +260,7 @@ public class Movieblock {
 
         // run
         List<Movie> recommendations;
-        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo, genresInput, limitNo);
+        recommendations = engine.recommendMovies(genderInput, ageInput, occupationInputNo, genresInput, titleInput, limitNo);
 
         // print result
         loadLinks("data/links.dat");

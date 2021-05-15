@@ -172,35 +172,35 @@ public class MovieblockTest {
 
         Movieblock.main(args);
 
-        assertEquals("Args: gender age occupation genre(s) limit", outStream.toString().strip());
+        assertEquals("Args: gender age occupation genre(s) title limit", outStream.toString().strip());
     }
 
     @Test
     public void normalArgumentTest1() {
-        String[] args = {"F", "25", "gradstudent", "", "10"};
+        String[] args = {"F", "25", "gradstudent", "", "", "10"};
 
         Movieblock.main(args);
     }
 
     @Test
     public void normalArgumentTest2() {
-        String[] args = {"F", "25", "gradstudent", "drama", ""};
+        String[] args = {"F", "25", "gradstudent", "drama", "", ""};
 
         Movieblock.main(args);
     }
 
     @Test
     public void moreArgumentTest() {
-        String[] args = {"F", "25", "gradstudent", "drama", "10", "more_arg"};
+        String[] args = {"F", "25", "gradstudent", "drama", "", "10", "more_arg"};
 
         Movieblock.main(args);
 
-        assertEquals("Args: gender age occupation genre(s) limit", outStream.toString().strip());
+        assertEquals("Args: gender age occupation genre(s) title limit", outStream.toString().strip());
     }
 
     @Test
     public void invalidGenderTest() {
-        String[] invalid_gender = {"D", "", "", "", ""};
+        String[] invalid_gender = {"D", "", "", "", "", ""};
 
         Movieblock.main(invalid_gender);
 
@@ -209,7 +209,7 @@ public class MovieblockTest {
 
     @Test
     public void invalidAgeTest() {
-        String[] invalid_age = {"", "-15", "", "", ""};
+        String[] invalid_age = {"", "-15", "", "", "", ""};
 
         Movieblock.main(invalid_age);
 
@@ -218,7 +218,7 @@ public class MovieblockTest {
 
     @Test
     public void invalidOccupationTest() {
-        String[] invalid_occupation = {"", "", "dog", "", ""};
+        String[] invalid_occupation = {"", "", "dog", "", "", ""};
 
         Movieblock.main(invalid_occupation);
 
@@ -227,7 +227,7 @@ public class MovieblockTest {
 
     @Test
     public void invalidGenreTest() {
-        String[] invalid_genre = {"", "", "", "dog", ""};
+        String[] invalid_genre = {"", "", "", "dog", "", ""};
 
         Movieblock.main(invalid_genre);
 

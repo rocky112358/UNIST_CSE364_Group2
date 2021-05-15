@@ -13,7 +13,6 @@ import java.io.PrintStream;
 
 
 public class MovieblockTest {
-    public static Map<String, Integer> occupationMap = new HashMap<>();
 
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
@@ -30,45 +29,6 @@ public class MovieblockTest {
     public void restoreStreams() {
         System.setOut(originalOut);
         System.setErr(originalErr);
-    }
-
-    @Before
-    public void setUp() {
-        occupationMap.put("", -1);
-        occupationMap.put("other", 0);
-        occupationMap.put("academic", 1);
-        occupationMap.put("educator", 1);
-        occupationMap.put("artist", 2);
-        occupationMap.put("clerical", 3);
-        occupationMap.put("admin", 3);
-        occupationMap.put("collegestudent", 4);
-        occupationMap.put("college student", 4);
-        occupationMap.put("gradstudent", 4);
-        occupationMap.put("grad student", 4);
-        occupationMap.put("customerservice", 5);
-        occupationMap.put("customer service", 5);
-        occupationMap.put("doctor", 6);
-        occupationMap.put("healthcare", 6);
-        occupationMap.put("health care", 6);
-        occupationMap.put("executive", 7);
-        occupationMap.put("managerial", 7);
-        occupationMap.put("farmer", 8);
-        occupationMap.put("homemaker", 9);
-        occupationMap.put("k-12student", 10);
-        occupationMap.put("k-12 student", 10);
-        occupationMap.put("lawyer", 11);
-        occupationMap.put("programmer", 12);
-        occupationMap.put("retired", 13);
-        occupationMap.put("sales", 14);
-        occupationMap.put("marketing", 14);
-        occupationMap.put("scientist", 15);
-        occupationMap.put("self-employed", 16);
-        occupationMap.put("technician", 17);
-        occupationMap.put("engineer", 17);
-        occupationMap.put("tradesman", 18);
-        occupationMap.put("craftsman", 18);
-        occupationMap.put("unemployed", 19);
-        occupationMap.put("writer", 20);
     }
 
     @Test
@@ -106,10 +66,10 @@ public class MovieblockTest {
         String test_everyone = "";
         String test_wrong = "Dog";
 
-        assertTrue(Movieblock.validateOccupationInput(test_other, MovieblockTest.occupationMap));
-        assertTrue(Movieblock.validateOccupationInput(test_gradstudent, MovieblockTest.occupationMap));
-        assertTrue(Movieblock.validateOccupationInput(test_everyone, MovieblockTest.occupationMap));
-        assertFalse(Movieblock.validateOccupationInput(test_wrong, MovieblockTest.occupationMap));
+        assertNotSame(-99, Movieblock.encodeOccupation(test_other));
+        assertNotSame(-99,Movieblock.encodeOccupation(test_gradstudent));
+        assertNotSame(-99,Movieblock.encodeOccupation(test_everyone));
+        assertSame(-99,Movieblock.encodeOccupation(test_wrong));
     }
 
     @Test
@@ -129,9 +89,9 @@ public class MovieblockTest {
         String test_academic = "academic";
         String test_uppercase = "AcadEmic";
         String test_everything = "";
-        assertSame(1, Movieblock.encodeOccupation(test_academic, MovieblockTest.occupationMap));
-        assertSame(1, Movieblock.encodeOccupation(test_uppercase, MovieblockTest.occupationMap));
-        assertSame(-1, Movieblock.encodeOccupation(test_everything, MovieblockTest.occupationMap));
+        assertSame(1, Movieblock.encodeOccupation(test_academic));
+        assertSame(1, Movieblock.encodeOccupation(test_uppercase));
+        assertSame(-1, Movieblock.encodeOccupation(test_everything));
     }
 
     @Test

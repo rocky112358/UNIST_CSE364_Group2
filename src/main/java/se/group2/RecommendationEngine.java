@@ -37,7 +37,7 @@ public class RecommendationEngine {
 
     public Movie getMovieByTitle(String title){
         for (Movie m: movies) {
-            if (m.title == title){
+            if (m.title.equals(title)){
                 return m;
             }
         }
@@ -173,8 +173,11 @@ public class RecommendationEngine {
 
         // convert titleInput to genresInput (even there are no movies with title)
         List<String> genresTemp = genresInput;
-        if(!titleInput.isEmpty())
-            genresTemp = getMovieByTitle(titleInput).genre;
+        if(!titleInput.isEmpty()) {
+            Movie movieTemp = getMovieByTitle(titleInput);
+            if(movieTemp != NULL)
+                genresTemp = movieTemp.genre;
+        }
 
         // put top 10 movie objects to recommendations
         for (Map.Entry<Integer, Double> movieRating: sortedRatings) {

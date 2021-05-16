@@ -1,20 +1,16 @@
 package se.group2;
 
-public class RecommendationInput {
+public class UserRecommendationInput {
     private String gender;
     private String age;
     private String occupation;
     private String genres;
-    private String title;
-    private Integer limit;
 
-    public RecommendationInput() {
+    public UserRecommendationInput() {
         gender = "";
         age = "";
         occupation = "";
         genres = "";
-        title = "";
-        limit = 10;
     }
 
     public String getGender() {
@@ -47,21 +43,5 @@ public class RecommendationInput {
 
     public void setGenres(String g) {
         genres = g;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String t) {
-        title = t;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Integer l) {
-        limit = l;
     }
 }

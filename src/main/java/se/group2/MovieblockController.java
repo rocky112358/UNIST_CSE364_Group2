@@ -10,18 +10,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 public class MovieblockController {
 
-    @RequestMapping(value = "/users/recommendations", method = POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public List<RecommendationOutput> recommendations(@RequestBody RecommendationInput input) {
+    @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public List<RecommendationOutput> userRecommendations(@RequestBody UserRecommendationInput input) {
         // TODO: load data on application startup to save time
         // TODO: validate each input
-        // TODO: validate input pair
-        // ex) if any of gender, age, occupation is present, title and limit should not exist.
-        // also for opposite situation
         Integer occupationNo = Movieblock.encodeOccupation(input.getOccupation());
 
         List<String> genresInput = new ArrayList<>();
@@ -31,7 +28,23 @@ public class MovieblockController {
         }
 
         RecommendationEngine engine = new RecommendationEngine();
-        List<Movie> recommendationResults = engine.recommendMovies(input.getGender(), input.getAge(), occupationNo, genresInput, input.getTitle(), input.getLimit());
+        List<Movie> recommendationResults = engine.recommendMovies(input.getGender(), input.getAge(), occupationNo, genresInput, "", 10);
+
+        // TODO: get imdb id from links.dat file and construct imdb url
+        return recommendationResults.stream().map(
+                (movie -> new RecommendationOutput(
+                        movie.title, String.join("|", movie.genre), "https://naver.com"))
+        ).collect(Collectors.toList());
+    }
+
+    @RequestMapping(value = "/movies/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public List<RecommendationOutput> movieRecommendations(@RequestBody MovieRecommendationInput input) {
+        // TODO: load data on application startup to save time
+        // TODO: validate each input
+
+        RecommendationEngine engine = new RecommendationEngine();
+        List<String> genresInput = new ArrayList<>();
+        List<Movie> recommendationResults = engine.recommendMovies("", "", -1, genresInput, input.getTitle(), input.getLimit());
 
         // TODO: get imdb id from links.dat file and construct imdb url
         return recommendationResults.stream().map(

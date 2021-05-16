@@ -48,13 +48,41 @@ public class MovieblockController {
     @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public List<RecommendationOutput> userRecommendations(@RequestBody UserRecommendationInput input) {
         // TODO: load data on application startup to save time
-        // TODO: validate each input
+        boolean isInvalid = false;
+        if(!Movieblock.validateAgeInput(input.getAge())){
+            System.out.println("Error: Invalid Age Input");
+            isInvalid = true;
+        }
+        if(!isInvalid && !Movieblock.validateGenderInput(input.getGender())){
+            System.out.println("Error: Invalid Gender Input");
+            isInvalid = true;
+        }
+
         Integer occupationNo = Movieblock.encodeOccupation(input.getOccupation());
+        if(!isInvalid && occupationNo == -99) {
+            System.out.println("Error: Invalid Occupation Input");
+            isInvalid = true;
+        }
 
         List<String> genresInput = new ArrayList<>();
         if (input.getGenres().length() != 0) {
             genresInput = Arrays.asList(input.getGenres().split("\\|"));
             genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
+        }
+
+        if(!isInvalid){
+            for (String g : genresInput) {
+                if (!Movieblock.validateGenreInput(g)) {
+                    System.out.println("Error: invalid genre input");
+                    isInvalid = true;
+                    break;
+                }
+            }
+        }
+
+        if(isInvalid){
+            List<RecommendationOutput> recommendationResults = new ArrayList<>();
+            return recommendationResults;
         }
 
         RecommendationEngine engine = new RecommendationEngine();
@@ -71,9 +99,22 @@ public class MovieblockController {
     @RequestMapping(value = "/movies/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public List<RecommendationOutput> movieRecommendations(@RequestBody MovieRecommendationInput input) {
         // TODO: load data on application startup to save time
-        // TODO: validate each input
+        boolean isInvalid = false;
+        if(input.getLimit() < 0){
+            System.out.println("Error: Invalid Limit Input");
+            isInvalid = true;
+        }
 
         RecommendationEngine engine = new RecommendationEngine();
+        if(!isInvalid && engine.getMovieByTitle(input.getTitle()) == null){
+            System.out.println("Error: Invalid Title Input");
+            isInvalid = true;
+        }
+
+        if(isInvalid){
+            List<RecommendationOutput> recommendationResults = new ArrayList<>();
+            return recommendationResults;
+        }
         List<String> genresInput = new ArrayList<>();
         List<Movie> recommendationResults = engine.recommendMovies("", "", -1, genresInput, input.getTitle(), input.getLimit());
 

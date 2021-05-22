@@ -3,11 +3,11 @@ package se.group2;
 public class MovieRecommendationInput {
 
     private String title;
-    private Integer limit;
+    private String limit;
 
     public MovieRecommendationInput() {
         title = null;
-        limit = 10;
+        limit = "10";
     }
 
     public String getTitle() {
@@ -18,11 +18,11 @@ public class MovieRecommendationInput {
         title = t;
     }
 
-    public Integer getLimit() {
+    public String getLimit() {
         return limit;
     }
 
-    public void setLimit(Integer l) {
+    public void setLimit(String l) {
         limit = l;
     }
 }

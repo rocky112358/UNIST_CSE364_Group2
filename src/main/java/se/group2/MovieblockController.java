@@ -1,6 +1,9 @@
 package se.group2;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,22 +49,19 @@ public class MovieblockController {
     }
 
     @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public List<RecommendationOutput> userRecommendations(@RequestBody UserRecommendationInput input) {
+    public List<RecommendationOutput> userRecommendations(@RequestBody UserRecommendationInput input) throws InvalidInputException {
         // TODO: load data on application startup to save time
-        boolean isInvalid = false;
         if(!Movieblock.validateAgeInput(input.getAge())){
-            System.out.println("Error: Invalid Age Input");
-            isInvalid = true;
+            throw new InvalidInputException("Error: Invalid Age Input");
         }
-        if(!isInvalid && !Movieblock.validateGenderInput(input.getGender())){
-            System.out.println("Error: Invalid Gender Input");
-            isInvalid = true;
+
+        if(!Movieblock.validateGenderInput(input.getGender())){
+            throw new InvalidInputException("Error: Invalid Gender Input");
         }
 
         Integer occupationNo = Movieblock.encodeOccupation(input.getOccupation());
-        if(!isInvalid && occupationNo == -99) {
-            System.out.println("Error: Invalid Occupation Input");
-            isInvalid = true;
+        if(occupationNo == -99) {
+            throw new InvalidInputException("Error: Invalid Occupation Input");
         }
 
         List<String> genresInput = new ArrayList<>();
@@ -70,19 +70,10 @@ public class MovieblockController {
             genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
         }
 
-        if(!isInvalid){
-            for (String g : genresInput) {
-                if (!Movieblock.validateGenreInput(g)) {
-                    System.out.println("Error: invalid genre input");
-                    isInvalid = true;
-                    break;
-                }
+        for (String g : genresInput) {
+            if (!Movieblock.validateGenreInput(g)) {
+                throw new InvalidInputException("Error: invalid genre input");
             }
-        }
-
-        if(isInvalid){
-            List<RecommendationOutput> recommendationResults = new ArrayList<>();
-            return recommendationResults;
         }
 
         RecommendationEngine engine = new RecommendationEngine();
@@ -97,24 +88,17 @@ public class MovieblockController {
     }
 
     @RequestMapping(value = "/movies/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public List<RecommendationOutput> movieRecommendations(@RequestBody MovieRecommendationInput input) {
+    public List<RecommendationOutput> movieRecommendations(@RequestBody MovieRecommendationInput input) throws InvalidInputException {
         // TODO: load data on application startup to save time
-        boolean isInvalid = false;
         if(input.getLimit() < 0){
-            System.out.println("Error: Invalid Limit Input");
-            isInvalid = true;
+            throw new InvalidInputException("Error: Invalid Limit Input");
         }
 
         RecommendationEngine engine = new RecommendationEngine();
-        if(!isInvalid && engine.getMovieByTitle(input.getTitle()) == null){
-            System.out.println("Error: Invalid Title Input");
-            isInvalid = true;
+        if(engine.getMovieByTitle(input.getTitle()) == null){
+            throw new InvalidInputException("Error: Invalid Title Input");
         }
 
-        if(isInvalid){
-            List<RecommendationOutput> recommendationResults = new ArrayList<>();
-            return recommendationResults;
-        }
         List<String> genresInput = new ArrayList<>();
         List<Movie> recommendationResults = engine.recommendMovies("", "", -1, genresInput, input.getTitle(), input.getLimit());
 
@@ -124,5 +108,10 @@ public class MovieblockController {
                 (movie -> new RecommendationOutput(
                         movie.title, String.join("|", movie.genre), printMovie(movie)))
         ).collect(Collectors.toList());
+    }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public Object invalidInput(Exception e) {
+        return new ResponseEntity<>(new ApiError(400, "invalid input", e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

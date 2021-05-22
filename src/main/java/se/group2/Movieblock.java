@@ -107,22 +107,12 @@ public class Movieblock {
         }
     }
 
-    public static boolean validateOccupationInput(String occupationInput, Map<String, Integer> occupationMap) {
-        return occupationMap.get(occupationInput.toLowerCase()) != null;
-    }
-
     public static boolean validateGenreInput(String genreInput) {
         String[] genreArray = {"action", "adventure", "animation", "children's", "comedy", "crime", "documentary",
                 "drama", "fantasy", "film-noir", "horror", "musical", "mystery", "romance", "sci-fi", "thriller",
                 "war", "western"};
         return genreInput.equals("") || Arrays.asList(genreArray).contains(genreInput);
     }
-
-    /*public static boolean validateTitleInput(String titleInput) {
-        try{
-            return titleInput.equals("")
-        }
-    }*/
 
     public static boolean validateLimitInput(String limitInput) {
         try {

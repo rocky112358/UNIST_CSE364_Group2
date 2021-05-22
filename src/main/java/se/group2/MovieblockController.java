@@ -3,6 +3,7 @@ package se.group2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -110,9 +111,11 @@ public class MovieblockController {
             throw new InvalidInputException("Error: Title input not given");
         }
 
-        if(input.getLimit() == null || input.getLimit() < 0){
-            throw new InvalidInputException("Error: Invalid Limit Input");
+        if(!Movieblock.validateLimitInput(input.getLimit())) {
+            throw new InvalidInputException("Error: Invalid Limit Input (must be an integer)");
         }
+
+        Integer limit = Integer.parseInt(input.getLimit());
 
         RecommendationEngine engine = new RecommendationEngine();
         if(engine.getMovieByTitle(input.getTitle()) == null){
@@ -120,7 +123,7 @@ public class MovieblockController {
         }
 
         List<String> genresInput = new ArrayList<>();
-        List<Movie> recommendationResults = engine.recommendMovies("", "", -1, genresInput, input.getTitle(), input.getLimit());
+        List<Movie> recommendationResults = engine.recommendMovies("", "", -1, genresInput, input.getTitle(), limit);
 
         loadLinks("data/links.dat");
 
@@ -130,8 +133,24 @@ public class MovieblockController {
         ).collect(Collectors.toList());
     }
 
+    @ExceptionHandler(NumberFormatException.class)
+    public Object invalidLimitInput(NumberFormatException e) {
+        return new ResponseEntity<>(
+                new ApiError(400, "invalid input", "Limit input should be an integer value"),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Object invalidHttpMessage(HttpMessageNotReadableException e) {
+        return new ResponseEntity<>(
+                new ApiError(400, "invalid input", "Illegal JSON input. Please check your input syntax again."),
+                HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public Object invalidInput(Exception e) {
-        return new ResponseEntity<>(new ApiError(400, "invalid input", e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                new ApiError(400, "invalid input", e.getMessage()),
+                HttpStatus.BAD_REQUEST);
     }
 }

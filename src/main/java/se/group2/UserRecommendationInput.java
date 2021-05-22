@@ -7,10 +7,10 @@ public class UserRecommendationInput {
     private String genres;
 
     public UserRecommendationInput() {
-        gender = "";
-        age = "";
-        occupation = "";
-        genres = "";
+        gender = null;
+        age = null;
+        occupation = null;
+        genres = null;
     }
 
     public String getGender() {

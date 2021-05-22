@@ -51,12 +51,24 @@ public class MovieblockController {
     @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public List<RecommendationOutput> userRecommendations(@RequestBody UserRecommendationInput input) throws InvalidInputException {
         // TODO: load data on application startup to save time
+        if (input.getAge() == null) {
+            throw new InvalidInputException("Error: Age input is not given");
+        }
+
         if(!Movieblock.validateAgeInput(input.getAge())){
             throw new InvalidInputException("Error: Invalid Age Input");
         }
 
+        if (input.getGender() == null) {
+            throw new InvalidInputException("Error: Gender input is not given");
+        }
+
         if(!Movieblock.validateGenderInput(input.getGender())){
             throw new InvalidInputException("Error: Invalid Gender Input");
+        }
+
+        if (input.getOccupation() == null) {
+            throw new InvalidInputException("Error: Occupation input is not given");
         }
 
         Integer occupationNo = Movieblock.encodeOccupation(input.getOccupation());
@@ -65,6 +77,10 @@ public class MovieblockController {
         }
 
         List<String> genresInput = new ArrayList<>();
+        if (input.getGenres() == null) {
+            throw new InvalidInputException("Error: Genres input is not given");
+        }
+
         if (input.getGenres().length() != 0) {
             genresInput = Arrays.asList(input.getGenres().split("\\|"));
             genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());
@@ -72,7 +88,7 @@ public class MovieblockController {
 
         for (String g : genresInput) {
             if (!Movieblock.validateGenreInput(g)) {
-                throw new InvalidInputException("Error: invalid genre input");
+                throw new InvalidInputException("Error: invalid genres input");
             }
         }
 
@@ -90,13 +106,17 @@ public class MovieblockController {
     @RequestMapping(value = "/movies/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public List<RecommendationOutput> movieRecommendations(@RequestBody MovieRecommendationInput input) throws InvalidInputException {
         // TODO: load data on application startup to save time
-        if(input.getLimit() < 0){
+        if (input.getTitle() == null) {
+            throw new InvalidInputException("Error: Title input not given");
+        }
+
+        if(input.getLimit() == null || input.getLimit() < 0){
             throw new InvalidInputException("Error: Invalid Limit Input");
         }
 
         RecommendationEngine engine = new RecommendationEngine();
         if(engine.getMovieByTitle(input.getTitle()) == null){
-            throw new InvalidInputException("Error: Invalid Title Input");
+            throw new InvalidInputException("Error: Movie does not exist");
         }
 
         List<String> genresInput = new ArrayList<>();
@@ -110,7 +130,7 @@ public class MovieblockController {
         ).collect(Collectors.toList());
     }
 
-    @ExceptionHandler(InvalidInputException.class)
+    @ExceptionHandler(Exception.class)
     public Object invalidInput(Exception e) {
         return new ResponseEntity<>(new ApiError(400, "invalid input", e.getMessage()), HttpStatus.BAD_REQUEST);
     }

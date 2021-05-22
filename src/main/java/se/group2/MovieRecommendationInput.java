@@ -6,7 +6,7 @@ public class MovieRecommendationInput {
     private Integer limit;
 
     public MovieRecommendationInput() {
-        title = "";
+        title = null;
         limit = 10;
     }
 

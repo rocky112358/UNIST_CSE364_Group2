@@ -112,7 +112,7 @@ public class MovieblockController {
         }
 
         if(!Movieblock.validateLimitInput(input.getLimit())) {
-            throw new InvalidInputException("Error: Invalid Limit Input (must be an integer)");
+            throw new InvalidInputException("Error: Invalid Limit Input (must be an positive integer)");
         }
 
         Integer limit = Integer.parseInt(input.getLimit());

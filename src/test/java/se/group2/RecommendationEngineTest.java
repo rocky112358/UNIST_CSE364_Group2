@@ -135,4 +135,31 @@ public class RecommendationEngineTest {
             assertTrue(m.genre.contains("drama"));
         }
     }
+
+    @Test
+    public void movieTitleTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList(), "Father of the Bride Part II (1995)", 10);
+        for (Movie m : recommend) {
+            assertTrue(m.genre.contains("comedy"));
+        }
+    }
+
+    @Test
+    public void invalidMovieTitleTest() {
+        RecommendationEngine r = new RecommendationEngine();
+        List<Movie> recommend = r.recommendMovies("", "", -1, Collections.emptyList(), "AABBCCDDEEFFGG", 10);
+    }
+
+    @Test
+    public void getMovieByTitleTest() {
+        RecommendationEngine re = new RecommendationEngine();
+        assertNull(re.getMovieByTitle("AAABBBCCCDDDEEE"));
+        re.loadMovies("data/movies.dat");
+        assertEquals("Toy Story (1995)", re.getMovieByTitle("Toy Story (1995)").title);
+        assertEquals(1, re.getMovieByTitle("Toy Story (1995)").id);
+        assertEquals(Arrays.asList("animation","children's","comedy"), re.getMovieByTitle("Toy Story (1995)").genre);
+        assertNull(re.getMovieByTitle("AAABBBCCCDDDEEE"));
+    }
+
 }

@@ -132,8 +132,68 @@ public class Movieblock {
         }
     }
 
-    public static Integer encodeOccupation(String occupationInput, Map<String, Integer> occupationMap) {
-        return occupationMap.get(occupationInput.toLowerCase());
+    public static Integer encodeOccupation(String occupationInput) {
+        switch (occupationInput.toLowerCase()) {
+            case "":
+                return -1;
+            case "other":
+                return 0;
+            case "academic":
+            case "educator":
+                return 1;
+            case "artist":
+                return 2;
+            case "clerical":
+            case "admin":
+                return 3;
+            case "collegestudent":
+            case "college student":
+            case "gradstudent":
+            case "grad student":
+                return 4;
+            case "customerservice":
+            case "customer service":
+                return 5;
+            case "doctor":
+            case "healthcare":
+            case "health care":
+                return 6;
+            case "executive":
+            case "managerial":
+                return 7;
+            case "farmer":
+                return 8;
+            case "homemaker":
+                return 9;
+            case "k-12student":
+            case "k-12 student":
+                return 10;
+            case "lawyer":
+                return 11;
+            case "programmer":
+                return 12;
+            case "retired":
+                return 13;
+            case "sales":
+            case "marketing":
+                return 14;
+            case "scientist":
+                return 15;
+            case "self-employed":
+                return 16;
+            case "technician":
+            case "engineer":
+                return 17;
+            case "tradesman":
+            case "craftsman":
+                return 18;
+            case "unemployed":
+                return 19;
+            case "writer":
+                return 20;
+            default:
+                return -99;
+        }
     }
 
     public static void loadLinks(String filename) {
@@ -192,48 +252,11 @@ public class Movieblock {
         }
 
         // validate occupation input and convert to integer
-        Map<String, Integer> occupationMap = new HashMap<>();
-        occupationMap.put("", -1);
-        occupationMap.put("other", 0);
-        occupationMap.put("academic", 1);
-        occupationMap.put("educator", 1);
-        occupationMap.put("artist", 2);
-        occupationMap.put("clerical", 3);
-        occupationMap.put("admin", 3);
-        occupationMap.put("collegestudent", 4);
-        occupationMap.put("college student", 4);
-        occupationMap.put("gradstudent", 4);
-        occupationMap.put("grad student", 4);
-        occupationMap.put("customerservice", 5);
-        occupationMap.put("customer service", 5);
-        occupationMap.put("doctor", 6);
-        occupationMap.put("healthcare", 6);
-        occupationMap.put("health care", 6);
-        occupationMap.put("executive", 7);
-        occupationMap.put("managerial", 7);
-        occupationMap.put("farmer", 8);
-        occupationMap.put("homemaker", 9);
-        occupationMap.put("k-12student", 10);
-        occupationMap.put("k-12 student", 10);
-        occupationMap.put("lawyer", 11);
-        occupationMap.put("programmer", 12);
-        occupationMap.put("retired", 13);
-        occupationMap.put("sales", 14);
-        occupationMap.put("marketing", 14);
-        occupationMap.put("scientist", 15);
-        occupationMap.put("self-employed", 16);
-        occupationMap.put("technician", 17);
-        occupationMap.put("engineer", 17);
-        occupationMap.put("tradesman", 18);
-        occupationMap.put("craftsman", 18);
-        occupationMap.put("unemployed", 19);
-        occupationMap.put("writer", 20);
-
-        if (!validateOccupationInput(occupationInput, occupationMap)) {
+        Integer occupationInputNo = encodeOccupation(occupationInput);
+        if (occupationInputNo == -99) {
             System.out.println("Error: invalid occupation input");
             return;
         }
-        Integer occupationInputNo = encodeOccupation(occupationInput, occupationMap);
 
         // if there are genres input, validate
         genresInput = genresInput.stream().map(String::toLowerCase).collect(Collectors.toList());

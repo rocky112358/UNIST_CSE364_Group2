@@ -15,6 +15,10 @@ public class RecommendationEngine {
         movies = new ArrayList<>();
         ratings = new ArrayList<>();
         users = new ArrayList<>();
+
+        loadMovies("data/movies.dat");
+        loadRatings("data/ratings.dat");
+        loadUsers("data/users.dat");
     }
 
     public User getUserById(int id) {
@@ -112,16 +116,6 @@ public class RecommendationEngine {
 
     public List<Movie> recommendMovies(String genderInput, String ageInput, Integer occupationInput, List<String> genresInput, String titleInput, Integer limitNo) {
         List<Movie> recommendations = new ArrayList<>();
-
-        if (movies.size() == 0) {
-            this.loadMovies("data/movies.dat");
-        }
-        if (ratings.size() == 0) {
-            this.loadRatings("data/ratings.dat");
-        }
-        if (users.size() == 0) {
-            this.loadUsers("data/users.dat");
-        }
 
         // recommendation algorithm: weighted average
         // first, divide users in 8 groups, each has same(similar)/different properties with the input for each property.

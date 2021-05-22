@@ -85,13 +85,93 @@ public class MovieblockTest {
     }
 
     @Test
+    public void validateLimitInputTest() {
+        String test_empty = "";
+        String test_invalid = "-1.23#4";
+        String test_valid = "1234";
+        String test_negative = "-1234";
+        assertTrue(Movieblock.validateLimitInput(test_empty));
+        assertFalse(Movieblock.validateLimitInput(test_invalid));
+        assertTrue(Movieblock.validateLimitInput(test_valid));
+        assertFalse(Movieblock.validateLimitInput(test_negative));
+    }
+
+    @Test
     public void encodeOccupationTest() {
-        String test_academic = "academic";
+        String test_empty = "";
         String test_uppercase = "AcadEmic";
-        String test_everything = "";
-        assertSame(1, Movieblock.encodeOccupation(test_academic));
+        String test_other = "other";
+        String test_academic = "academic";
+        String test_educator = "educator";
+        String test_artist = "artist";
+        String test_clerical = "clerical";
+        String test_admin = "admin";
+        String test_collegestudent = "collegestudent";
+        String test_college_student = "college student";
+        String test_gradstudent = "gradstudent";
+        String test_grad_student = "grad student";
+        String test_customerservice = "customerservice";
+        String test_customer_service = "customer service";
+        String test_doctor = "doctor";
+        String test_healthcare = "healthcare";
+        String test_health_care = "health care";
+        String test_executive = "executive";
+        String test_managerial = "managerial";
+        String test_farmer = "farmer";
+        String test_homemaker = "homemaker";
+        String test_k_12_student = "k-12student";
+        String test_k_12__student = "k-12 student";
+        String test_lawyer = "lawyer";
+        String test_programmer = "programmer";
+        String test_retired = "retired";
+        String test_sales = "sales";
+        String test_marketing = "marketing";
+        String test_scientist = "scientist";
+        String test_self_employed = "self-employed";
+        String test_technician = "technician";
+        String test_engineer = "engineer";
+        String test_tradesman = "tradesman";
+        String test_craftsman = "craftsman";
+        String test_unemployed = "unemployed";
+        String test_writer = "writer";
+        String test_invalid = "wizard";
+        assertSame(-1, Movieblock.encodeOccupation(test_empty));
         assertSame(1, Movieblock.encodeOccupation(test_uppercase));
-        assertSame(-1, Movieblock.encodeOccupation(test_everything));
+        assertSame(0, Movieblock.encodeOccupation(test_other));
+        assertSame(1, Movieblock.encodeOccupation(test_academic));
+        assertSame(1, Movieblock.encodeOccupation(test_educator));
+        assertSame(2, Movieblock.encodeOccupation(test_artist));
+        assertSame(3, Movieblock.encodeOccupation(test_clerical));
+        assertSame(3, Movieblock.encodeOccupation(test_admin));
+        assertSame(4, Movieblock.encodeOccupation(test_collegestudent));
+        assertSame(4, Movieblock.encodeOccupation(test_college_student));
+        assertSame(4, Movieblock.encodeOccupation(test_gradstudent));
+        assertSame(4, Movieblock.encodeOccupation(test_grad_student));
+        assertSame(5, Movieblock.encodeOccupation(test_customerservice));
+        assertSame(5, Movieblock.encodeOccupation(test_customer_service));
+        assertSame(6, Movieblock.encodeOccupation(test_doctor));
+        assertSame(6, Movieblock.encodeOccupation(test_healthcare));
+        assertSame(6, Movieblock.encodeOccupation(test_health_care));
+        assertSame(7, Movieblock.encodeOccupation(test_executive));
+        assertSame(7, Movieblock.encodeOccupation(test_managerial));
+        assertSame(8, Movieblock.encodeOccupation(test_farmer));
+        assertSame(9, Movieblock.encodeOccupation(test_homemaker));
+        assertSame(10, Movieblock.encodeOccupation(test_k_12_student));
+        assertSame(10, Movieblock.encodeOccupation(test_k_12__student));
+        assertSame(11, Movieblock.encodeOccupation(test_lawyer));
+        assertSame(12, Movieblock.encodeOccupation(test_programmer));
+        assertSame(13, Movieblock.encodeOccupation(test_retired));
+        assertSame(14, Movieblock.encodeOccupation(test_sales));
+        assertSame(14, Movieblock.encodeOccupation(test_marketing));
+        assertSame(15, Movieblock.encodeOccupation(test_scientist));
+        assertSame(16, Movieblock.encodeOccupation(test_self_employed));
+        assertSame(17, Movieblock.encodeOccupation(test_technician));
+        assertSame(17, Movieblock.encodeOccupation(test_engineer));
+        assertSame(18, Movieblock.encodeOccupation(test_tradesman));
+        assertSame(18, Movieblock.encodeOccupation(test_craftsman));
+        assertSame(19, Movieblock.encodeOccupation(test_unemployed));
+        assertSame(20, Movieblock.encodeOccupation(test_writer));
+        assertSame(-99, Movieblock.encodeOccupation(test_invalid));
     }
 
     @Test
@@ -192,5 +272,14 @@ public class MovieblockTest {
         Movieblock.main(invalid_genre);
 
         assertEquals("Error: invalid genre input", outStream.toString().strip());
+    }
+
+    @Test
+    public void invalidLimitTest() {
+        String[] invalid_link = {"", "", "", "", "", "12#3"};
+
+        Movieblock.main(invalid_link);
+
+        assertEquals("Error: invalid limit input", outStream.toString().strip());
     }
 }

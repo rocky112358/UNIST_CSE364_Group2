@@ -173,7 +173,7 @@ public class RecommendationEngine {
                 genresTemp = movieTemp.genre;
         }
 
-        // put top 10 movie objects to recommendations
+        // put top 10 (or limitNo) movie objects to recommendations
         for (Map.Entry<Integer, Double> movieRating: sortedRatings) {
             if (movieRatingCnt.get(movieRating.getKey()) < 5) {  // if the movie is rated less than 5 times, skip it.
                 continue;
@@ -181,13 +181,15 @@ public class RecommendationEngine {
             if(genresTemp.size() > 0){
                 for(String g: getMovieById(movieRating.getKey()).genre){
                     if(genresTemp.contains(g)){
-                        recommendations.add(getMovieById(movieRating.getKey()));
+                        if(titleInput.isEmpty() || !getMovieById(movieRating.getKey()).title.equals(titleInput))
+                            recommendations.add(getMovieById(movieRating.getKey()));
                         break;
                     }
                 }
             }
             else {
-                recommendations.add(getMovieById(movieRating.getKey()));
+                if(titleInput.isEmpty() || !getMovieById(movieRating.getKey()).title.equals(titleInput))
+                    recommendations.add(getMovieById(movieRating.getKey()));
             }
             if (recommendations.size() >= limitNo) {
                 break;

@@ -51,8 +51,12 @@ We implemented REST APIs for recommending movies using Spring Framework.
 ### How our recommendation algorithm works
 
 #### About implementation
-(대충 동민이형이 쓴다는 내용)
-Part II에서 사용자가 좋아하는 영화 제목이 주어지면 서비스는 주어진 영화 수를 포함하는 추천 영화 목록을 표시하는 REST API를 제공해야합니다. 추천 목록을 얻는 한 가지 방법은 먼저 입력 영화와 유사한 영화 목록을 찾은 다음 등급에 따라 해당 영화의 순위를 매기는 것입니다. Milestone 2와 마찬가지로 자체 알고리즘을 만들거나 기존 알고리즘을 사용할 수 있습니다. README의 소스 코드에서 알고리즘이 작동하는 방식과 알고리즘이 구현 된 위치를 언급하는 것을 잊지 마십시오. 기존 알고리즘을 사용하는 경우 참조도 제공하십시오.
+The recommendation algorithm is almost the same as in Milestone 2. ([Algorithm Description](xxx://github.com/rocky112358/UNIST_CSE364_Group2/blob/feature/73-read-me/README.md#L232
+)) 
+
+One difference is that when a movie title is entered as the input, it looks for the genre of the movie in `movies.dat` and recommends popular movies of the genre regardless of gender, age, or occupation.
+
+If a limit is given, only the number of movies are printed, sorted from most popular. If not, top 10 movies are printed by default.
 
 ### How to install the program
 1. Download Dockerfile and run.sh from Blackboard.

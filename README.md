@@ -46,7 +46,7 @@ We implemented REST APIs for recommending movies using Spring Framework.
 ### How our recommendation algorithm works
 
 #### About implementation
-The recommendation algorithm is almost the same as in Milestone 2. ([Algorithm Description](xxx://github.com/rocky112358/UNIST_CSE364_Group2/blob/feature/73-read-me/README.md#L232
+The recommendation algorithm is almost the same as in Milestone 2. ([Algorithm Description](https://github.com/rocky112358/UNIST_CSE364_Group2/tree/main#about-our-algorithm-design
 )) 
 
 One difference is that when a movie title is entered as the input, it looks for the genre of the movie in `movies.dat` and recommends popular movies of the genre regardless of gender, age, or occupation.

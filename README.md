@@ -335,7 +335,7 @@ root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommenda
 {"error":"invalid input","message":"Error: Movie does not exist","statusCode":400}
 ```
 
-* "limit" takes positive integer value. When not entered, it defaults to 10.
+* "limit" takes positive integer value [1 ~ 2147483647(MAX_INT)]. When not entered, it defaults to 10.
 > If "limit" has wrong value, error will be returned. (ex. -10, 3.14159)
 ```
 # defaults to 10

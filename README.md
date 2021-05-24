@@ -1,7 +1,13 @@
 # Movie Recommendation System: Movieblock
 for UNIST CSE364 Software Engineering
 
-## Milestone 2
+## Milestone 2 (Deprecated)
+
+<details>
+  <summary> Click to expand! </summary>
+
+> **This program no longer behaves like **How to run the program** described below in the lastest commit. (as of May 23, 2021)**
+> **This version is tagged as "milestone-2" and you may checkout if you like.**
 
 ### What did we do
 #### Repository structure
@@ -417,6 +423,7 @@ Everyone has contributed to all parts. However in this part, we will mention the
 
 ---
 
+</details>
 
 ## ~~Milestone 1~~ (Deprecated)
 

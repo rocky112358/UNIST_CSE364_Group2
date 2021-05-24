@@ -95,7 +95,7 @@ Fetched 17.8 MB in 7s (2722 kB/s)
 Reading package lists...
 Removing intermediate container 66b60d257f60
  ---> 6e63a3a16227
-Step 4/9 : RUN apt-get -y install vim git openjdk-11-jdk maven
+Step 4/9 : RUN apt-get -y install vim git openjdk-11-jdk maven curl
 
 ...
 
@@ -169,8 +169,8 @@ Password for 'https://[your username]@github.com': [your password]
 
 ### How to run the program
 1. After installing the program, you need to access another terminal session in the same server.
-2. Check if docker container which is running Spring web server in HostOS is running normally by using another terminal.
-3. Approach to docker container by using command below.
+2. Check if docker container which is running Spring web server is running normally by using another terminal.
+3. Approach to docker container by using command below in another terminal.
 ```
 docker ps - a | grep image_name
 docker exec -it container_name bash
@@ -179,21 +179,129 @@ docker exec -it container_name bash
 
 4. You can use recommendation system using curl command in docker container.
 > Please note that the URL address changes depending on which function you are using.
-```
-(1) part I: Recommend Top 10 movies given user data (gender, age, occupation, genres)
 
-In part I, given a user data, It provides a REST API that shows a list of top 10 recommended movies for a given user.
+#### Part I: Recommend Top 10 movies given user data (gender, age, occupation, genres)
+```
+# In part I, given a user data, It provides a REST API that shows a list of top 10 recommended movies for a given user.
 
 curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": user_gender, "age": user_age, "occupation": user_occupation, "genres": user_genres}'
-
-"gender", "age", "occupation", "genres" must be all listed if you use -d option. If not, error will be returned.
-If you want to search all cases, use "" for user data.
-user data are case insensitive.
-user_genres supports multiple search. (ex. "Action|Animation")
-
-[출력결과물]
-
 ```
+* In part I, "gender", "age", "occupation", "genres" must be all listed. If not, error will be returned.
+```
+# Missing Gender
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"age": "25", "occupation": "Grad student", "genres": "Action|War"}'
+{"error":"invalid input","message":"Error: Gender input is not given","statusCode":400}
+
+# Missing Age
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "F", "occupation": "Grad student", "genres": "Action|War"}'
+{"error":"invalid input","message":"Error: Age input is not given","statusCode":400}
+
+# Missing occupation
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "F", "age": "25", "genres": "Action|War"}'
+{"error":"invalid input","message":"Error: Occupation input is not given","statusCode":400}
+
+# Missing Genres
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "F", "age": "25", "occupation": "Grad student"}'
+{"error":"invalid input","message":"Error: Genres input is not given","statusCode":400}
+```
+
+* In Part I, If you want to search all cases, use "" for user data.
+```
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "", "age": "", "occupation": "", "genres": ""}'
+[{"title":"I Am Cuba (Soy Cuba/Ya Kuba) (1964)","genres":"drama","imdb":"http://www.imdb.com/title/tt0058604"},{"title":"Lamerica (1994)","genres":"drama","imdb":"http://www.imdb.com/title/tt0110299"},{"title":"Apple, The (Sib) (1998)","genres":"drama","imdb":"http://www.imdb.com/title/tt0156901"},{"title":"Sanjuro (1962)","genres":"action|adventure","imdb":"http://www.imdb.com/title/tt0056443"},{"title":"Seven Samurai (The Magnificent Seven) (Shichinin no samurai) (1954)","genres":"action|drama","imdb":"http://www.imdb.com/title/tt0047478"},{"title":"Shawshank Redemption, The (1994)","genres":"drama","imdb":"http://www.imdb.com/title/tt0111161"},{"title":"Godfather, The (1972)","genres":"action|crime|drama","imdb":"http://www.imdb.com/title/tt0068646"},{"title":"Close Shave, A (1995)","genres":"animation|comedy|thriller","imdb":"http://www.imdb.com/title/tt0112691"},{"title":"Usual Suspects, The (1995)","genres":"crime|thriller","imdb":"http://www.imdb.com/title/tt0114814"},{"title":"Schindler's List (1993)","genres":"drama|war","imdb":"http://www.imdb.com/title/tt0108052"}]
+```
+
+* In Part I, Gender can have one of three values: F, M, and "".
+> If an incorrect value is entered for the gender, an error is displayed.
+```
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "D", "age": "", "occupation": "", "genres": "action|war"}'
+{"error":"invalid input","message":"Error: Invalid Gender Input","statusCode":400}
+```
+
+* In the case of age (Part I), you can enter 0 or a decimal positive integer or "".
+It is possible to enter a value that is accepted as a decimal positive number in [parseInt]( https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String) ).
+> If an incorrect value is entered for the age, an error is displayed.
+```
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "", "age": "-123", "occupation": "", "genres": "action|war"}'
+{"error":"invalid input","message":"Error: Invalid Age Input","statusCode":400}
+```
+
+* In Part I, an occupation can be only one of the values below:
+```
+other
+academic
+educator
+artist
+clerical
+admin
+collegestudent
+gradstudent
+grad student
+customerservice
+customer service
+doctor
+healthcare
+health care
+executive
+managerial
+farmer
+homemaker
+k-12student
+k-12 student
+lawyer
+programmer
+retired
+sales
+marketing
+scientist
+self-employed
+technician
+engineer
+tradesman
+craftsman
+unemployed
+writer
+""
+```
+
+* List of availble genre (Part I):
+```
+action
+adventure
+animation
+children's
+comedy
+crime
+documentary
+drama
+fantasy
+film-noir
+horror
+musical
+mystery
+romance
+sci-fi
+thriller
+war
+western
+"" (Ignore in multiple search case)
+```
+
+* In Part I, user_genres supports multiple search. (ex. "Action|Animation")
+a list of genres can contain words below, with | as delimiter.
+Note that for the category input, “|” means “or”, not “and”.
+For example, for a category input “Action|Comedy”, the user likes those movies categorized to either Action or Comedy, not both Action and Comedy.
+```
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "", "age": "", "occupation": "", "genres": "action|war"}'
+[{"title":"Sanjuro (1962)","genres":"action|adventure","imdb":"http://www.imdb.com/title/tt0056443"},{"title":"Seven Samurai (The Magnificent Seven) (Shichinin no samurai) (1954)","genres":"action|drama","imdb":"http://www.imdb.com/title/tt0047478"},{"title":"Godfather, The (1972)","genres":"action|crime|drama","imdb":"http://www.imdb.com/title/tt0068646"},{"title":"Schindler's List (1993)","genres":"drama|war","imdb":"http://www.imdb.com/title/tt0108052"},{"title":"Raiders of the Lost Ark (1981)","genres":"action|adventure","imdb":"http://www.imdb.com/title/tt0082971"},{"title":"Paths of Glory (1957)","genres":"drama|war","imdb":"http://www.imdb.com/title/tt0050825"},{"title":"Star Wars: Episode IV - A New Hope (1977)","genres":"action|adventure|fantasy|sci-fi","imdb":"http://www.imdb.com/title/tt0076759"},{"title":"Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1963)","genres":"sci-fi|war","imdb":"http://www.imdb.com/title/tt0057012"},{"title":"Casablanca (1942)","genres":"drama|romance|war","imdb":"http://www.imdb.com/title/tt0034583"},{"title":"Lawrence of Arabia (1962)","genres":"adventure|war","imdb":"http://www.imdb.com/title/tt0056172"}]
+```
+
+* In Part I, user data are case insensitive.
+```
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "f", "age": "25", "occupation": "GRADSTUDENT", "genres": "ActioN|WaR"}'
+[{"title":"Schindler's List (1993)","genres":"drama|war","imdb":"http://www.imdb.com/title/tt0108052"},{"title":"Godfather, The (1972)","genres":"action|crime|drama","imdb":"http://www.imdb.com/title/tt0068646"},{"title":"Sanjuro (1962)","genres":"action|adventure","imdb":"http://www.imdb.com/title/tt0056443"},{"title":"Raiders of the Lost Ark (1981)","genres":"action|adventure","imdb":"http://www.imdb.com/title/tt0082971"},{"title":"Star Wars: Episode IV - A New Hope (1977)","genres":"action|adventure|fantasy|sci-fi","imdb":"http://www.imdb.com/title/tt0076759"},{"title":"Seven Samurai (The Magnificent Seven) (Shichinin no samurai) (1954)","genres":"action|drama","imdb":"http://www.imdb.com/title/tt0047478"},{"title":"Casablanca (1942)","genres":"drama|romance|war","imdb":"http://www.imdb.com/title/tt0034583"},{"title":"Princess Bride, The (1987)","genres":"action|adventure|comedy|romance","imdb":"http://www.imdb.com/title/tt0093779"},{"title":"Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1963)","genres":"sci-fi|war","imdb":"http://www.imdb.com/title/tt0057012"},{"title":"Saving Private Ryan (1998)","genres":"action|drama|war","imdb":"http://www.imdb.com/title/tt0120815"}]
+```
+
 ```
 (2) part II: Recommend movies given a movie title
 

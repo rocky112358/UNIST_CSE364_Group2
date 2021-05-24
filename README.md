@@ -312,6 +312,8 @@ curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:applic
 * In part II, "title" must be listed. "limit" is optional.
 > If there is no "title", or no movie in IMDb data matches with "title", error will be returned.
 ```
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"limit": 10}'
+{"error":"invalid input","message":"Error: Title input not given","statusCode":400}
 root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": ""}'
 {"error":"invalid input","message":"Error: Movie does not exist","statusCode":400}
 root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": "nongdamgom"}'

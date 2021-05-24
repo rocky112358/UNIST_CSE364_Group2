@@ -200,20 +200,20 @@ root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendat
 {"error":"invalid input","message":"Error: Genres input is not given","statusCode":400}
 ```
 
-* In Part I, If you want to search all cases, use "" for user data.
+* In Part I, If you want to search all cases, use "" for user data on any field.
 ```
 root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "", "age": "", "occupation": "", "genres": ""}'
 [{"title":"I Am Cuba (Soy Cuba/Ya Kuba) (1964)","genres":"drama","imdb":"http://www.imdb.com/title/tt0058604"},{"title":"Lamerica (1994)","genres":"drama","imdb":"http://www.imdb.com/title/tt0110299"},{"title":"Apple, The (Sib) (1998)","genres":"drama","imdb":"http://www.imdb.com/title/tt0156901"},{"title":"Sanjuro (1962)","genres":"action|adventure","imdb":"http://www.imdb.com/title/tt0056443"},{"title":"Seven Samurai (The Magnificent Seven) (Shichinin no samurai) (1954)","genres":"action|drama","imdb":"http://www.imdb.com/title/tt0047478"},{"title":"Shawshank Redemption, The (1994)","genres":"drama","imdb":"http://www.imdb.com/title/tt0111161"},{"title":"Godfather, The (1972)","genres":"action|crime|drama","imdb":"http://www.imdb.com/title/tt0068646"},{"title":"Close Shave, A (1995)","genres":"animation|comedy|thriller","imdb":"http://www.imdb.com/title/tt0112691"},{"title":"Usual Suspects, The (1995)","genres":"crime|thriller","imdb":"http://www.imdb.com/title/tt0114814"},{"title":"Schindler's List (1993)","genres":"drama|war","imdb":"http://www.imdb.com/title/tt0108052"}]
 ```
 
-* In Part I, Gender can have one of three values: F, M, and "".
+* In Part I, Gender can have one of two values: F, M.
 > If an incorrect value is entered for the gender, an error is displayed.
 ```
 root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": "D", "age": "", "occupation": "", "genres": "action|war"}'
 {"error":"invalid input","message":"Error: Invalid Gender Input","statusCode":400}
 ```
 
-* In the case of age (Part I), you can enter 0 or a decimal positive integer or "".
+* In the case of age (Part I), you can enter 0 or a decimal positive integer.
 It is possible to enter a value that is accepted as a decimal positive number in [parseInt]( https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String) ).
 > If an incorrect value is entered for the age, an error is displayed.
 ```
@@ -256,7 +256,6 @@ tradesman
 craftsman
 unemployed
 writer
-""
 ```
 
 * List of availble genre (Part I):
@@ -279,7 +278,6 @@ sci-fi
 thriller
 war
 western
-"" (Ignore in multiple search case)
 ```
 
 * In Part I, user_genres supports multiple search. (ex. "Action|Animation")
@@ -338,11 +336,11 @@ root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommenda
 [{"title":"Usual Suspects, The (1995)","genres":"crime|thriller","imdb":"http://www.imdb.com/title/tt0114814"},{"title":"Wrong Trousers, The (1993)","genres":"animation|comedy","imdb":"http://www.imdb.com/title/tt0108598"},{"title":"Rear Window (1954)","genres":"mystery|thriller","imdb":"http://www.imdb.com/title/tt0047396"},{"title":"Third Man, The (1949)","genres":"mystery|thriller","imdb":"http://www.imdb.com/title/tt0041959"},{"title":"Wallace & Gromit: The Best of Aardman Animation (1996)","genres":"animation","imdb":"http://www.imdb.com/title/tt0118114"},{"title":"Sixth Sense, The (1999)","genres":"thriller","imdb":"http://www.imdb.com/title/tt0167404"},{"title":"Yojimbo (1961)","genres":"comedy|drama|western","imdb":"http://www.imdb.com/title/tt0055630"},{"title":"City Lights (1931)","genres":"comedy|drama|romance","imdb":"http://www.imdb.com/title/tt0021749"},{"title":"North by Northwest (1959)","genres":"drama|thriller","imdb":"http://www.imdb.com/title/tt0053125"},{"title":"General, The (1927)","genres":"comedy","imdb":"http://www.imdb.com/title/tt0017925"}]
 
 # Set limit
-root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": "Close Shave, A (1995)", "limit":"1"}'
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": "Close Shave, A (1995)", "limit":1}'
 [{"title":"Usual Suspects, The (1995)","genres":"crime|thriller","imdb":"http://www.imdb.com/title/tt0114814"}]
 
 # Wrong value
-root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": "Close Shave, A (1995)", "limit":"-10"}'
+root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": "Close Shave, A (1995)", "limit":-10}'
 {"error":"invalid input","message":"Error: Invalid Limit Input (must be an positive integer)","statusCode":400}
 ```
 

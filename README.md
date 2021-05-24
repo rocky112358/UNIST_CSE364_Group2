@@ -170,6 +170,57 @@ Password for 'https://[your username]@github.com': [your password]
 ### How to run the program
 1. After installing the program, you need to access another terminal session in the same server.
 
+2. HostOS에서 Spring web server를 띄우고 있는 docker 컨테이너가 정상적으로 동작하는지 확인한다.
+3. 해당 명령어를 통해 docker 컨테이너로 접근한다
+```
+docker ps - a | grep image_name
+docker exec -it container_name bash
+```
+![image](https://user-images.githubusercontent.com/17242507/119365548-fbee4e00-bcea-11eb-910e-9c58658f297b.png)
+
+4. docker 컨테이너 안에서 curl 명령어를 통해 기능을 동작시킬 수 있다.
+> 기능에 따라 접근하는 URL 주소가 다르다는것을 명심할 것
+```
+(1) part I: Recommend Top 10 movies given user data (gender, age, occupation, genres)
+
+In part I, given a user data, It provides a REST API that shows a list of top 10 recommended movies for a given user.
+
+curl -X GET http://localhost:8080/users/recommendations -H 'Content-type:application/json' -d '{"gender": user_gender, "age": user_age, "occupation": user_occupation, "genres": user_genres}'
+
+-d 옵션에는 "gender", "age", "occupation", "genres"가 모두 기재되어있어야 함
+user data의 경우에는 case insensitive
+모든 경우를 추가하고 싶으면 ""
+genres의 경우에는 다중 검색을 지원
+없는 경우에는 error 반환
+[출력결과물]
+
+```
+```
+(2) part II: Recommend movies given a movie title
+
+In Part II, given a user’s favorite movie title, It provide a REST API that shows a list of recommended movies that contains the given number of movies
+
+curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": "Toy Story (1995)"}'
+curl -X GET http://localhost:8080/movies/recommendations -H 'Content-type:application/json' -d '{"title": "Toy Story (1995)", "limits" : positive_integer}'
+-d 옵션에는 title의 경우에는 항상 기재되어 있어야 하지만 limits는 선택사항임
+  title이 IMDb data 내에 존재하지 않을 경우 error를 반환함
+  영화 이름은 case-sensitive함
+극단적으로 큰 숫자를 입력할 경우에는 해당 숫자 범위 내에서 출력가능한 모든 영화를 알고리즘대로 출력함.
+IMDb 내에 영화가 3883개만 존재
+리뷰가 5개 이하인 영화는 출력되지 않음
+
+limits는 양의 정수 값을 가지나, 만약 입력되지 않을 경우에는 default옵션인 10개가 출력된다.
+  음의정수, 소수 등 적합하지 않은 값이 입력 될 경우에는 error를 출력함
+[출력결과물]
+
+```
+
+### Roles of each member
+Everyone has contributed to all parts. However in this part, we will mention the part that each has mainly contributed.
+* 20151054 김동민: AAA
+* 20151467 장동원: BBB
+* 20171108 박다현: CCC
+
 ---
 
 ## ~~Milestone 2~~ (Deprecated)

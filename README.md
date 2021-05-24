@@ -34,17 +34,12 @@ for UNIST CSE364 Software Engineering
         └── java
             └── se
                 └── group2
-                    ├── ApiErrorTest.java
-                    ├── ApplicationTest.java
-                    ├── InvalidInputExceptionTest.java
+                    ├── ApplicationIT.java
                     ├── MovieblockControllerTest.java
                     ├── MovieblockTest.java
-                    ├── MovieRecommendationInputTest.java
-                    ├── RecommendationEngineTest.java
-                    ├── RecommendationOutputTest.java
-                    └── UserRecommendationInputTest.java
+                    └── RecommendationEngineTest.java
 
-10 directories, 26 files
+10 directories, 21 files
 ```
 We implemented REST APIs for recommending movies using Spring Framework.
 

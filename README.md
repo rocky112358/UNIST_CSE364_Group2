@@ -56,7 +56,7 @@ The recommendation algorithm is almost the same as in Milestone 2. ([Algorithm D
 
 One difference is that when a movie title is entered as the input, it looks for the genre of the movie in `movies.dat` and recommends popular movies of the genre regardless of gender, age, or occupation.
 
-If a limit is given, only the number of movies are printed, sorted from most popular. If not, top 10 movies are printed by default.
+If a limit is given, "limit" number of movies are printed, chosen from most popular. If not, top 10 movies are printed by default.
 
 ### How to install the program
 1. Download Dockerfile and run.sh from Blackboard.
@@ -353,6 +353,8 @@ root@c910a6e3e87b:~/project# curl -X GET http://localhost:8080/movies/recommenda
 
 * If you input "limit" extremely big, our recommendation returns as many movies as possible within the entered limit.
 > There exists 3883 movies in IMDb, but movies with less than 5 reviews will be excluded from our recommendation.
+
+* We do not re-recommend input movie as output.
 
 ### Roles of each member
 Everyone has contributed to all parts. However in this part, we will mention the part that each has mainly contributed.

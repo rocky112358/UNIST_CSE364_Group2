@@ -1,7 +1,174 @@
 # Movie Recommendation System: Movieblock
 for UNIST CSE364 Software Engineering
 
-## Milestone 2 (Deprecated)
+## Milestone 3
+
+### What did we do
+#### Repository structure
+```
+.
+├── data
+│   ├── links.dat
+│   ├── movies.dat
+│   ├── ratings.dat
+│   └── users.dat
+├── Dockerfile
+├── pom.xml
+├── README.md
+├── run.sh
+└── src
+    ├── main
+    │   └── java
+    │       └── se
+    │           └── group2
+    │               ├── ApiError.java
+    │               ├── Application.java
+    │               ├── InvalidInputException.java
+    │               ├── MovieblockController.java
+    │               ├── Movieblock.java
+    │               ├── MovieRecommendationInput.java
+    │               ├── RecommendationEngine.java
+    │               ├── RecommendationOutput.java
+    │               └── UserRecommendationInput.java
+    └── test
+        └── java
+            └── se
+                └── group2
+                    ├── ApiErrorTest.java
+                    ├── ApplicationTest.java
+                    ├── InvalidInputExceptionTest.java
+                    ├── MovieblockControllerTest.java
+                    ├── MovieblockTest.java
+                    ├── MovieRecommendationInputTest.java
+                    ├── RecommendationEngineTest.java
+                    ├── RecommendationOutputTest.java
+                    └── UserRecommendationInputTest.java
+
+10 directories, 26 files
+```
+We implemented REST APIs for recommending movies using Spring Framework.
+
+### How our recommendation algorithm works
+
+#### About implementation
+(대충 동민이형이 쓴다는 내용)
+Part II에서 사용자가 좋아하는 영화 제목이 주어지면 서비스는 주어진 영화 수를 포함하는 추천 영화 목록을 표시하는 REST API를 제공해야합니다. 추천 목록을 얻는 한 가지 방법은 먼저 입력 영화와 유사한 영화 목록을 찾은 다음 등급에 따라 해당 영화의 순위를 매기는 것입니다. Milestone 2와 마찬가지로 자체 알고리즘을 만들거나 기존 알고리즘을 사용할 수 있습니다. README의 소스 코드에서 알고리즘이 작동하는 방식과 알고리즘이 구현 된 위치를 언급하는 것을 잊지 마십시오. 기존 알고리즘을 사용하는 경우 참조도 제공하십시오.
+
+### How to install the program
+1. Download Dockerfile and run.sh from Blackboard.
+
+2. Put dockerfile and run.sh in the same directory path, build the image, and run the container.
+```text
+$ docker build -t milestone3 .
+
+Sending build context to Docker daemon  31.44MB
+Step 1/9 : FROM ubuntu:20.04
+ ---> 4dd97cefde62
+Step 2/9 : ARG DEBIAN_FRONTEND="noninteractive"
+ ---> Running in 008b87e642bb
+Removing intermediate container 008b87e642bb
+ ---> 9b39fb815563
+Step 3/9 : RUN apt-get update
+ ---> Running in 66b60d257f60
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:2 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+Get:3 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [829 kB]
+Get:4 http://archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:5 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [716 kB]
+Get:6 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [274 kB]
+Get:7 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [27.6 kB]
+Get:8 http://archive.ubuntu.com/ubuntu focal-backports InRelease [101 kB]
+Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1275 kB]
+Get:10 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
+Get:11 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
+Get:12 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
+Get:13 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [299 kB]
+Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [1246 kB]
+Get:15 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [29.8 kB]
+Get:16 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [973 kB]
+Get:17 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [4305 B]
+Fetched 17.8 MB in 7s (2722 kB/s)
+Reading package lists...
+Removing intermediate container 66b60d257f60
+ ---> 6e63a3a16227
+Step 4/9 : RUN apt-get -y install vim git openjdk-11-jdk maven
+
+...
+
+done.
+done.
+Removing intermediate container 7fda52e27c8a
+ ---> 7419a62837c9
+Step 5/9 : RUN mkdir -p /root/project
+ ---> Running in c7e1f4572294
+Removing intermediate container c7e1f4572294
+ ---> 1cb22177da3c
+Step 6/9 : WORKDIR /root/project
+ ---> Running in 5083ce0a8d8c
+Removing intermediate container 5083ce0a8d8c
+ ---> fa78bbfdeffd
+Step 7/9 : COPY run.sh /root/project
+ ---> 5b7a4d166652
+Step 8/9 : RUN chmod 755 run.sh
+ ---> Running in 7e4030ce7ab5
+Removing intermediate container 7e4030ce7ab5
+ ---> e750116ef5ec
+Step 9/9 : RUN /bin/bash
+ ---> Running in dd6a09bd56f3
+Removing intermediate container dd6a09bd56f3
+ ---> 8c2337ae710e
+Successfully built 8c2337ae710e
+Successfully tagged milestone3:latest
+
+$ docker run -it milestone3
+root@6738818f1e19:~/project#
+
+```
+3. Execute run.sh in container. (About 10 minutes)
+```text
+root@[containerID]:~/project# . run.sh 
+Cloning into 'UNIST_CSE364_Group2'...
+Username for 'https://github.com': [your username]
+Password for 'https://[your username]@github.com': [your password]
+
+...
+
+[INFO] Building jar: /root/project/UNIST_CSE364_Group2/target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  06:38 min
+[INFO] Finished at: 2021-05-24T14:25:00Z
+[INFO] ------------------------------------------------------------------------
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::       (v2.3.10.RELEASE)
+
+2021-05-24 14:25:01.675  INFO 522 --- [           main] se.group2.Application                    : Starting Application on 6738818f1e19 with PID 522 (/root/project/UNIST_CSE364_Group2/target/cse364-project-1.0-SNAPSHOT.jar started by root in /root/project/UNIST_CSE364_Group2)
+2021-05-24 14:25:01.678  INFO 522 --- [           main] se.group2.Application                    : No active profile set, falling back to default profiles: default
+2021-05-24 14:25:02.629  INFO 522 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-05-24 14:25:02.641  INFO 522 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-05-24 14:25:02.642  INFO 522 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2021-05-24 14:25:02.705  INFO 522 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-05-24 14:25:02.705  INFO 522 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 972 ms
+2021-05-24 14:25:02.887  INFO 522 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-24 14:25:03.032  INFO 522 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-05-24 14:25:03.044  INFO 522 --- [           main] se.group2.Application                    : Started Application in 1.752 seconds (JVM running for 2.123)
+...
+```
+
+### How to run the program
+1. After installing the program, you need to access another terminal session in the same server.
+
+---
+
+## ~~Milestone 2~~ (Deprecated)
 
 <details>
   <summary> Click to expand! </summary>

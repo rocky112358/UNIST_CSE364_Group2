@@ -1,11 +1,9 @@
 package se.group2;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class User {
-    @Id
     private int id;
     private String gender;
     private int age;

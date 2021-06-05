@@ -1,5 +1,6 @@
 package se.group2;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class MovieblockController {
     private static List<Link> links;
+    @Autowired
+    private MovieRepository movieRepository;
 
     public static void loadLinks(String filename) {
         List<Link> l = new ArrayList<>();
@@ -47,6 +50,11 @@ public class MovieblockController {
             }
         }
         return null;
+    }
+
+    @RequestMapping(value = "/movies")
+    public List<Movie> allMovies() {
+        return movieRepository.findAll();
     }
 
     @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})

@@ -118,7 +118,7 @@ public class Movieblock {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] properties = line.split("::");
-                Link link = new Link(properties[0], properties[1]);
+                Link link = new Link(Integer.parseInt(properties[0]), properties[1]);
                 l.add(link);
             }
             br.close();

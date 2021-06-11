@@ -8,5 +8,5 @@ public interface MovieRepository extends MongoRepository<Movie, String> {
     public List<Movie> findAll();
     public Movie findById(int id);
     public List<Movie> findByGenre(String genre);
-    public Movie findByTitle(String title);
+    public List<Movie> findByTitle(String title);
 }

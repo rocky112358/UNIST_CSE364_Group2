@@ -1,13 +1,15 @@
 package se.group2;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Rating {
+    @Id
+    int timestamp;
     int userId;
     int movieId;
     int rating;
-    int timestamp;
 
     public Rating(int userId, int movieId, int rating, int timestamp) {
         this.userId = userId;

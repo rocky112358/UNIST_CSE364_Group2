@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,10 +22,13 @@ import java.util.stream.Collectors;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
+@Service
 public class MovieblockController {
     private static List<Link> links;
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    RecommendationEngine recommendationEngine;
 
     public static void loadLinks(String filename) {
         List<Link> l = new ArrayList<>();
@@ -101,8 +105,7 @@ public class MovieblockController {
             }
         }
 
-        RecommendationEngine engine = new RecommendationEngine();
-        List<Movie> recommendationResults = engine.recommendMovies(input.getGender(), input.getAge(), occupationNo, genresInput, "", 10);
+        List<Movie> recommendationResults = recommendationEngine.recommendMovies(input.getGender(), input.getAge(), occupationNo, genresInput, "", 10);
 
         loadLinks("data/links.dat");
 
@@ -125,15 +128,12 @@ public class MovieblockController {
 
         Integer limit = Integer.parseInt(input.getLimit());
 
-        RecommendationEngine engine = new RecommendationEngine();
-        if(engine.getMovieByTitle(input.getTitle()) == null){
+        if(recommendationEngine.getMovieByTitle(input.getTitle()) == null){
             throw new InvalidInputException("Error: Movie does not exist");
         }
 
         List<String> genresInput = new ArrayList<>();
-        List<Movie> recommendationResults = engine.recommendMovies("", "", -1, genresInput, input.getTitle(), limit);
-
-        loadLinks("data/links.dat");
+        List<Movie> recommendationResults = recommendationEngine.recommendMovies("", "", -1, genresInput, input.getTitle(), limit);
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(

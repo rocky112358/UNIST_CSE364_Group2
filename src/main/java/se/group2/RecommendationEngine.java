@@ -1,10 +1,12 @@
 package se.group2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 public class RecommendationEngine {
     @Autowired
     private MovieRepository movieRepository;
@@ -22,7 +24,7 @@ public class RecommendationEngine {
     }
 
     public Movie getMovieByTitle(String title){
-        return movieRepository.findByTitle(title);
+        return movieRepository.findByTitle(title).get(0);
     }
 
     public Rating getRatingByUserAndMovie(int userId, int movieId) {

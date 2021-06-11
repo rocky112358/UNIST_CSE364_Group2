@@ -1,9 +1,11 @@
 package se.group2;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Link {
+    @Id
     int movieId;
     String imdbId;
 

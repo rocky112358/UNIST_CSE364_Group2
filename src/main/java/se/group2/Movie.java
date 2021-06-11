@@ -1,11 +1,13 @@
 package se.group2;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Document
 public class Movie {
+    @Id
     int id;
     String title;
     List<String> genre;

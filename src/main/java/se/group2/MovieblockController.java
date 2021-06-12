@@ -1,9 +1,11 @@
 package se.group2;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +22,15 @@ import java.util.stream.Collectors;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
+@Service
 public class MovieblockController {
     private static List<Link> links;
+    @Autowired
+    private MovieRepository movieRepository;
+    @Autowired
+    private LinkRepository linkRepository;
+    @Autowired
+    RecommendationEngine recommendationEngine;
 
     public static void loadLinks(String filename) {
         List<Link> l = new ArrayList<>();
@@ -30,7 +39,7 @@ public class MovieblockController {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] properties = line.split("::");
-                Link link = new Link(properties[0], properties[1]);
+                Link link = new Link(Integer.parseInt(properties[0]), properties[1]);
                 l.add(link);
             }
             br.close();
@@ -40,13 +49,17 @@ public class MovieblockController {
         links = l;
     }
 
-    public static String printMovie(Movie movie) {
-        for (Link l: links) {
-            if (l.movieId == movie.id) {
-                return String.format("http://www.imdb.com/title/tt%s", l.imdbId);
-            }
+    public String printMovie(Movie movie) {
+        Link l = linkRepository.findByMovieId(movie.id);
+        if (l != null) {
+            return String.format("http://www.imdb.com/title/tt%s", l.imdbId);
         }
         return null;
+    }
+
+    @RequestMapping(value = "/movies")
+    public List<Movie> allMovies() {
+        return movieRepository.findAll();
     }
 
     @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
@@ -93,10 +106,7 @@ public class MovieblockController {
             }
         }
 
-        RecommendationEngine engine = new RecommendationEngine();
-        List<Movie> recommendationResults = engine.recommendMovies(input.getGender(), input.getAge(), occupationNo, genresInput, "", 10);
-
-        loadLinks("data/links.dat");
+        List<Movie> recommendationResults = recommendationEngine.recommendMovies(input.getGender(), input.getAge(), occupationNo, genresInput, "", 10);
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(
@@ -117,15 +127,12 @@ public class MovieblockController {
 
         Integer limit = Integer.parseInt(input.getLimit());
 
-        RecommendationEngine engine = new RecommendationEngine();
-        if(engine.getMovieByTitle(input.getTitle()) == null){
+        if(recommendationEngine.getMovieByTitle(input.getTitle()) == null){
             throw new InvalidInputException("Error: Movie does not exist");
         }
 
         List<String> genresInput = new ArrayList<>();
-        List<Movie> recommendationResults = engine.recommendMovies("", "", -1, genresInput, input.getTitle(), limit);
-
-        loadLinks("data/links.dat");
+        List<Movie> recommendationResults = recommendationEngine.recommendMovies("", "", -1, genresInput, input.getTitle(), limit);
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(

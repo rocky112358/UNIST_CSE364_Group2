@@ -4,8 +4,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-import java.util.*;
-
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
@@ -176,33 +174,33 @@ public class MovieblockTest {
 
     @Test
     public void userCanBeAgeTest() {
-        User u = new User("1", "f", "1", "1", "");
+        User u = new User(1, "f", 1, 1, "");
         assertFalse(u.canBeAge(""));
         assertTrue(u.canBeAge("17"));
         assertFalse(u.canBeAge("18"));
-        u = new User("1", "f", "18", "1", "");
+        u = new User(1, "f", 18, 1, "");
         assertFalse(u.canBeAge("17"));
         assertTrue(u.canBeAge("18"));
         assertTrue(u.canBeAge("24"));
         assertFalse(u.canBeAge("25"));
-        u = new User("1", "f", "25", "1", "");
+        u = new User(1, "f", 25, 1, "");
         assertFalse(u.canBeAge("24"));
         assertTrue(u.canBeAge("25"));
         assertTrue(u.canBeAge("34"));
         assertFalse(u.canBeAge("35"));
-        u = new User("1", "f", "35", "1", "");
+        u = new User(1, "f", 35, 1, "");
         assertTrue(u.canBeAge("35"));
         assertFalse(u.canBeAge("45"));
-        u = new User("1", "f", "45", "1", "");
+        u = new User(1, "f", 45, 1, "");
         assertTrue(u.canBeAge("45"));
         assertFalse(u.canBeAge("50"));
-        u = new User("1", "f", "50", "1", "");
+        u = new User(1, "f", 50, 1, "");
         assertTrue(u.canBeAge("50"));
         assertFalse(u.canBeAge("56"));
-        u = new User("1", "f", "56", "1", "");
+        u = new User(1, "f", 56, 1, "");
         assertTrue(u.canBeAge("56"));
         assertFalse(u.canBeAge("1"));
-        u = new User("1", "f", "999", "1", "");
+        u = new User(1, "f", 999, 1, "");
         assertFalse(u.canBeAge("1"));
     }
 
@@ -213,20 +211,6 @@ public class MovieblockTest {
         Movieblock.main(args);
 
         assertEquals("Args: gender age occupation genre(s) title limit", outStream.toString().strip());
-    }
-
-    @Test
-    public void normalArgumentTest1() {
-        String[] args = {"F", "25", "gradstudent", "", "", "10"};
-
-        Movieblock.main(args);
-    }
-
-    @Test
-    public void normalArgumentTest2() {
-        String[] args = {"F", "25", "gradstudent", "drama", "", ""};
-
-        Movieblock.main(args);
     }
 
     @Test

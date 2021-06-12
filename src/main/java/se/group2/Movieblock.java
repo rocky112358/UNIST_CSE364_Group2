@@ -1,97 +1,22 @@
 package se.group2;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.stream.Collectors;
-
-class Movie {
-    int id;
-    String title;
-    List<String> genre;
-
-    public Movie(String i, String t, String g) {
-        id = Integer.parseInt(i);
-        title = t;
-        genre = Arrays.asList(g.split("\\|"));
-    }
-}
-
-class User {
-    int id;
-    String gender;
-    int age;
-    int occupation;
-    String zipcode;
-
-    public User(String i, String g, String a, String o, String z) {
-        id = Integer.parseInt(i);
-        gender = g;
-        age = Integer.parseInt(a);
-        occupation = Integer.parseInt(o);
-        zipcode = z;
-    }
-
-    public boolean canBeAge(String a) {
-        if (a.equals("")) {
-            return false;
-        } else if (age == 1) {
-            return Integer.parseInt(a) < 18;
-        } else if (age == 18) {
-            return 18 <= Integer.parseInt(a) && Integer.parseInt(a) <= 24;
-        } else if (age == 25) {
-            return 25 <= Integer.parseInt(a) && Integer.parseInt(a) <= 34;
-        } else if (age == 35) {
-            return 35 <= Integer.parseInt(a) && Integer.parseInt(a) <= 44;
-        } else if (age == 45) {
-            return 45 <= Integer.parseInt(a) && Integer.parseInt(a) <= 49;
-        } else if (age == 50) {
-            return 50 <= Integer.parseInt(a) && Integer.parseInt(a) <= 55;
-        } else if (age == 56) {
-            return 56 <= Integer.parseInt(a);
-        } else {
-            return false;
-        }
-    }
-}
-
-class Rating {
-    int userId;
-    int movieId;
-    int rating;
-    int timestamp;
-
-    public Rating(String u, String m, String r, String t) {
-        userId = Integer.parseInt(u);
-        movieId = Integer.parseInt(m);
-        rating = Integer.parseInt(r);
-        timestamp = Integer.parseInt(t);
-    }
-}
-
-class Link {
-    int movieId;
-    String imdbId;
-
-    public Link(String m, String i) {
-        movieId = Integer.parseInt(m);
-        imdbId = i;
-    }
-}
 
 public class Movieblock {
     private static List<Link> links;
+    @Autowired
+    private LinkRepository linkRepository;
 
     public Link getLinkByMovieId(int id) {
-        for (Link l: links) {
-            return l;
-        }
-        return null;
+        return linkRepository.findByMovieId(id);
     }
 
     public static boolean validateGenderInput(String genderInput) {
@@ -193,7 +118,7 @@ public class Movieblock {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] properties = line.split("::");
-                Link link = new Link(properties[0], properties[1]);
+                Link link = new Link(Integer.parseInt(properties[0]), properties[1]);
                 l.add(link);
             }
             br.close();

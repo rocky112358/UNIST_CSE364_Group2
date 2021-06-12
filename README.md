@@ -1,6 +1,8 @@
 # Movie Recommendation System: Movieblock
 for UNIST CSE364 Software Engineering
 
+![example workflow](https://github.com/rocky112358/UNIST_CSE364_Group2/actions/workflows/maven.yml/badge.svg)
+
 ## Milestone 3
 
 ### What did we do

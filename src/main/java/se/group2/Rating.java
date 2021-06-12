@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Rating {
-    @Id
     int timestamp;
     int userId;
     int movieId;

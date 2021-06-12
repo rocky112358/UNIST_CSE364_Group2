@@ -38,7 +38,9 @@ public class RecommendationEngine {
         // first, divide users in 8 groups, each has same(similar)/different properties with the input for each property.
         // we have 3 properties, so there are 2^3=8 groups
         int[] groupCount = new int[8];
-        for (User u: userRepository.findAll()) {
+
+        List<User> users = userRepository.findAll();
+        for (User u: users) {
             int ind = (0b100 * (u.getGender().equals(genderInput) ? 1 : 0)) |
                     (0b10 * (u.canBeAge(ageInput) ? 1 : 0)) |
                     (u.getOccupation()==occupationInput ? 1 : 0);
@@ -48,7 +50,8 @@ public class RecommendationEngine {
         HashMap<Integer, Double> movieRatingSum = new HashMap<>();
         HashMap<Integer, Integer> movieRatingCnt = new HashMap<>();
 
-        for (Movie m: movieRepository.findAll()) {
+        List<Movie> movies = movieRepository.findAll();
+        for (Movie m: movies) {
             movieRatingSum.put(m.id, 0.0);
             movieRatingCnt.put(m.id, 0);
         }
@@ -57,12 +60,17 @@ public class RecommendationEngine {
         // to give more weight as the group is smaller, less weight as the group is larger.
         // the weight get closer to 1 as the group is larger.
 
-        for (Rating r: ratingRepository.findAll()) {
-            User user = getUserById(r.userId);
+        List<Rating> ratings = ratingRepository.findAll();
+        HashMap<Integer, User> userMap = new HashMap<>();
+        for (User u: users) {
+            userMap.put(u.getId(), u);
+        }
+        for (Rating r: ratings) {
+            User user = userMap.get(r.userId);
             double groupRatio = (double)groupCount[
                     (0b100 * (user.getGender().equals(genderInput) ? 1 : 0)) |
                     (0b10 * (user.canBeAge(ageInput) ? 1 : 0)) |
-                    (user.getOccupation()==occupationInput ? 1 : 0)] / userRepository.count();
+                    (user.getOccupation()==occupationInput ? 1 : 0)] / userMap.size();
             double weight = Math.exp(1 - groupRatio);
             movieRatingSum.put(r.movieId, movieRatingSum.get(r.movieId) + r.rating * weight);
             movieRatingCnt.put(r.movieId, movieRatingCnt.get(r.movieId) + 1);

@@ -6,12 +6,9 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
-import java.util.*;
-
-import static org.junit.Assert.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
 
 public class MovieblockControllerTest {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -34,16 +31,6 @@ public class MovieblockControllerTest {
     @Test
     public void loadLinksTest(){
         MovieblockController.loadLinks("data/links.dat");
-    }
-
-    @Test
-    public void printMovieTest(){
-        MovieblockController testcontroller = new MovieblockController();
-        testcontroller.loadLinks("data/links.dat");
-
-        Movie testmovie = new Movie("1", "Toy Story (1995)", "Animation|Children's|Comedy");
-
-        assertEquals("http://www.imdb.com/title/tt0114709",testcontroller.printMovie(testmovie));
     }
 
     @Rule
@@ -170,18 +157,6 @@ public class MovieblockControllerTest {
         MovieRecommendationInput testinput = new MovieRecommendationInput();
 
         //testinput.setTitle("");
-        testcontroller.movieRecommendations(testinput);
-    }
-
-    @Test
-    public void movieRecommendationsInvalidTitleTest() throws Exception{
-        expectedExcetption.expect(InvalidInputException.class);
-        expectedExcetption.expectMessage("Error: Movie does not exist");
-
-        MovieblockController testcontroller = new MovieblockController();
-        MovieRecommendationInput testinput = new MovieRecommendationInput();
-
-        testinput.setTitle("nongdamgom");
         testcontroller.movieRecommendations(testinput);
     }
 

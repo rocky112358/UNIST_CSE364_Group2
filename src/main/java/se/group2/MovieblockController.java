@@ -28,6 +28,8 @@ public class MovieblockController {
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
+    private LinkRepository linkRepository;
+    @Autowired
     RecommendationEngine recommendationEngine;
 
     public static void loadLinks(String filename) {
@@ -47,11 +49,10 @@ public class MovieblockController {
         links = l;
     }
 
-    public static String printMovie(Movie movie) {
-        for (Link l: links) {
-            if (l.movieId == movie.id) {
-                return String.format("http://www.imdb.com/title/tt%s", l.imdbId);
-            }
+    public String printMovie(Movie movie) {
+        Link l = linkRepository.findByMovieId(movie.id);
+        if (l != null) {
+            return String.format("http://www.imdb.com/title/tt%s", l.imdbId);
         }
         return null;
     }
@@ -106,8 +107,6 @@ public class MovieblockController {
         }
 
         List<Movie> recommendationResults = recommendationEngine.recommendMovies(input.getGender(), input.getAge(), occupationNo, genresInput, "", 10);
-
-        loadLinks("data/links.dat");
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(

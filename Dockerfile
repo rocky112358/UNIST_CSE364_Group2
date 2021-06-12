@@ -6,7 +6,7 @@ FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND="noninteractive"
 
 RUN apt-get update
-RUN apt-get -y install vim git openjdk-11-jdk maven curl
+RUN apt-get -y install vim git openjdk-11-jdk maven curl mongodb
 
 #Create /root/project folder and set it as WORKDIR.
 RUN mkdir -p /root/project
@@ -17,6 +17,7 @@ WORKDIR /root/project
 #The details are given in Submission Instructions.
 COPY run.sh /root/project
 RUN chmod 755 run.sh
+RUN mongod --fork --dbpath=/var/lib/mongodb --logpath /var/log/mongod.log
 
 #The container should execute a bash shell by default when the built image is launched.
 RUN /bin/bash

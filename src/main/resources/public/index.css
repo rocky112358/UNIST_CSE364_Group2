@@ -1,0 +1,44 @@
+.movieList {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+#userInput {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+nav {
+    padding-bottom: 10px;
+}
+
+.img {
+    object-fit: cover;
+}
+
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 900;
+}
+
+.title-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.description-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.moviePoster {
+    height: 350px;
+    padding: 5px;
+}
+
+#submit-btn {
+    float: right;
+}

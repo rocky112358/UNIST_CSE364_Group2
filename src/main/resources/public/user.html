@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movieblock</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,900;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid logo-text">
+        <a class="navbar-brand" href="#">Movieblock</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="user.html">Recommend by User Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="favorite.html">Recommend by a Favorite Movie</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="userInput" class="card container">
+    <div class="description-text">
+        Please fill out a form below to get a list of recommended movies!
+    </div>
+    <form action="#">
+        <div class="mb-3 row">
+            <label for="gender" class="description-text col-sm-2 col-form-label">Gender</label>
+            <div class="col-sm-10">
+                <select class="form-select" name="gender" id="gender">
+                    <option value="">All</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="age" class="description-text col-sm-2 col-form-label">Age</label>
+            <div class="col-sm-10">
+                <input type="number" id="age" class="form-control" name="age" min="1" max="99"
+                       placeholder="Type in number (1-99)">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="occupation" class="description-text col-sm-2 col-form-label">Occupation</label>
+            <div class="col-sm-10">
+                <select class="form-select" name="occupation" id="occupation">
+                    <option value="">Not selected</option>
+                    <option value="other">other</option>
+                    <option value="academic">academic</option>
+                    <option value="educator">educator</option>
+                    <option value="artist">artist</option>
+                    <option value="clerical">clerical</option>
+                    <option value="admin">admin</option>
+                    <option value="college student">college student</option>
+                    <option value="grad student">grad student</option>
+                    <option value="customer service">customer service</option>
+                    <option value="doctor">doctor</option>
+                    <option value="health care">health care</option>
+                    <option value="executive">executive</option>
+                    <option value="managerial">managerial</option>
+                    <option value="farmer">farmer</option>
+                    <option value="homemaker">homemaker</option>
+                    <option value="K-12 student">K-12 student</option>
+                    <option value="lawyer">lawyer</option>
+                    <option value="programmer">programmer</option>
+                    <option value="retired">retired</option>
+                    <option value="sales">sales</option>
+                    <option value="marketing">marketing</option>
+                    <option value="scientist">scientist</option>
+                    <option value="self-employed">self-employed</option>
+                    <option value="scientist">scientist</option>
+                    <option value="technician">technician</option>
+                    <option value="engineer">engineer</option>
+                    <option value="tradesman">tradesman</option>
+                    <option value="craftsman">craftsman</option>
+                    <option value="unemployed">unemployed</option>
+                    <option value="writer">writer</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="genres" class="description-text col-sm-2 col-form-label">Genres</label>
+            <div class="col-sm-10" id="genres">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Action" value="Action">
+                    <label class="form-check-label" for="genre-Action">Action</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Adventure" value="Adventure">
+                    <label class="form-check-label" for="genre-Adventure">Adventure</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Animation" value="Animation">
+                    <label class="form-check-label" for="genre-Animation">Animation</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Childrens" value="Childrens">
+                    <label class="form-check-label" for="genre-Childrens">Children's</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Comedy" value="Comedy">
+                    <label class="form-check-label" for="genre-Comedy">Comedy</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Crime" value="Crime">
+                    <label class="form-check-label" for="genre-Crime">Crime</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Documentary" value="Documentary">
+                    <label class="form-check-label" for="genre-Documentary">Documentary</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Drama" value="Drama">
+                    <label class="form-check-label" for="genre-Drama">Drama</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Fantasy" value="Fantasy">
+                    <label class="form-check-label" for="genre-Fantasy">Fantasy</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Film-Noir" value="Film-Noir">
+                    <label class="form-check-label" for="genre-Film-Noir">Film-Noir</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Horror" value="Horror">
+                    <label class="form-check-label" for="genre-Horror">Horror</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Musical" value="Musical">
+                    <label class="form-check-label" for="genre-Musical">Musical</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Mystery" value="Mystery">
+                    <label class="form-check-label" for="genre-Mystery">Mystery</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Romance" value="Romance">
+                    <label class="form-check-label" for="genre-Romance">Romance</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Sci-Fi" value="Sci-Fi">
+                    <label class="form-check-label" for="genre-Sci-Fi">Sci-Fi</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Thriller" value="Thriller">
+                    <label class="form-check-label" for="genre-Thriller">Thriller</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-War" value="War">
+                    <label class="form-check-label" for="genre-War">War</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="genre-Western" value="Western">
+                    <label class="form-check-label" for="genre-Western">Western</label>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="submit-btn" class="btn btn-primary mb-3">Submit</button>
+    </form>
+</div>
+<div id="topMovie">
+    <div class="title-text">
+        Movies recommended for you!
+    </div>
+    <div class="movieList">
+        <div id="recom-movie" class="movieList">
+            <img src="https://dummyimage.com/250x350/999999/000000&text=Waiting+Input">
+        </div>
+    </div>
+</div>
+<script>
+    let getGenre = () => {
+        let result = []
+        if ($("#genre-Action").is(":checked")) {
+            result.push("action")
+        }
+        if ($("#genre-Adventure").is(":checked")) {
+            result.push("adventure")
+        }
+        if ($("#genre-Animation").is(":checked")) {
+            result.push("animation")
+        }
+        if ($("#genre-Childrens").is(":checked")) {
+            result.push("children's")
+        }
+        if ($("#genre-Comedy").is(":checked")) {
+            result.push("comedy")
+        }
+        if ($("#genre-Crime").is(":checked")) {
+            result.push("crime")
+        }
+        if ($("#genre-Documentary").is(":checked")) {
+            result.push("documentary")
+        }
+        if ($("#genre-Drama").is(":checked")) {
+            result.push("drama")
+        }
+        if ($("#genre-Fantasy").is(":checked")) {
+            result.push("fantasy")
+        }
+        if ($("#genre-Film-Noir").is(":checked")) {
+            result.push("film-noir")
+        }
+        if ($("#genre-Horror").is(":checked")) {
+            result.push("horror")
+        }
+        if ($("#genre-Musical").is(":checked")) {
+            result.push("musical")
+        }
+        if ($("#genre-Mystery").is(":checked")) {
+            result.push("mystery")
+        }
+        if ($("#genre-Romance").is(":checked")) {
+            result.push("romance")
+        }
+        if ($("#genre-Sci-Fi").is(":checked")) {
+            result.push("sci-fi")
+        }
+        if ($("#genre-Thriller").is(":checked")) {
+            result.push("thriller")
+        }
+        if ($("#genre-War").is(":checked")) {
+            result.push("war")
+        }
+        if ($("#genre-Western").is(":checked")) {
+            result.push("western")
+        }
+        return result.join("|")
+    }
+    $("#submit-btn").click(function (event) {
+        if ($("#gender").val() in ["", "M", "F"]) {
+
+        } else {
+            $.ajax({
+                dataType: "JSON",
+                url: "http://localhost:8080/users/recommendations",
+                data: JSON.stringify({
+                    "gender": $("#gender").val(),
+                    "age": $("#age").val(),
+                    "occupation": $("#occupation").val(),
+                    "genres": getGenre()
+                }),
+                contentType: "application/json; charset=utf-8",
+                method: "POST",
+                data_type: "json",
+                success: function (data) {
+                    let movies = document.createElement('div');
+                    movies.id = "recom-movie"
+                    $.each(data.reverse(), function (index, movie) {
+                        $.ajax({
+                                dataType: "JSON",
+                                url: `http://localhost:8080/posters?id=${movie.id}`,
+                                contentType: "application/json; charset=utf-8",
+                                method: "GET",
+                                success: function (ml) {
+                                    let hyperlink = document.createElement('a');
+                                    hyperlink.href = movie.imdb;
+                                    let poster = document.createElement('img');
+                                    poster.src = ml.imageLink;
+                                    poster.alt = movie.title;
+                                    poster.className = "moviePoster";
+                                    poster.onerror = function () {
+                                        this.onerror = null;
+                                        this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                                    }
+                                    hyperlink.appendChild(poster);
+                                    movies.prepend(hyperlink);
+                                },
+                                error: function () {
+                                    let hyperlink = document.createElement('a');
+                                    hyperlink.href = movie.imdb;
+                                    let poster = document.createElement('img');
+                                    poster.src = "";
+                                    poster.alt = movie.title;
+                                    poster.className = "moviePoster";
+                                    poster.onerror = function () {
+                                        this.onerror = null;
+                                        this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                                    }
+                                    hyperlink.appendChild(poster);
+                                    movies.prepend(hyperlink);
+                                }
+                            }
+                        )
+                    })
+                    $("#recom-movie").replaceWith(movies);
+                }
+            });
+        }
+        event.preventDefault();
+    })
+
+</script>
+</body>
+</html>

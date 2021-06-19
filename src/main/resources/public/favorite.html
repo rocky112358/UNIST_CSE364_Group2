@@ -99,6 +99,8 @@
             errorMessage.text("Invalid number of movies")
         } else {
             $("#loading-img").attr("src", "https://dummyimage.com/250x350/999999/000000&text=Loading+Movies");
+            let errorMessage = $("#inputErrorMessage");
+            errorMessage.text("")
             $.ajax({
                 dataType: "JSON",
                 url: "http://localhost:8080/movies/recommendations",

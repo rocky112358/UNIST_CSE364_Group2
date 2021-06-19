@@ -42,6 +42,7 @@ public class CsvToMongoJob {
                 .next(step2())
                 .next(step3())
                 .next(step4())
+                .next(step5())
                 .build();
     }
 

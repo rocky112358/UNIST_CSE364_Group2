@@ -117,7 +117,7 @@ public class MovieblockController {
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(
-                        movie.title, String.join("|", movie.genre), printMovie(movie)))
+                        movie.id, movie.title, String.join("|", movie.genre), printMovie(movie)))
         ).collect(Collectors.toList());
     }
 
@@ -143,7 +143,7 @@ public class MovieblockController {
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(
-                        movie.title, String.join("|", movie.genre), printMovie(movie)))
+                        movie.id, movie.title, String.join("|", movie.genre), printMovie(movie)))
         ).collect(Collectors.toList());
     }
 

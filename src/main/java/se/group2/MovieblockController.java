@@ -57,9 +57,16 @@ public class MovieblockController {
         return null;
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/movies")
     public List<Movie> allMovies() {
         return movieRepository.findAll();
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/links")
+    public List<Link> allLinks() {
+        return linkRepository.findAll();
     }
 
     @CrossOrigin(origins = "*")

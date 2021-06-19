@@ -30,6 +30,8 @@ public class MovieblockController {
     @Autowired
     private LinkRepository linkRepository;
     @Autowired
+    private MoviePosterRepository moviePosterRepository;
+    @Autowired
     RecommendationEngine recommendationEngine;
 
     public static void loadLinks(String filename) {
@@ -63,6 +65,11 @@ public class MovieblockController {
     }
 
     @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/posters")
+    public MoviePoster getMoviePoster(@RequestParam Integer id) {
+        return moviePosterRepository.findByMovieId(id);
+    }
     public List<RecommendationOutput> userRecommendations(@RequestBody UserRecommendationInput input) throws InvalidInputException {
         // TODO: load data on application startup to save time
         if (input.getAge() == null) {

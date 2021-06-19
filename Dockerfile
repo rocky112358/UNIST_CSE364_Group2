@@ -39,7 +39,7 @@ RUN echo '/bin/bash' >> /root/project/start.sh
 RUN chmod a+x /root/project/start.sh
 
 CMD ["/root/project/start.sh"]
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-c"]
 
 #Run /to/tomcat/catalina.sh start
 #RUN /opt/tomcat/bin/catalina.sh start

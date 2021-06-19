@@ -12,12 +12,34 @@ RUN apt-get -y install vim git openjdk-11-jdk maven curl mongodb
 RUN mkdir -p /root/project
 WORKDIR /root/project
 
-#Add your run.sh file to /root/project in the docker container. 
-#Your run.sh must include command lines that git clone your_repository, cd your_repository, mvn instll, and java command to run your code. 
-#The details are given in Submission Instructions.
+#Download and install Tomcat
+RUN mkdir /opt/tomcat
+RUN curl -LO http://mirror.23media.de/apache/tomcat/tomcat-8/v8.5.30/bin/apache-tomcat-8.5.30.tar.gz
+RUN tar xvf apache-tomcat-8.5.30.tar.gz -C /opt/tomcat --strip-components=1
+
+RUN groupadd tomcat
+RUN useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
+RUN cd /opt/tomcat
+RUN chgrp -R tomcat /opt/tomcat/conf
+RUN chmod g+rwx /opt/tomcat/conf
+RUN chmod g+r /opt/tomcat/conf/*
+RUN rm -rf /opt/tomcat/webapps/ROOT
+
+#Copy WAR file from the host machine to the proper directory in docker
+COPY ROOT.war /opt/tomcat/webapps
+RUN chmod 755 /opt/tomcat/webapps/ROOT.war
+
 COPY run.sh /root/project
 RUN chmod 755 run.sh
-RUN mongod --fork --dbpath=/var/lib/mongodb --logpath /var/log/mongod.log
 
-#The container should execute a bash shell by default when the built image is launched.
-RUN /bin/bash
+RUN echo '#!/bin/bash' >> /root/project/start.sh 
+RUN echo 'mongod --fork --dbpath=/var/lib/mongodb --logpath=/var/log/mongod.log' >> /root/project/start.sh
+RUN echo '/opt/tomcat/bin/catalina.sh run' >> /root/project/start.sh
+RUN echo '/bin/bash' >> /root/project/start.sh
+RUN chmod a+x /root/project/start.sh
+
+CMD ["/root/project/start.sh"]
+ENTRYPOINT ["/bin/bash", "-c"]
+
+#Run /to/tomcat/catalina.sh start
+#RUN /opt/tomcat/bin/catalina.sh start

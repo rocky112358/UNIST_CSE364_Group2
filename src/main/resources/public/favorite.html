@@ -46,12 +46,15 @@
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="limit" class="description-text col-sm-2 col-form-label">Age</label>
+            <label for="limit" class="description-text col-sm-2 col-form-label">Number of Movies</label>
             <div class="col-sm-10">
                 <input type="number" id="limit" class="form-control" name="limit" min="1" max="99"
                        placeholder="Type in number">
             </div>
         </div>
+        <p id="inputErrorMessage">
+
+        </p>
         <button type="button" id="submit-btn" class="btn btn-primary mb-3">Submit</button>
     </form>
 </div>
@@ -61,13 +64,14 @@
     </div>
     <div class="movieList">
         <div id="recom-movie" class="movieList">
-            <img src="https://dummyimage.com/250x350/999999/000000&text=Waiting+Input">
+            <img id="loading-img" src="https://dummyimage.com/250x350/999999/000000&text=Waiting+Input">
         </div>
     </div>
 </div>
 <script>
     movieTitleArea = $("#datalistOptions")
     movieInput = $("#movieTitle")
+    let allMovieTitles = [];
     $.ajax({
             dataType: "JSON",
             url: `http://localhost:8080/movies`,
@@ -78,67 +82,77 @@
                     let opt = document.createElement("option");
                     opt.value = movie.title;
                     movieTitleArea.append(opt);
+                    allMovieTitles.push(movie.title);
                 })
-                movieInput.attr("placeholder", "Type to search...")
+                movieInput.attr("placeholder", "Type to search, leave empty for any movie")
             },
             error: function () {
             }
         }
     )
     $("#submit-btn").click(function (event) {
-        $.ajax({
-            dataType: "JSON",
-            url: "http://localhost:8080/movies/recommendations",
-            data: JSON.stringify({
-                "title": $("#movieTitle").val(),
-                "limit": $("#limit").val()
-            }),
-            contentType: "application/json; charset=utf-8",
-            method: "POST",
-            data_type: "json",
-            success: function (data) {
-                let movies = document.createElement('div');
-                movies.id = "recom-movie"
-                $.each(data.reverse(), function (index, movie) {
-                    $.ajax({
-                            dataType: "JSON",
-                            url: `http://localhost:8080/posters?id=${movie.id}`,
-                            contentType: "application/json; charset=utf-8",
-                            method: "GET",
-                            success: function (ml) {
-                                let hyperlink = document.createElement('a');
-                                hyperlink.href = movie.imdb;
-                                let poster = document.createElement('img');
-                                poster.src = ml.imageLink;
-                                poster.alt = movie.title;
-                                poster.className = "moviePoster";
-                                poster.onerror = function () {
-                                    this.onerror = null;
-                                    this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+        if (!allMovieTitles.includes($("#movieTitle").val())) {
+            let errorMessage = $("#inputErrorMessage");
+            errorMessage.text("Invalid movie title")
+        } else if ($("#limit").val() <= 0) {
+            let errorMessage = $("#inputErrorMessage");
+            errorMessage.text("Invalid number of movies")
+        } else {
+            $("#loading-img").attr("src", "https://dummyimage.com/250x350/999999/000000&text=Loading+Movies");
+            $.ajax({
+                dataType: "JSON",
+                url: "http://localhost:8080/movies/recommendations",
+                data: JSON.stringify({
+                    "title": $("#movieTitle").val(),
+                    "limit": $("#limit").val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                method: "POST",
+                data_type: "json",
+                success: function (data) {
+                    let movies = document.createElement('div');
+                    movies.id = "recom-movie"
+                    $.each(data.reverse(), function (index, movie) {
+                        $.ajax({
+                                dataType: "JSON",
+                                url: `http://localhost:8080/posters?id=${movie.id}`,
+                                contentType: "application/json; charset=utf-8",
+                                method: "GET",
+                                success: function (ml) {
+                                    let hyperlink = document.createElement('a');
+                                    hyperlink.href = movie.imdb;
+                                    let poster = document.createElement('img');
+                                    poster.src = ml.imageLink;
+                                    poster.alt = movie.title;
+                                    poster.className = "moviePoster";
+                                    poster.onerror = function () {
+                                        this.onerror = null;
+                                        this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                                    }
+                                    hyperlink.appendChild(poster);
+                                    movies.prepend(hyperlink);
+                                },
+                                error: function () {
+                                    let hyperlink = document.createElement('a');
+                                    hyperlink.href = movie.imdb;
+                                    let poster = document.createElement('img');
+                                    poster.src = "";
+                                    poster.alt = movie.title;
+                                    poster.className = "moviePoster";
+                                    poster.onerror = function () {
+                                        this.onerror = null;
+                                        this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                                    }
+                                    hyperlink.appendChild(poster);
+                                    movies.prepend(hyperlink);
                                 }
-                                hyperlink.appendChild(poster);
-                                movies.prepend(hyperlink);
-                            },
-                            error: function () {
-                                let hyperlink = document.createElement('a');
-                                hyperlink.href = movie.imdb;
-                                let poster = document.createElement('img');
-                                poster.src = "";
-                                poster.alt = movie.title;
-                                poster.className = "moviePoster";
-                                poster.onerror = function () {
-                                    this.onerror = null;
-                                    this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
-                                }
-                                hyperlink.appendChild(poster);
-                                movies.prepend(hyperlink);
                             }
-                        }
-                    )
-                })
-                $("#recom-movie").replaceWith(movies);
-            }
-        });
+                        )
+                    })
+                    $("#recom-movie").replaceWith(movies);
+                }
+            });
+        }
     })
 
 

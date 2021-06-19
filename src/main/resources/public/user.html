@@ -51,14 +51,14 @@
             <label for="age" class="description-text col-sm-2 col-form-label">Age</label>
             <div class="col-sm-10">
                 <input type="number" id="age" class="form-control" name="age" min="1" max="99"
-                       placeholder="Type in number (1-99)">
+                       placeholder="Type in number (1-99), leave empty for any age" pattern="[0-9]">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="occupation" class="description-text col-sm-2 col-form-label">Occupation</label>
             <div class="col-sm-10">
                 <select class="form-select" name="occupation" id="occupation">
-                    <option value="">Not selected</option>
+                    <option value="">Any occupation</option>
                     <option value="other">other</option>
                     <option value="academic">academic</option>
                     <option value="educator">educator</option>
@@ -96,79 +96,82 @@
             <label for="genres" class="description-text col-sm-2 col-form-label">Genres</label>
             <div class="col-sm-10" id="genres">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Action" value="Action">
+                    <input class="form-check-input" type="checkbox" id="genre-Action" value="Action" checked>
                     <label class="form-check-label" for="genre-Action">Action</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Adventure" value="Adventure">
+                    <input class="form-check-input" type="checkbox" id="genre-Adventure" value="Adventure" checked>
                     <label class="form-check-label" for="genre-Adventure">Adventure</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Animation" value="Animation">
+                    <input class="form-check-input" type="checkbox" id="genre-Animation" value="Animation" checked>
                     <label class="form-check-label" for="genre-Animation">Animation</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Childrens" value="Childrens">
+                    <input class="form-check-input" type="checkbox" id="genre-Childrens" value="Childrens" checked>
                     <label class="form-check-label" for="genre-Childrens">Children's</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Comedy" value="Comedy">
+                    <input class="form-check-input" type="checkbox" id="genre-Comedy" value="Comedy" checked>
                     <label class="form-check-label" for="genre-Comedy">Comedy</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Crime" value="Crime">
+                    <input class="form-check-input" type="checkbox" id="genre-Crime" value="Crime" checked>
                     <label class="form-check-label" for="genre-Crime">Crime</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Documentary" value="Documentary">
+                    <input class="form-check-input" type="checkbox" id="genre-Documentary" value="Documentary" checked>
                     <label class="form-check-label" for="genre-Documentary">Documentary</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Drama" value="Drama">
+                    <input class="form-check-input" type="checkbox" id="genre-Drama" value="Drama" checked>
                     <label class="form-check-label" for="genre-Drama">Drama</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Fantasy" value="Fantasy">
+                    <input class="form-check-input" type="checkbox" id="genre-Fantasy" value="Fantasy" checked>
                     <label class="form-check-label" for="genre-Fantasy">Fantasy</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Film-Noir" value="Film-Noir">
+                    <input class="form-check-input" type="checkbox" id="genre-Film-Noir" value="Film-Noir" checked>
                     <label class="form-check-label" for="genre-Film-Noir">Film-Noir</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Horror" value="Horror">
+                    <input class="form-check-input" type="checkbox" id="genre-Horror" value="Horror" checked>
                     <label class="form-check-label" for="genre-Horror">Horror</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Musical" value="Musical">
+                    <input class="form-check-input" type="checkbox" id="genre-Musical" value="Musical" checked>
                     <label class="form-check-label" for="genre-Musical">Musical</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Mystery" value="Mystery">
+                    <input class="form-check-input" type="checkbox" id="genre-Mystery" value="Mystery" checked>
                     <label class="form-check-label" for="genre-Mystery">Mystery</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Romance" value="Romance">
+                    <input class="form-check-input" type="checkbox" id="genre-Romance" value="Romance" checked>
                     <label class="form-check-label" for="genre-Romance">Romance</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Sci-Fi" value="Sci-Fi">
+                    <input class="form-check-input" type="checkbox" id="genre-Sci-Fi" value="Sci-Fi" checked>
                     <label class="form-check-label" for="genre-Sci-Fi">Sci-Fi</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Thriller" value="Thriller">
+                    <input class="form-check-input" type="checkbox" id="genre-Thriller" value="Thriller" checked>
                     <label class="form-check-label" for="genre-Thriller">Thriller</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-War" value="War">
+                    <input class="form-check-input" type="checkbox" id="genre-War" value="War" checked>
                     <label class="form-check-label" for="genre-War">War</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="genre-Western" value="Western">
+                    <input class="form-check-input" type="checkbox" id="genre-Western" value="Western" checked>
                     <label class="form-check-label" for="genre-Western">Western</label>
                 </div>
             </div>
         </div>
+        <p id="inputErrorMessage">
+
+        </p>
         <button type="button" id="submit-btn" class="btn btn-primary mb-3">Submit</button>
     </form>
 </div>
@@ -178,7 +181,7 @@
     </div>
     <div class="movieList">
         <div id="recom-movie" class="movieList">
-            <img src="https://dummyimage.com/250x350/999999/000000&text=Waiting+Input">
+            <img id="loading-img" src="https://dummyimage.com/250x350/999999/000000&text=Waiting+Input">
         </div>
     </div>
 </div>
@@ -242,9 +245,13 @@
         return result.join("|")
     }
     $("#submit-btn").click(function (event) {
-        if ($("#gender").val() in ["", "M", "F"]) {
-
+        if (!((1 <= $("#age").val() && $("#age").val() <= 99) || $("#age").val() === "")) {
+            let errorMessage = $("#inputErrorMessage");
+            errorMessage.text("Invalid age input")
         } else {
+            let errorMessage = $("#inputErrorMessage");
+            errorMessage.text("");
+            $("#loading-img").attr("src", "https://dummyimage.com/250x350/999999/000000&text=Loading+Movies");
             $.ajax({
                 dataType: "JSON",
                 url: "http://localhost:8080/users/recommendations",

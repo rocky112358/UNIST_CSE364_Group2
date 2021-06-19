@@ -31,6 +31,8 @@ public class CsvToMongoJob {
     private RatingRepository ratingRepository;
     @Autowired
     private LinkRepository linkRepository;
+    @Autowired
+    private MoviePosterRepository moviePosterRepository;
 
     @Bean
     public Job readCSVFile() {
@@ -40,6 +42,7 @@ public class CsvToMongoJob {
                 .next(step2())
                 .next(step3())
                 .next(step4())
+                .next(step5())
                 .build();
     }
 
@@ -65,6 +68,12 @@ public class CsvToMongoJob {
     public Step step4() {
         return stepBuilderFactory.get("step4").<Link, Link>chunk(10).reader(linkReader())
                 .writer(linkWriter()).build();
+    }
+
+    @Bean
+    public Step step5() {
+        return stepBuilderFactory.get("step5").<MoviePoster, MoviePoster>chunk(10).reader(moviePosterReader())
+                .writer(moviePosterWriter()).build();
     }
 
     @Bean
@@ -124,6 +133,20 @@ public class CsvToMongoJob {
     }
 
     @Bean
+    public FlatFileItemReader<MoviePoster> moviePosterReader() {
+        FlatFileItemReader<MoviePoster> reader = new FlatFileItemReader<>();
+        MoviePosterFieldSetMapper mapper = new MoviePosterFieldSetMapper();
+        reader.setResource(new ClassPathResource("movie_poster.csv"));
+        reader.setLineMapper(new DefaultLineMapper<>() {{
+            setLineTokenizer(new DelimitedLineTokenizer() {{
+                setNames("movieId", "imageLink");
+            }});
+            setFieldSetMapper(mapper);
+        }});
+        return reader;
+    }
+
+    @Bean
     public RepositoryItemWriter<Movie> movieWriter() {
         RepositoryItemWriter<Movie> writer = new RepositoryItemWriter<>();
         writer.setRepository(movieRepository);
@@ -151,6 +174,14 @@ public class CsvToMongoJob {
     public RepositoryItemWriter<Link> linkWriter() {
         RepositoryItemWriter<Link> writer = new RepositoryItemWriter<>();
         writer.setRepository(linkRepository);
+        writer.setMethodName("save");
+        return writer;
+    }
+
+    @Bean
+    public RepositoryItemWriter<MoviePoster> moviePosterWriter() {
+        RepositoryItemWriter<MoviePoster> writer = new RepositoryItemWriter<>();
+        writer.setRepository(moviePosterRepository);
         writer.setMethodName("save");
         return writer;
     }

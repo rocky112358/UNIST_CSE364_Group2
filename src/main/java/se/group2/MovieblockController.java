@@ -6,10 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @Service
@@ -29,6 +27,8 @@ public class MovieblockController {
     private MovieRepository movieRepository;
     @Autowired
     private LinkRepository linkRepository;
+    @Autowired
+    private MoviePosterRepository moviePosterRepository;
     @Autowired
     RecommendationEngine recommendationEngine;
 
@@ -57,12 +57,26 @@ public class MovieblockController {
         return null;
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/movies")
     public List<Movie> allMovies() {
         return movieRepository.findAll();
     }
 
-    @RequestMapping(value = "/users/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/links")
+    public List<Link> allLinks() {
+        return linkRepository.findAll();
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/posters")
+    public MoviePoster getMoviePoster(@RequestParam Integer id) {
+        return moviePosterRepository.findByMovieId(id);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/users/recommendations", method = POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public List<RecommendationOutput> userRecommendations(@RequestBody UserRecommendationInput input) throws InvalidInputException {
         // TODO: load data on application startup to save time
         if (input.getAge() == null) {
@@ -110,11 +124,12 @@ public class MovieblockController {
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(
-                        movie.title, String.join("|", movie.genre), printMovie(movie)))
+                        movie.id, movie.title, String.join("|", movie.genre), printMovie(movie)))
         ).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/movies/recommendations", method = GET, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/movies/recommendations", method = POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public List<RecommendationOutput> movieRecommendations(@RequestBody MovieRecommendationInput input) throws InvalidInputException {
         // TODO: load data on application startup to save time
         if (input.getTitle() == null) {
@@ -136,7 +151,7 @@ public class MovieblockController {
 
         return recommendationResults.stream().map(
                 (movie -> new RecommendationOutput(
-                        movie.title, String.join("|", movie.genre), printMovie(movie)))
+                        movie.id, movie.title, String.join("|", movie.genre), printMovie(movie)))
         ).collect(Collectors.toList());
     }
 

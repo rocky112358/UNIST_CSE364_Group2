@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movieblock</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,900;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid logo-text">
+        <a class="navbar-brand" href="index.html">Movieblock</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="user.html">Recommend by User Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="favorite.html">Recommend by a Favorite Movie</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="topMovie">
+    <div class="title-text">
+        Top Movies
+    </div>
+    <div class="movieList">
+        <div id="top-movie-loading" class="movieList">
+            <img src="https://dummyimage.com/250x350/999999/000000&text=Loading+Movies">
+        </div>
+    </div>
+</div>
+<div id="topActionMovie">
+    <div class="title-text">
+        Top Action Movies
+    </div>
+    <div class="movieList">
+        <div id="top-action-movie-loading">
+            <img src="https://dummyimage.com/250x350/999999/000000&text=Loading+Movies">
+        </div>
+    </div>
+</div>
+<div id="topDramaMovie">
+    <div class="title-text">
+        Top Drama Movies
+    </div>
+    <div class="movieList">
+        <div id="top-drama-movie-loading">
+            <img src="https://dummyimage.com/250x350/999999/000000&text=Loading+Movies">
+        </div>
+    </div>
+</div>
+<div id="topAnimationMovie">
+    <div class="title-text">
+        Top Animation Movies
+    </div>
+    <div class="movieList">
+        <div id="top-animation-movie-loading">
+            <img src="https://dummyimage.com/250x350/999999/000000&text=Loading+Movies">
+        </div>
+    </div>
+</div>
+
+<script>
+    $.ajax({
+        dataType: "JSON",
+        url: "http://localhost:8080/users/recommendations",
+        data: JSON.stringify({
+            "gender": "",
+            "age": "",
+            "occupation": "",
+            "genres": ""
+        }),
+        contentType: "application/json; charset=utf-8",
+        method: "POST",
+        data_type: "json",
+        success: function (data) {
+            let movies = document.createElement('div');
+            $.each(data.reverse(), function (index, movie) {
+                $.ajax({
+                        dataType: "JSON",
+                        url: `http://localhost:8080/posters?id=${movie.id}`,
+                        contentType: "application/json; charset=utf-8",
+                        method: "GET",
+                        success: function (ml) {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = ml.imageLink;
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        },
+                        error: function () {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = "";
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        }
+                    }
+                )
+            })
+            $("#top-movie-loading").replaceWith(movies);
+        }
+    });
+    $.ajax({
+        dataType: "JSON",
+        url: "http://localhost:8080/users/recommendations",
+        data: JSON.stringify({
+            "gender": "",
+            "age": "",
+            "occupation": "",
+            "genres": "action"
+        }),
+        contentType: "application/json; charset=utf-8",
+        method: "POST",
+        data_type: "json",
+        success: function (data) {
+            let movies = document.createElement('div');
+            $.each(data.reverse(), function (index, movie) {
+                $.ajax({
+                        dataType: "JSON",
+                        url: `http://localhost:8080/posters?id=${movie.id}`,
+                        contentType: "application/json; charset=utf-8",
+                        method: "GET",
+                        success: function (ml) {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = ml.imageLink;
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        },
+                        error: function () {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = "";
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        }
+                    }
+                )
+            })
+            $("#top-action-movie-loading").replaceWith(movies);
+        }
+    });
+    $.ajax({
+        dataType: "JSON",
+        url: "http://localhost:8080/users/recommendations",
+        data: JSON.stringify({
+            "gender": "",
+            "age": "",
+            "occupation": "",
+            "genres": "drama"
+        }),
+        contentType: "application/json; charset=utf-8",
+        method: "POST",
+        data_type: "json",
+        success: function (data) {
+            let movies = document.createElement('div');
+            $.each(data.reverse(), function (index, movie) {
+                $.ajax({
+                        dataType: "JSON",
+                        url: `http://localhost:8080/posters?id=${movie.id}`,
+                        contentType: "application/json; charset=utf-8",
+                        method: "GET",
+                        success: function (ml) {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = ml.imageLink;
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        },
+                        error: function () {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = "";
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        }
+                    }
+                )
+            })
+            $("#top-drama-movie-loading").replaceWith(movies);
+        }
+    });
+    $.ajax({
+        dataType: "JSON",
+        url: "http://localhost:8080/users/recommendations",
+        data: JSON.stringify({
+            "gender": "",
+            "age": "",
+            "occupation": "",
+            "genres": "animation"
+        }),
+        contentType: "application/json; charset=utf-8",
+        method: "POST",
+        data_type: "json",
+        success: function (data) {
+            let movies = document.createElement('div');
+            $.each(data.reverse(), function (index, movie) {
+                $.ajax({
+                        dataType: "JSON",
+                        url: `http://localhost:8080/posters?id=${movie.id}`,
+                        contentType: "application/json; charset=utf-8",
+                        method: "GET",
+                        success: function (ml) {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = ml.imageLink;
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        },
+                        error: function () {
+                            let hyperlink = document.createElement('a');
+                            hyperlink.href = movie.imdb;
+                            let poster = document.createElement('img');
+                            poster.src = "";
+                            poster.alt = movie.title;
+                            poster.className = "moviePoster";
+                            poster.onerror = function () {
+                                this.onerror = null;
+                                this.src = `https://dummyimage.com/250x350/999999/000000&text=${movie.title}`
+                            }
+                            hyperlink.appendChild(poster);
+                            movies.prepend(hyperlink);
+                        }
+                    }
+                )
+            })
+            $("#top-animation-movie-loading").replaceWith(movies);
+        }
+    });
+</script>
+</body>
+</html>

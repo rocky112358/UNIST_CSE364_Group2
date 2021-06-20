@@ -3,4 +3,4 @@ cd UNIST_CSE364_Group2
 mvn package
 echo ""
 mongod --fork --dbpath=/var/lib/mongodb --logpath=/var/log/mongod.log
-java -jar target/ROOT-jar-with-dependencies.jar
+java -jar target/ROOT-exec.jar

@@ -13,7 +13,7 @@
 
 2. [Get started with Movieblock](https://github.com/rocky112358/UNIST_CSE364_Group2#2-get-started-with-movieblock)
     - [Overview](https://github.com/rocky112358/UNIST_CSE364_Group2#overview)
-    - [Main page](https://github.com/rocky112358/UNIST_CSE364_Group25#main-page)
+    - [Main page](https://github.com/rocky112358/UNIST_CSE364_Group2#main-page)
     - [User Information based Recommendation](https://github.com/rocky112358/UNIST_CSE364_Group2#user-information-based-recommendation)
     - [Favorite Movie based Recommendation](https://github.com/rocky112358/UNIST_CSE364_Group2#user-information-based-recommendation)
 

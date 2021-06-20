@@ -94,7 +94,7 @@
         if (!allMovieTitles.includes($("#movieTitle").val())) {
             let errorMessage = $("#inputErrorMessage");
             errorMessage.text("Invalid movie title")
-        } else if ($("#limit").val() <= 0) {
+        } else if ($("#limit").val() <= 0 || /^[1-9]\d*$/.exec($("#limit").val())) {
             let errorMessage = $("#inputErrorMessage");
             errorMessage.text("Invalid number of movies")
         } else {

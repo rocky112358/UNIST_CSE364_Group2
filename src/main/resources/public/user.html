@@ -245,7 +245,7 @@
         return result.join("|")
     }
     $("#submit-btn").click(function (event) {
-        if (!((1 <= $("#age").val() && $("#age").val() <= 99) || $("#age").val() === "")) {
+        if (!(/^[1-9]+[0-9]?$/.exec($("#age").val()) !== null && 1 <= $("#age").val() && $("#age").val() <= 99) || $("#age").val() === "") {
             let errorMessage = $("#inputErrorMessage");
             errorMessage.text("Invalid age input")
         } else {

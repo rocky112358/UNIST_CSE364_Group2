@@ -13,8 +13,6 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
-    <packaging>war</packaging>
-
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>

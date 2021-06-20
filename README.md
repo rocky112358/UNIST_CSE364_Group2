@@ -19,7 +19,7 @@
 
 3. FAQ
 
-Appendix : Information for grading
+4. Appendix : Information for grading
 
 ## 1. What is Movieblock?
 ![image](https://user-images.githubusercontent.com/17242507/122660827-79f52600-d1bf-11eb-8aae-2599b7453065.png)
@@ -157,7 +157,9 @@ Movieblock provides the following features:
 
 - Send e-mail to [support@movieblock.co.kr](mailto:support@movieblock.co.kr) about your having problem or inquiry. We will do our best to help you solve the problem.
 
-## Appendix : Information for Grading
+## 4. Appendix : Information for Grading Milestone 4
+<details>
+  <summary> Click to expand! </summary>
 
 ### Structure of Program
 ```bash
@@ -225,11 +227,89 @@ Movieblock provides the following features:
 
 12 directories, 48 files
 ```
-### How to install program
+### How to check the milestone
+#### For part 1
+* DB setup can be checked in the same way as part2 and part3
+
+#### How to check part 1 with run.sh (optional)
+
+(1) Server-side
+```
+$ docker build -t mile4 .
+$ docker run -it -p 8080:8080 mile4 /bin/bash
+root@06bec8c66c26:~/project# . run.sh
+```
+
+(2) Client-side (Another Terminal)
+```
+curl http://localhost:8080/movies
+```
+
+#### For part 2, part 3
+(1) Server-side
+```bash
+$ docker build -t mile4 .
+$ docker run -d -p 8080:8080 mile4
+```
 
 ```bash
-docker file과 run.sh와 ROOT.war는 같은 경로에 있어야 함
+$ ls
+Dockerfile ROOT.war run.sh
+
+$ docker build -t mile4 .
+Sending build context to Docker daemon  108.9MB
+Step 1/27 : FROM ubuntu:20.04
+ ---> 4dd97cefde62
+Step 2/27 : ARG DEBIAN_FRONTEND="noninteractive"
+ ---> Running in 4224998c0774
+Removing intermediate container 4224998c0774
+ ---> 716a51198913
+Step 3/27 : RUN apt-get update
+ ---> Running in bdca8ee19ed2
+Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:3 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [884 kB]
+
+...
+
+Step 24/27 : RUN echo '/bin/bash' >> /root/project/start.sh
+ ---> Running in 6bc70a4bbb5a
+Removing intermediate container 6bc70a4bbb5a
+ ---> 956a7ee482f4
+Step 25/27 : RUN chmod a+x /root/project/start.sh
+ ---> Running in 986164284b09
+Removing intermediate container 986164284b09
+ ---> 7e4d31c69f93
+Step 26/27 : CMD ["/root/project/start.sh"]
+ ---> Running in 45054729980b
+Removing intermediate container 45054729980b
+ ---> cb62209adee9
+Step 27/27 : ENTRYPOINT ["/bin/bash", "-c"]
+ ---> Running in bb51892c77ba
+Removing intermediate container bb51892c77ba
+ ---> 6a199c37b69c
+Successfully built 6a199c37b69c
+Successfully tagged mile4:latest
+
+$ docker run -d -p 8080:8080 mile4
+f0f9d1ec307b1bd009b9fe287d1409b2760049a3eafc97ed059d3507a203c51f
+
+$
 ```
+
+(2) Client-side
+* Access Movieblock in a web browser by visiting http://localhost:8080/
+
+#### For part 4
+Check 
+* https://github.com/rocky112358/UNIST_CSE364_Group2/tree/main/.github/workflows
+* https://github.com/rocky112358/UNIST_CSE364_Group2/commits/main
+
+#### For part 5
+Read
+* https://github.com/rocky112358/UNIST_CSE364_Group2/blob/main/README.md
+    
+</details>
 
 ## Previous implementation (Milestone 1 ~ Milestone 3)
 <details>

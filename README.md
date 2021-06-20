@@ -1,10 +1,355 @@
-# Movie Recommendation System: Movieblock
-for UNIST CSE364 Software Engineering
+# Movieblock USER MANUAL
 
 ![example workflow](https://github.com/rocky112358/UNIST_CSE364_Group2/actions/workflows/maven.yml/badge.svg)
+* User guide for users who are new to Movieblock.
+* All necessary information for users to be able to use your application conveniently.
 
-## Milestone 3
+---
 
+## Table of contents
+1. [What is Movieblock?](https://github.com/rocky112358/UNIST_CSE364_Group2#1-what-is-movieblock)
+    - [Features of Movieblock](https://github.com/rocky112358/UNIST_CSE364_Group2#features-of-movieblock)
+    - [How to get started with Movieblock](https://github.com/rocky112358/UNIST_CSE364_Group2#how-to-get-started-with-movieblock)
+
+2. [Get started with Movieblock](https://github.com/rocky112358/UNIST_CSE364_Group2#2-get-started-with-movieblock)
+    - [Overview](https://github.com/rocky112358/UNIST_CSE364_Group2#overview)
+    - [Main page](https://github.com/rocky112358/UNIST_CSE364_Group25#main-page)
+    - [User Information based Recommendation](https://github.com/rocky112358/UNIST_CSE364_Group2#user-information-based-recommendation)
+    - [Favorite Movie based Recommendation](https://github.com/rocky112358/UNIST_CSE364_Group2#user-information-based-recommendation)
+
+3. [FAQ](https://github.com/rocky112358/UNIST_CSE364_Group2#3-faq)
+
+4. [Appendix : Information for grading](https://github.com/rocky112358/UNIST_CSE364_Group2#4-appendix--information-for-grading-milestone-4)
+
+## 1. What is Movieblock?
+![image](https://user-images.githubusercontent.com/17242507/122660827-79f52600-d1bf-11eb-8aae-2599b7453065.png)
+- Movieblock is a movie recommendation system that can be used directly on the web on any device without ads or installation.
+- Movieblock is a next-generation movie recommendation system based on over 6000 users and over 1 million reviews.
+
+### Features of Movieblock
+Movieblock provides the following features:
+- Top 10 Movie Recommendations by Genre (Main page)
+    - We collect data from all users and recommend Top 10 movies for each genre.
+- User Information based recommendation
+    - Based on the user information entered by the user, it recommends movies preferred by similar users.
+- Favorite Movie based recommendation
+    - Recommend similar movies based on user-entered preferred movie information.
+
+### How to get started with Movieblock
+- Movieblock can use all services without any prerequisites.
+    - Anyone can use it as long as the web browser can be used.
+- Movieblock provides a web-based GUI.
+    - You can access the service's main page through [http://localhost:8080](http://localhost:8080/).
+
+## 2. Get Started with Movieblock
+
+### Overview
+
+<details>
+  <summary> Click to expand! </summary>
+    
+- Main Page
+    
+    ![image](https://user-images.githubusercontent.com/32671177/122660997-efadc180-d1c0-11eb-91c5-680d3de1b623.png)
+    
+    ① Move to Home
+    
+    ② Move to Recommendation by User Information
+    
+    ③ Move to Recommendation by Favorite Movie
+
+- Recommendation by User Information
+    
+    ![image](https://user-images.githubusercontent.com/32671177/122661004-05bb8200-d1c1-11eb-80ec-001ca50e09f6.png)
+    
+    ① "Gender" dropdown list
+
+    ② "Age" input field
+
+    ③ "Occupation" dropdown list
+
+    ④ "Genre" select checkbox
+
+- Recommendation by Favorite Movie
+    
+    ![image](https://user-images.githubusercontent.com/32671177/122663109-1674f380-d1d3-11eb-98d2-50779991ae30.png)
+    
+    ① "Title" input field
+
+    ② "Number of Movies" input field
+
+</details>    
+    
+### Main Page
+
+<details>
+  <summary> Click to expand! </summary>
+    
+1. Open web browser and connect [http://localhost:8080](http://localhost:8080/index.html%EC%9C%BC%EB%A1%9C)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661063-7793cb80-d1c1-11eb-8004-ea6dcf67ed61.png)
+
+2. After few seconds, 10 high rated movies for each genres are recommended.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661099-ce99a080-d1c1-11eb-921a-f881f51f7daa.png)
+
+3. Click the movie poster to see IMDb page of that movie.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661078-9befa800-d1c1-11eb-961a-15cc5e1a7f5f.png)
+
+4. Click the menu on the top navigation bar to move between pages.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661081-a316b600-d1c1-11eb-83ef-5d3b2b018e27.png)
+
+</details>
+
+### User Information based recommendation
+
+<details>
+  <summary> Click to expand! </summary>
+
+1. Click "Recommend by User Information" menu.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661138-351ebe80-d1c2-11eb-8c0e-c006418094ee.png)
+
+2. Select/input "Gender", "Age", "Occupation" of the target user from dropdown lists. (Optional)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661150-45cf3480-d1c2-11eb-86cc-f2c45cff2531.png)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661153-4cf64280-d1c2-11eb-8921-c209c595d5ec.png)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661159-54b5e700-d1c2-11eb-9430-bcc17cf6cdd4.png)
+
+3. Select "Preferred Genre" from checkbox. If you select some genres, the movie which contains the genre will be recommended. (Optional) If you don't select any genre, it is treated as if all genres are selected.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661196-921a7480-d1c2-11eb-83e2-f3215c761eb1.png)
+    
+    ![image](https://user-images.githubusercontent.com/32671177/122661202-9fcffa00-d1c2-11eb-8d21-2930cda61d8c.png)
+
+4. Click "Search" button.
+    
+5. After short loading, 10 movies that are highly rated by similar users are recommended.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661210-af4f4300-d1c2-11eb-9e3e-55a5d3bde002.png)
+
+6. Click the movie poster to see detail information of that movie at IMDb.
+
+</details>
+    
+### Favorite Movie based recommendation
+
+<details>
+  <summary> Click to expand! </summary>
+
+1. Click "Recommend by Favorite Movie" menu.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661316-fdb11180-d1c3-11eb-9d40-5eee8dd1f3a4.png)
+
+2. Type the title of your favorite movie in "Title" field. For convenient and accurate input, autocomplete is supported.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661319-07d31000-d1c4-11eb-82ed-04497ad15569.png)
+
+3. Enter the number of movies to be recommended in "Number of Movies" field.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661322-13263b80-d1c4-11eb-80ae-13b596f17d82.png)
+
+4. Click "Search" button.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661330-2fc27380-d1c4-11eb-9eeb-528005dec8a2.png)
+
+5. After short loading, movies similar to the ones you enjoyed are recommended, based on the genre of the movie.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661336-38b34500-d1c4-11eb-88ee-6ae3fde855e6.png)
+
+6. Click the movie poster to see detail information of that movie at IMDb.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661343-4072e980-d1c4-11eb-976f-6a64e8450018.png)
+
+</details>    
+    
+## 3. FAQ
+
+### Movie poster is not shown!
+
+- It's not a problem of user, but a problem of database with unregistered movie poster. Please send the title of movie to [support@movieblock.co.kr](mailto:support@movieblock.co.kr) to allow us to fix the problem as soon as possible.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661357-6a2c1080-d1c4-11eb-9e34-476c5083f72e.png)
+
+### Movie poster has wrong link!
+
+- It's not a problem of user, but a problem of database with invalid link. Please send the title of movie to [support@movieblock.co.kr](mailto:support@movieblock.co.kr) to allow us to fix the problem as soon as possible.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661360-72844b80-d1c4-11eb-8669-9a5360275276.png)
+
+### Other problems / Inquiry
+
+- Send e-mail to [support@movieblock.co.kr](mailto:support@movieblock.co.kr) about your having problem or inquiry. We will do our best to help you solve the problem.
+
+## 4. Appendix : Information for Grading Milestone 4
+<details>
+  <summary> Click to expand! </summary>
+
+### Structure of Program
+```bash
+.
+├── data
+│   ├── links.dat
+│   ├── movies.dat
+│   ├── ratings.dat
+│   └── users.dat
+├── Dockerfile
+├── pom.xml
+├── README.md
+├── ROOT.war
+├── run.sh
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── se
+    │   │       └── group2
+    │   │           ├── ApiError.java
+    │   │           ├── Application.java
+    │   │           ├── CsvToMongoJob.java
+    │   │           ├── InvalidInputException.java
+    │   │           ├── LinkFieldSetMapper.java
+    │   │           ├── Link.java
+    │   │           ├── LinkRepository.java
+    │   │           ├── MovieblockController.java
+    │   │           ├── Movieblock.java
+    │   │           ├── MovieFieldSetMapper.java
+    │   │           ├── Movie.java
+    │   │           ├── MoviePosterFieldSetMapper.java
+    │   │           ├── MoviePoster.java
+    │   │           ├── MoviePosterRepository.java
+    │   │           ├── MovieRecommendationInput.java
+    │   │           ├── MovieRepository.java
+    │   │           ├── RatingFieldSetMapper.java
+    │   │           ├── Rating.java
+    │   │           ├── RatingRepository.java
+    │   │           ├── RecommendationEngine.java
+    │   │           ├── RecommendationOutput.java
+    │   │           ├── UserFieldSetMapper.java
+    │   │           ├── User.java
+    │   │           ├── UserRecommendationInput.java
+    │   │           └── UserRepository.java
+    │   └── resources
+    │       ├── application.properties
+    │       ├── links.csv
+    │       ├── movie_poster.csv
+    │       ├── movies.csv
+    │       ├── public
+    │       │   ├── favorite.html
+    │       │   ├── index.css
+    │       │   ├── index.html
+    │       │   └── user.html
+    │       ├── ratings.csv
+    │       └── users.csv
+    └── test
+        └── java
+            └── se
+                └── group2
+                    ├── ApplicationIT.java
+                    ├── MovieblockControllerTest.java
+                    ├── MovieblockTest.java
+                    └── RecommendationEngineTest.java
+
+12 directories, 48 files
+```
+### How to check the milestone
+#### For part 1
+* DB setup can be checked in the same way as part2 and part3
+
+#### How to check part 1 with run.sh (optional)
+
+(1) Server-side
+```
+$ docker build -t mile4 .
+$ docker run -it -p 8080:8080 mile4 /bin/bash
+root@06bec8c66c26:~/project# . run.sh
+```
+
+(2) Client-side (Another Terminal)
+```
+curl http://localhost:8080/movies
+```
+
+#### For part 2, part 3
+(1) Server-side
+```bash
+$ docker build -t mile4 .
+$ docker run -d -p 8080:8080 mile4
+```
+
+```bash
+$ ls
+Dockerfile ROOT.war run.sh
+
+$ docker build -t mile4 .
+Sending build context to Docker daemon  108.9MB
+Step 1/27 : FROM ubuntu:20.04
+ ---> 4dd97cefde62
+Step 2/27 : ARG DEBIAN_FRONTEND="noninteractive"
+ ---> Running in 4224998c0774
+Removing intermediate container 4224998c0774
+ ---> 716a51198913
+Step 3/27 : RUN apt-get update
+ ---> Running in bdca8ee19ed2
+Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:3 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [884 kB]
+
+...
+
+Step 24/27 : RUN echo '/bin/bash' >> /root/project/start.sh
+ ---> Running in 6bc70a4bbb5a
+Removing intermediate container 6bc70a4bbb5a
+ ---> 956a7ee482f4
+Step 25/27 : RUN chmod a+x /root/project/start.sh
+ ---> Running in 986164284b09
+Removing intermediate container 986164284b09
+ ---> 7e4d31c69f93
+Step 26/27 : CMD ["/root/project/start.sh"]
+ ---> Running in 45054729980b
+Removing intermediate container 45054729980b
+ ---> cb62209adee9
+Step 27/27 : ENTRYPOINT ["/bin/bash", "-c"]
+ ---> Running in bb51892c77ba
+Removing intermediate container bb51892c77ba
+ ---> 6a199c37b69c
+Successfully built 6a199c37b69c
+Successfully tagged mile4:latest
+
+$ docker run -d -p 8080:8080 mile4
+f0f9d1ec307b1bd009b9fe287d1409b2760049a3eafc97ed059d3507a203c51f
+
+$
+```
+
+(2) Client-side
+* Access Movieblock in a web browser by visiting http://localhost:8080/
+
+#### For part 4
+Check 
+* https://github.com/rocky112358/UNIST_CSE364_Group2/tree/main/.github/workflows
+* https://github.com/rocky112358/UNIST_CSE364_Group2/commits/main
+
+#### For part 5
+Read
+* https://github.com/rocky112358/UNIST_CSE364_Group2/blob/main/README.md
+    
+</details>
+
+## Previous implementation (Milestone 1 ~ Milestone 3)
+<details>
+  <summary> Click to expand! </summary>
+
+## ~~Milestone 3~~ (Deprecated)
+<details>
+  <summary> Click to expand! </summary>
+
+> **This program no longer behaves like **How to run the program** described below in the lastest commit. (as of June 20, 2021)**
+> **This version is tagged as "milestone-3" and you may checkout if you like.**
+    
 ### What did we do
 #### Repository structure
 ```
@@ -358,6 +703,7 @@ Everyone has contributed to all parts. However in this part, we will mention the
 * 20171108 박다현: Debugging Project (edge-case input response)
 
 ---
+</details>
 
 ## ~~Milestone 2~~ (Deprecated)
 
@@ -953,4 +1299,5 @@ Error: There are no movies with that category(categories)
 
 20171108 박다현: Download dataset, test input validation logic
 
+</details>
 </details>

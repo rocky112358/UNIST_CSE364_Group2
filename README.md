@@ -19,8 +19,7 @@
 
 3. FAQ
 
-4. Appendix
-    - Information for grading
+Appendix : Information for grading
 
 ## 1. What is Movieblock?
 ![image](https://user-images.githubusercontent.com/17242507/122660827-79f52600-d1bf-11eb-8aae-2599b7453065.png)
@@ -42,9 +41,195 @@ Movieblock provides the following features:
 - Movieblock provides a web-based GUI.
     - You can access the service's main page through [http://localhost:8080](http://localhost:8080/).
 
+## 2. Get Started with Movieblock
 
+### Overview
 
+- Main Page
+    ![image](https://user-images.githubusercontent.com/32671177/122660997-efadc180-d1c0-11eb-91c5-680d3de1b623.png)
+    ① Move to Home
+    
+    ② Move to Recommendation by User Information
+    
+    ③ Move to Recommendation by Favorite Movie
 
+- Recommendation by User Information
+    ![image](https://user-images.githubusercontent.com/32671177/122661004-05bb8200-d1c1-11eb-80ec-001ca50e09f6.png)
+    ① "Gender" dropdown list
+
+    ② "Age" input field
+
+    ③ "Occupation" dropdown list
+
+    ④ "Genre" select checkbox
+
+- Recommendation by Favorite Movie
+    ![image](https://user-images.githubusercontent.com/32671177/122661022-2257ba00-d1c1-11eb-9535-bc5088f25aa9.png)
+    ① "Title" input field
+
+    ② "Number of Movies" input field
+### Main Page
+
+1. Open web browser and connect [http://localhost:8080](http://localhost:8080/index.html%EC%9C%BC%EB%A1%9C)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661063-7793cb80-d1c1-11eb-8004-ea6dcf67ed61.png)
+
+2. After few seconds, 10 high rated movies for each genres are recommended.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661099-ce99a080-d1c1-11eb-921a-f881f51f7daa.png)
+
+3. Click the movie poster to see IMDb page of that movie.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661078-9befa800-d1c1-11eb-961a-15cc5e1a7f5f.png)
+
+4. Click recommendation type to move each search page.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661081-a316b600-d1c1-11eb-83ef-5d3b2b018e27.png)
+
+### User Information based recommendation
+
+1. Click "Recommend by User Information" menu.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661138-351ebe80-d1c2-11eb-8c0e-c006418094ee.png)
+
+2. Select the "Gender", "Age", "Occupation" of target user from dropdown lists. (Optional)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661150-45cf3480-d1c2-11eb-86cc-f2c45cff2531.png)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661153-4cf64280-d1c2-11eb-8921-c209c595d5ec.png)
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661159-54b5e700-d1c2-11eb-9430-bcc17cf6cdd4.png)
+
+3. Select "Preferred Genre" from checkbox. If you select multiple genres, our recommendation will be movies which contains at least one genre you've selected. (Optional) If you don't select any genre, all genres are selected automatically.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661196-921a7480-d1c2-11eb-83e2-f3215c761eb1.png)
+    
+    ![image](https://user-images.githubusercontent.com/32671177/122661202-9fcffa00-d1c2-11eb-8d21-2930cda61d8c.png)
+
+4. Click "Search" button.
+5. After short loading, 10 movies that similar users enjoyed are recommended.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661210-af4f4300-d1c2-11eb-9e3e-55a5d3bde002.png)
+
+6. Click the movie poster to see Detail information of that movie.
+
+### Favorite Movie based recommendation
+
+1. Click "Recommend by Favorite Movie" menu.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661316-fdb11180-d1c3-11eb-9d40-5eee8dd1f3a4.png)
+
+2. Type the title of your favorite movie in "Title" field. For convenient and accurate input, autocomplete is supported.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661319-07d31000-d1c4-11eb-82ed-04497ad15569.png)
+
+3. Enter the number of movies to be recommended in "Number of Movies" field.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661322-13263b80-d1c4-11eb-80ae-13b596f17d82.png)
+
+4. Click "Search" button.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661330-2fc27380-d1c4-11eb-9eeb-528005dec8a2.png)
+
+5. After short loading, movies similar to the ones you enjoyed are recommended.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661336-38b34500-d1c4-11eb-88ee-6ae3fde855e6.png)
+
+6. Click the movie poster to see Detail information of that movie.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661343-4072e980-d1c4-11eb-976f-6a64e8450018.png)
+
+## 3. FAQ
+
+### Movie poster is not shown!
+
+- It's not a problem of user, but a problem of database with unregistered movie poster. Please send the title of movie to [support@movieblock.co.kr](mailto:support@movieblock.co.kr) to allow us to fix the problem as soon as possible.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661357-6a2c1080-d1c4-11eb-9e34-476c5083f72e.png)
+
+### Movie poster has wrong link!
+
+- It's not a problem of user, but a problem of database with invalid link. Please send the title of movie to [support@movieblock.co.kr](mailto:support@movieblock.co.kr) to allow us to fix the problem as soon as possible.
+
+    ![image](https://user-images.githubusercontent.com/32671177/122661360-72844b80-d1c4-11eb-8669-9a5360275276.png)
+
+### Other problems / Inquiry
+
+- Send e-mail to [support@movieblock.co.kr](mailto:support@movieblock.co.kr) about your having problem or inquiry. We will do our best to help you solve the problem.
+
+## Appendix : Information for Grading
+
+### Structure of Program
+```bash
+.
+├── data
+│   ├── links.dat
+│   ├── movies.dat
+│   ├── ratings.dat
+│   └── users.dat
+├── Dockerfile
+├── pom.xml
+├── README.md
+├── ROOT.war
+├── run.sh
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── se
+    │   │       └── group2
+    │   │           ├── ApiError.java
+    │   │           ├── Application.java
+    │   │           ├── CsvToMongoJob.java
+    │   │           ├── InvalidInputException.java
+    │   │           ├── LinkFieldSetMapper.java
+    │   │           ├── Link.java
+    │   │           ├── LinkRepository.java
+    │   │           ├── MovieblockController.java
+    │   │           ├── Movieblock.java
+    │   │           ├── MovieFieldSetMapper.java
+    │   │           ├── Movie.java
+    │   │           ├── MoviePosterFieldSetMapper.java
+    │   │           ├── MoviePoster.java
+    │   │           ├── MoviePosterRepository.java
+    │   │           ├── MovieRecommendationInput.java
+    │   │           ├── MovieRepository.java
+    │   │           ├── RatingFieldSetMapper.java
+    │   │           ├── Rating.java
+    │   │           ├── RatingRepository.java
+    │   │           ├── RecommendationEngine.java
+    │   │           ├── RecommendationOutput.java
+    │   │           ├── UserFieldSetMapper.java
+    │   │           ├── User.java
+    │   │           ├── UserRecommendationInput.java
+    │   │           └── UserRepository.java
+    │   └── resources
+    │       ├── application.properties
+    │       ├── links.csv
+    │       ├── movie_poster.csv
+    │       ├── movies.csv
+    │       ├── public
+    │       │   ├── favorite.html
+    │       │   ├── index.css
+    │       │   ├── index.html
+    │       │   └── user.html
+    │       ├── ratings.csv
+    │       └── users.csv
+    └── test
+        └── java
+            └── se
+                └── group2
+                    ├── ApplicationIT.java
+                    ├── MovieblockControllerTest.java
+                    ├── MovieblockTest.java
+                    └── RecommendationEngineTest.java
+
+12 directories, 48 files
+```
+### How to install program
+
+```bash
+docker file과 run.sh와 ROOT.war는 같은 경로에 있어야 함
+```
 
 ## Previous implementation (Milestone 1 ~ Milestone 3)
 <details>

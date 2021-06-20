@@ -1,10 +1,62 @@
-# Movie Recommendation System: Movieblock
-for UNIST CSE364 Software Engineering
+# Movieblock USER MANUAL
 
 ![example workflow](https://github.com/rocky112358/UNIST_CSE364_Group2/actions/workflows/maven.yml/badge.svg)
+* User guide for users who are new to Movieblock.
+* All necessary information for users to be able to use your application conveniently.
 
-## Milestone 3
+---
 
+## Table of contents
+1. What is Movieblock?
+    - Features of Movieblock
+    - How to get started with Movieblock
+
+2. Get started with Movieblock
+    - Overview
+    - Main page
+    - User Information based Recommendation
+    - Favorite Movie based Recommendation
+
+3. FAQ
+
+4. Appendix
+    - Information for grading
+
+## 1. What is Movieblock?
+![image](https://user-images.githubusercontent.com/17242507/122660827-79f52600-d1bf-11eb-8aae-2599b7453065.png)
+- Movieblock is a movie recommendation system that can be used directly on the web on any device without ads or installation.
+- Movieblock is a next-generation movie recommendation system based on over 6000 users and over 1 million reviews.
+
+### Features of Movieblock
+Movieblock provides the following features:
+- Top 10 Movie Recommendations by Genre (Main page)
+    - We collect data from all users and recommend Top 10 movies for each genre.
+- User Information based recommendation
+    - Based on the user information entered by the user, it recommends movies preferred by similar users.
+- Favorite Movie based recommendation
+    - Recommend similar movies based on user-entered preferred movie information.
+
+### How to get started with Movieblock
+- Movieblock can use all services without any prerequisites.
+    - Anyone can use it as long as the web browser can be used.
+- Movieblock provides a web-based GUI.
+    - You can access the service's main page through [http://localhost:8080](http://localhost:8080/).
+
+
+
+
+
+## Previous implementation (Milestone 1 ~ Milestone 3)
+<details>
+  <summary> Click to expand! </summary>
+
+## ~~Milestone 3~~ (Deprecated)
+<details>
+  <summary> Click to expand! </summary>
+
+> **This program no longer behaves like **How to run the program** described below in the lastest commit. (as of June 20, 2021)**
+> **This version is tagged as "milestone-3" and you may checkout if you like.**
+    
 ### What did we do
 #### Repository structure
 ```
@@ -358,6 +410,7 @@ Everyone has contributed to all parts. However in this part, we will mention the
 * 20171108 박다현: Debugging Project (edge-case input response)
 
 ---
+</details>
 
 ## ~~Milestone 2~~ (Deprecated)
 
@@ -953,4 +1006,5 @@ Error: There are no movies with that category(categories)
 
 20171108 박다현: Download dataset, test input validation logic
 
+</details>
 </details>

@@ -82,7 +82,7 @@ Movieblock provides the following features:
 
     ![image](https://user-images.githubusercontent.com/32671177/122661078-9befa800-d1c1-11eb-961a-15cc5e1a7f5f.png)
 
-4. Click recommendation type to move each search page.
+4. Click the menu on the top navigation bar to move between pages.
 
     ![image](https://user-images.githubusercontent.com/32671177/122661081-a316b600-d1c1-11eb-83ef-5d3b2b018e27.png)
 
@@ -92,7 +92,7 @@ Movieblock provides the following features:
 
     ![image](https://user-images.githubusercontent.com/32671177/122661138-351ebe80-d1c2-11eb-8c0e-c006418094ee.png)
 
-2. Select the "Gender", "Age", "Occupation" of target user from dropdown lists. (Optional)
+2. Select/input "Gender", "Age", "Occupation" of the target user from dropdown lists. (Optional)
 
     ![image](https://user-images.githubusercontent.com/32671177/122661150-45cf3480-d1c2-11eb-86cc-f2c45cff2531.png)
 
@@ -100,18 +100,18 @@ Movieblock provides the following features:
 
     ![image](https://user-images.githubusercontent.com/32671177/122661159-54b5e700-d1c2-11eb-9430-bcc17cf6cdd4.png)
 
-3. Select "Preferred Genre" from checkbox. If you select multiple genres, our recommendation will be movies which contains at least one genre you've selected. (Optional) If you don't select any genre, all genres are selected automatically.
+3. Select "Preferred Genre" from checkbox. If you select some genres, the movie which contains the genre will be recommended. (Optional) If you don't select any genre, it is treated as if all genres are selected.
 
     ![image](https://user-images.githubusercontent.com/32671177/122661196-921a7480-d1c2-11eb-83e2-f3215c761eb1.png)
     
     ![image](https://user-images.githubusercontent.com/32671177/122661202-9fcffa00-d1c2-11eb-8d21-2930cda61d8c.png)
 
 4. Click "Search" button.
-5. After short loading, 10 movies that similar users enjoyed are recommended.
+5. After short loading, 10 movies that are highly rated by similar users are recommended.
 
     ![image](https://user-images.githubusercontent.com/32671177/122661210-af4f4300-d1c2-11eb-9e3e-55a5d3bde002.png)
 
-6. Click the movie poster to see Detail information of that movie.
+6. Click the movie poster to see detail information of that movie at IMDb.
 
 ### Favorite Movie based recommendation
 
@@ -131,11 +131,11 @@ Movieblock provides the following features:
 
     ![image](https://user-images.githubusercontent.com/32671177/122661330-2fc27380-d1c4-11eb-9eeb-528005dec8a2.png)
 
-5. After short loading, movies similar to the ones you enjoyed are recommended.
+5. After short loading, movies similar to the ones you enjoyed are recommended, based on the genre of the movie.
 
     ![image](https://user-images.githubusercontent.com/32671177/122661336-38b34500-d1c4-11eb-88ee-6ae3fde855e6.png)
 
-6. Click the movie poster to see Detail information of that movie.
+6. Click the movie poster to see detail information of that movie at IMDb.
 
     ![image](https://user-images.githubusercontent.com/32671177/122661343-4072e980-d1c4-11eb-976f-6a64e8450018.png)
 

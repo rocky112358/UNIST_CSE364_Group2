@@ -64,7 +64,7 @@ Movieblock provides the following features:
     ④ "Genre" select checkbox
 
 - Recommendation by Favorite Movie
-    ![image](https://user-images.githubusercontent.com/32671177/122662066-238de480-d1cb-11eb-8da2-f0f565688217.png)<br>
+    ![image](https://user-images.githubusercontent.com/32671177/122663109-1674f380-d1d3-11eb-98d2-50779991ae30.png)
     ① "Title" input field
 
     ② "Number of Movies" input field

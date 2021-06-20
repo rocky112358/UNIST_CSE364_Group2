@@ -7,19 +7,19 @@
 ---
 
 ## Table of contents
-1. What is Movieblock?
-    - Features of Movieblock
-    - How to get started with Movieblock
+1. [What is Movieblock?](https://github.com/rocky112358/UNIST_CSE364_Group2#1-what-is-movieblock)
+- [Features of Movieblock](https://github.com/rocky112358/UNIST_CSE364_Group2#features-of-movieblock)
+- [How to get started with Movieblock](https://github.com/rocky112358/UNIST_CSE364_Group2#how-to-get-started-with-movieblock)
 
-2. Get started with Movieblock
-    - Overview
-    - Main page
-    - User Information based Recommendation
-    - Favorite Movie based Recommendation
+2. [Get started with Movieblock](https://github.com/rocky112358/UNIST_CSE364_Group2#2-get-started-with-movieblock)
+- [Overview](https://github.com/rocky112358/UNIST_CSE364_Group2#overview)
+- [Main page](https://github.com/rocky112358/UNIST_CSE364_Group25#main-page)
+- [User Information based Recommendation](https://github.com/rocky112358/UNIST_CSE364_Group2#user-information-based-recommendation)
+- [Favorite Movie based Recommendation](https://github.com/rocky112358/UNIST_CSE364_Group2#user-information-based-recommendation)
 
-3. FAQ
+3. [FAQ](https://github.com/rocky112358/UNIST_CSE364_Group2#3-faq)
 
-4. Appendix : Information for grading
+4. [Appendix : Information for grading](https://github.com/rocky112358/UNIST_CSE364_Group2#4-appendix--information-for-grading-milestone-4)
 
 ## 1. What is Movieblock?
 ![image](https://user-images.githubusercontent.com/17242507/122660827-79f52600-d1bf-11eb-8aae-2599b7453065.png)
@@ -45,8 +45,13 @@ Movieblock provides the following features:
 
 ### Overview
 
+<details>
+  <summary> Click to expand! </summary>
+    
 - Main Page
+    
     ![image](https://user-images.githubusercontent.com/32671177/122660997-efadc180-d1c0-11eb-91c5-680d3de1b623.png)
+    
     ① Move to Home
     
     ② Move to Recommendation by User Information
@@ -54,7 +59,9 @@ Movieblock provides the following features:
     ③ Move to Recommendation by Favorite Movie
 
 - Recommendation by User Information
+    
     ![image](https://user-images.githubusercontent.com/32671177/122661004-05bb8200-d1c1-11eb-80ec-001ca50e09f6.png)
+    
     ① "Gender" dropdown list
 
     ② "Age" input field
@@ -64,12 +71,20 @@ Movieblock provides the following features:
     ④ "Genre" select checkbox
 
 - Recommendation by Favorite Movie
+    
     ![image](https://user-images.githubusercontent.com/32671177/122663109-1674f380-d1d3-11eb-98d2-50779991ae30.png)
+    
     ① "Title" input field
 
     ② "Number of Movies" input field
+
+</details>    
+    
 ### Main Page
 
+<details>
+  <summary> Click to expand! </summary>
+    
 1. Open web browser and connect [http://localhost:8080](http://localhost:8080/index.html%EC%9C%BC%EB%A1%9C)
 
     ![image](https://user-images.githubusercontent.com/32671177/122661063-7793cb80-d1c1-11eb-8004-ea6dcf67ed61.png)
@@ -86,7 +101,12 @@ Movieblock provides the following features:
 
     ![image](https://user-images.githubusercontent.com/32671177/122661081-a316b600-d1c1-11eb-83ef-5d3b2b018e27.png)
 
+</details>
+
 ### User Information based recommendation
+
+<details>
+  <summary> Click to expand! </summary>
 
 1. Click "Recommend by User Information" menu.
 
@@ -107,13 +127,19 @@ Movieblock provides the following features:
     ![image](https://user-images.githubusercontent.com/32671177/122661202-9fcffa00-d1c2-11eb-8d21-2930cda61d8c.png)
 
 4. Click "Search" button.
+    
 5. After short loading, 10 movies that are highly rated by similar users are recommended.
 
     ![image](https://user-images.githubusercontent.com/32671177/122661210-af4f4300-d1c2-11eb-9e3e-55a5d3bde002.png)
 
 6. Click the movie poster to see detail information of that movie at IMDb.
 
+</details>
+    
 ### Favorite Movie based recommendation
+
+<details>
+  <summary> Click to expand! </summary>
 
 1. Click "Recommend by Favorite Movie" menu.
 
@@ -139,6 +165,8 @@ Movieblock provides the following features:
 
     ![image](https://user-images.githubusercontent.com/32671177/122661343-4072e980-d1c4-11eb-976f-6a64e8450018.png)
 
+</details>    
+    
 ## 3. FAQ
 
 ### Movie poster is not shown!
